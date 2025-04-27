@@ -1,0 +1,71 @@
+package com.example.fridgemanager.entity;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class FridgeItem {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name; // 食材名
+
+    private String category; // カテゴリ（例：野菜、肉、乳製品など）
+
+    private int quantity; // 数量
+
+    private LocalDate expirationDate; // 賞味期限
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    // ゲッター・セッター
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+     
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+}

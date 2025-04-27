@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>fridge-manager</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>fridge-manager</name>
+    <description>Fridge Management System</description>
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- Spring Boot Starter Web (REST API用) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.7.8</version> <!-- バージョンを統一 -->
+        </dependency>
+
+        <!-- Spring Boot Starter Data JPA (データベースアクセス用) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>2.7.8</version> <!-- バージョンを統一 -->
+        </dependency>
+
+        <!-- H2 Database (開発用インメモリデータベース) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.1.214</version> <!-- バージョンを追加 -->
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring Boot Starter Test (JUnit, MockMvc, Mockito などのテスト用の依存) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>2.7.8</version> <!-- バージョンを統一 -->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito (モックテスト用) -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.6.1</version> <!-- 最新のMockitoバージョン -->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Lombok (コードを簡略化するため) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version> <!-- バージョンを追加 -->
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+		  <groupId>mysql</groupId>
+		  <artifactId>mysql-connector-java</artifactId>
+		  <version>8.0.33</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-validation</artifactId>
+		    <version>2.7.8</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		    <version>2.7.8</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+		    <version>2.7.8</version>
+		</dependency>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Spring Bootプラグイン (実行用) -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
