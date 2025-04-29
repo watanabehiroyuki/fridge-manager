@@ -2,35 +2,48 @@ package com.example.fridgemanager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import com.example.fridgemanager.service.CustomUserDetailsService;
 
 @Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
+	
+    private final CustomUserDetailsService customUserDetailsService; // 追加！！
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-                .antMatchers("/register", "/login").permitAll() // 認証なしでアクセス可能なURL
-                .anyRequest().authenticated() // 他のURLは認証が必要
-                .and()
-            .formLogin()
-                .loginPage("/login") // カスタムログインページ
-                .defaultSuccessUrl("/home", true) // ログイン成功後の遷移先
-                .failureUrl("/login?error=true") // 失敗時のリダイレクト
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+            .authorizeHttpRequests(authz -> authz
+            		.antMatchers("/register", "/login").permitAll() // 認証不要なURL
+                .anyRequest().authenticated() // その他は認証が必要
+            )
+            .formLogin(form -> form
+                .loginPage("/login") // ログインページのURL
+                .defaultSuccessUrl("/home", true) // 成功時にリダイレクト
+                .failureUrl("/login?error=true") // 失敗時
                 .permitAll()
-                .and()
-            .logout()
-                .permitAll();
+            )
+            .logout(logout -> logout.permitAll())
+            .build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }

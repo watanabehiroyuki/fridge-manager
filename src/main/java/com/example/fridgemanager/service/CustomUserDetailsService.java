@@ -1,6 +1,5 @@
 package com.example.fridgemanager.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,23 +11,29 @@ import com.example.fridgemanager.repository.UserRepository;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    // メールアドレスをユーザー名として扱う場合
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        // メールアドレスでユーザーを検索
         User user = userRepository.findByEmail(email);
 
+        // ユーザーが見つからない場合はエラー
         if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("ユーザーが見つかりません");
         }
 
-        // ユーザー名、パスワード、ロールなどを含む UserDetails を返す
+        // ここで、ユーザーの情報をSpring Security用に変換
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
-                .password(user.getPassword())
-                .roles("USER") // 必要に応じてロールを追加
+                .builder()
+                .username(user.getEmail())  // メールアドレスをユーザー名として使用
+                .password(user.getPassword())  // パスワードをセット
+                .authorities("USER")  // 権限（今回は簡単に"USER"とする）
                 .build();
     }
 }
+
