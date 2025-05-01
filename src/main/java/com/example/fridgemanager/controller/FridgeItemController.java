@@ -14,56 +14,73 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.fridgemanager.entity.Fridge;
 import com.example.fridgemanager.entity.FridgeItem;
+import com.example.fridgemanager.repository.FridgeRepository;
 import com.example.fridgemanager.service.FridgeItemService;
 
 @RestController
-@RequestMapping("/api/items")
+@RequestMapping("/api/fridges/{fridgeId}/items")  // 冷蔵庫ごとのアイテム操作に変更
 @CrossOrigin
 public class FridgeItemController {
 
     private final FridgeItemService fridgeItemService;
+    private final FridgeRepository fridgeRepository;
 
     @Autowired
-    public FridgeItemController(FridgeItemService fridgeItemService) {
+    public FridgeItemController(FridgeItemService fridgeItemService, FridgeRepository fridgeRepository) {
         this.fridgeItemService = fridgeItemService;
+        this.fridgeRepository = fridgeRepository;
     }
 
+    // 冷蔵庫に食材を追加する
     @PostMapping
-    public FridgeItem createItem(@RequestBody FridgeItem item) {
-        return fridgeItemService.createItem(item);
+    public FridgeItem createItem(
+        @PathVariable Long fridgeId,
+        @RequestBody FridgeItem item
+    ) {
+        Fridge fridge = fridgeRepository.findById(fridgeId)
+                .orElseThrow(() -> new RuntimeException("Fridge not found"));
+        return fridgeItemService.createItem(item, fridge);
     }
 
+    // 冷蔵庫ごとのアイテム一覧取得
     @GetMapping
-    public List<FridgeItem> getAllItems() {
-        return fridgeItemService.getAllItems();
+    public List<FridgeItem> getItemsByFridge(@PathVariable Long fridgeId) {
+        Fridge fridge = fridgeRepository.findById(fridgeId)
+                .orElseThrow(() -> new RuntimeException("Fridge not found"));
+        return fridgeItemService.getItemsByFridge(fridge);
     }
 
+    // 通知対象アイテムの取得（全冷蔵庫からでOKの場合）
     @GetMapping("/notify")
     public List<FridgeItem> getItemsForNotification() {
         return fridgeItemService.getItemsForNotification();
     }
-    
-    @GetMapping("/{id:\\d+}")
-    public FridgeItem getItem(@PathVariable Long id) {
-        Optional<FridgeItem> optionalItem = fridgeItemService.getItemById(id);
-        if (optionalItem.isPresent()) {
-            return optionalItem.get();
-        } else {
-            throw new RuntimeException("Item not found");
-        }
+
+    @GetMapping("/{itemId}")
+    public FridgeItem getItem(
+        @PathVariable Long fridgeId,
+        @PathVariable Long itemId
+    ) {
+        Optional<FridgeItem> optionalItem = fridgeItemService.getItemById(itemId);
+        return optionalItem.orElseThrow(() -> new RuntimeException("Item not found"));
     }
 
-
-    @PutMapping("/{id:\\d+}")
-    public FridgeItem updateItem(@PathVariable Long id, @RequestBody FridgeItem updatedItem) {
-        return fridgeItemService.updateItem(id, updatedItem);
+    @PutMapping("/{itemId}")
+    public FridgeItem updateItem(
+        @PathVariable Long fridgeId,
+        @PathVariable Long itemId,
+        @RequestBody FridgeItem updatedItem
+    ) {
+        return fridgeItemService.updateItem(itemId, updatedItem);
     }
 
-    @DeleteMapping("/{id:\\d+}")
-    public void deleteItem(@PathVariable Long id) {
-        fridgeItemService.deleteItem(id);
+    @DeleteMapping("/{itemId}")
+    public void deleteItem(
+        @PathVariable Long fridgeId,
+        @PathVariable Long itemId
+    ) {
+        fridgeItemService.deleteItem(itemId);
     }
-    
-
 }

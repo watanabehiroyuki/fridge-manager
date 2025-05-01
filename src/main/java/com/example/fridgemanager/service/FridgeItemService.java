@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.fridgemanager.entity.Fridge;
 import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.repository.FridgeItemRepository;
 
@@ -24,7 +25,9 @@ public class FridgeItemService {
     }
     
     // 食材を保存する（賞味期限の自動設定付き）
-    public FridgeItem createItem(FridgeItem item) {
+    public FridgeItem createItem(FridgeItem item, Fridge fridge) {
+    	// 冷蔵庫との関連をセット
+    	item.setFridge(fridge);
     	if (item.getExpirationDate() == null) {
     		item.setExpirationDate(calculateDefaultExpiration(item.getName()));
     	}
@@ -45,8 +48,8 @@ public class FridgeItemService {
     }
     
     // 全件取得
-    public List<FridgeItem> getAllItems() {
-        return fridgeItemRepository.findAll();
+    public List<FridgeItem> getItemsByFridge(Fridge fridge) {
+        return fridgeItemRepository.findByFridge(fridge);
     }
 
     // 賞味期限が早い順にソートする

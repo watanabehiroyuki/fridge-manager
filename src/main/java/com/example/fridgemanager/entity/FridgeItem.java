@@ -24,9 +24,11 @@ public class FridgeItem {
 
     private LocalDate expirationDate; // 賞味期限
     
+    private boolean consumed = false;
+    
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "fridge_id", nullable = false)
+    private Fridge fridge;
 
     // ゲッター・セッター
     public Long getId() {
@@ -67,5 +69,21 @@ public class FridgeItem {
 
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
+    }
+    
+    public boolean isConsumed() {
+        return consumed;
+    }
+
+    public void setConsumed(boolean consumed) {
+        this.consumed = consumed;
+    }
+
+    public Fridge getFridge() {
+        return fridge;
+    }
+
+    public void setFridge(Fridge fridge) {
+        this.fridge = fridge;
     }
 }
