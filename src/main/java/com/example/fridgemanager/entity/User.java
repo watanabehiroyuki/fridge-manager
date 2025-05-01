@@ -1,13 +1,15 @@
 package com.example.fridgemanager.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -35,8 +37,14 @@ public class User {
     private String password;
 
     
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FridgeItem> fridgeItems;
+    @ManyToMany
+    @JoinTable(
+        name = "user_fridge",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "fridge_id")
+    )
+    
+    private List<Fridge> fridges = new ArrayList<>();
 
     // --- コンストラクタ ---
 
@@ -83,12 +91,12 @@ public class User {
         this.password = password;
     }
 
-    public List<FridgeItem> getFridgeItems() {
-        return fridgeItems;
+    public List<Fridge> getFridges() {
+        return fridges;
     }
 
-    public void setFridgeItems(List<FridgeItem> fridgeItems) {
-        this.fridgeItems = fridgeItems;
+    public void setFridges(List<Fridge> fridges) {
+        this.fridges = fridges;
     }
 
 }

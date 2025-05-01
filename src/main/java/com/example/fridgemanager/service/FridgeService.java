@@ -20,15 +20,17 @@ public class FridgeService {
     }
 
     public Fridge createFridge(Fridge fridge, User user) {
+    	// Frigeにユーザーを追加
         fridge.getUsers().add(user);
-        user.getFridges().add(fridge); // 双方向の関連付け
+        // userにFrigeを追加
+        user.getFridges().add(fridge);
         return fridgeRepository.save(fridge);
     }
-
+    // ユーザーと関係する冷蔵庫を返す
     public List<Fridge> getFridgesByUser(User user) {
         return fridgeRepository.findByUsers(user);
     }
-
+    // 特定の冷蔵庫をIDで取得（見つからなければエラー）
     public Fridge getFridgeById(Long id) {
         return fridgeRepository.findById(id).orElseThrow(() -> new RuntimeException("Fridge not found"));
     }

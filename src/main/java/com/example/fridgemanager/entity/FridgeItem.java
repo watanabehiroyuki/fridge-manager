@@ -24,7 +24,7 @@ public class FridgeItem {
 
     private LocalDate expirationDate; // 賞味期限
     
-    private boolean consumed = false;
+    private boolean consumed = false; // 消費済み
     
     @ManyToOne
     @JoinColumn(name = "fridge_id", nullable = false)
