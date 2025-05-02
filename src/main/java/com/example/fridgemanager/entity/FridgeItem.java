@@ -2,14 +2,17 @@ package com.example.fridgemanager.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "fridge_items") 
 public class FridgeItem {
 
     @Id
@@ -24,6 +27,7 @@ public class FridgeItem {
 
     private LocalDate expirationDate; // 賞味期限
     
+    @Column(columnDefinition = "TINYINT(1)")
     private boolean consumed = false; // 消費済み
     
     @ManyToOne
