@@ -17,6 +17,10 @@ import com.example.fridgemanager.repository.FridgeItemRepository;
 @Service
 public class FridgeItemService {
 
+	// 全件取得（通知デバッグ用）
+	public List<FridgeItem> getAllItems() {
+	    return fridgeItemRepository.findAll();
+	}
     private final FridgeItemRepository fridgeItemRepository;
 
     @Autowired
