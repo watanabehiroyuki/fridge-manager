@@ -44,6 +44,14 @@ public class FridgeController {
         User user = userRepository.findByEmail(principal.getName());
         return fridgeService.getFridgesByUser(user);
     }
+    
+    // ログインユーザーのメールアドレス取得
+    @GetMapping
+    public List<Fridge> getUserFridges(Principal principal) {
+        String email = principal.getName();
+        return fridgeService.getFridgesByUserEmail(email);
+    }
+
 
     // 単体取得（必要に応じて）
     @GetMapping("/{id}")
