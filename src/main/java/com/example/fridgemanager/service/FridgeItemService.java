@@ -53,7 +53,7 @@ public class FridgeItemService {
     
     // 全件取得
     public List<FridgeItem> getItemsByFridge(Fridge fridge) {
-        return fridgeItemRepository.findByFridge(fridge);
+    	return fridgeItemRepository.findByFridgeOrderByExpirationDateAsc(fridge);
     }
 
     // 賞味期限が早い順にソートする

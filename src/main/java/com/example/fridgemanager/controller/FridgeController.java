@@ -82,11 +82,16 @@ public class FridgeController {
         return response;
     }
 
-    
+    // 冷蔵庫の共有からユーザを削除する
     @DeleteMapping("/{fridgeId}/users/{userId}")
     public void removeFridgeUser(@PathVariable Long fridgeId, @PathVariable Long userId) {
         fridgeService.removeUserFromFridge(fridgeId, userId);
     }
-
+    
+    // 冷蔵庫自体を削除する
+    @DeleteMapping("/{fridgeId}")
+    public void deleteFridge(@PathVariable Long fridgeId) {
+        fridgeService.deleteFridge(fridgeId);
+    }
     
 }

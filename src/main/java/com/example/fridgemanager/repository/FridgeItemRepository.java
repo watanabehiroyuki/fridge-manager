@@ -13,5 +13,7 @@ public interface FridgeItemRepository extends JpaRepository<FridgeItem, Long> {
 	 // 部分一致検索用
     List<FridgeItem> findByNameContainingIgnoreCase(String name);
     // 選択した冷蔵庫からの検索用
-    List<FridgeItem> findByFridge(Fridge fridge);
+    List<FridgeItem> findByFridge(Fridge fridge); 
+    // 賞味期限昇順に並べて取得する
+    List<FridgeItem> findByFridgeOrderByExpirationDateAsc(Fridge fridge);
 }
