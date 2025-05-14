@@ -44,7 +44,12 @@ public class FridgeService {
         }
         return new ArrayList<>(user.getFridges()); // Set → List に変換
     }
-
+    
+    // 冷蔵庫を削除する
+    public void deleteFridge(Long fridgeId) {
+        fridgeRepository.deleteById(fridgeId);
+    }
+    
     
     // 特定の冷蔵庫をIDで取得（見つからなければエラー）
     public Fridge getFridgeById(Long id) {
