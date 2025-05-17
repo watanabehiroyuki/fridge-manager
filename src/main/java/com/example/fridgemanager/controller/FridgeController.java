@@ -43,11 +43,11 @@ public class FridgeController {
     }
 
     // ログインユーザーが属する冷蔵庫一覧を取得
-    @GetMapping
-    public List<Fridge> getMyFridges(Principal principal) {
-       User user = userRepository.findByEmail(principal.getName());
-       return fridgeService.getFridgesByUser(user);
-    }
+    // @GetMapping
+    // public List<Fridge> getMyFridges(Principal principal) {
+    //    User user = userRepository.findByEmail(principal.getName());
+    //    return fridgeService.getFridgesByUser(user);
+    // }
     
     // ログインユーザーのメールアドレス取得
     @GetMapping
