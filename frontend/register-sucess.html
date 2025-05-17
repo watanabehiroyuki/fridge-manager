@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ユーザー登録</title>
+</head>
+
+<body>
+    <header>
+    </header>
+    <main>
+        <div class="g-container">
+            <div class="m-register">
+                <div class="m-register__false" id="registerFalse"></div>
+                <h1 class="m-register__ttl">ユーザー登録</h2>
+                    <form class="m-register__form" id="registerForm">
+                        <div class="m-register__group">
+                            <label for="username">ユーザー名</label>
+                            <input type="text" name="name" placeholder="ユーザー名を入力してください" required id="username">
+                        </div>
+                        <div class="m-register__group">
+                            <label for="email">メールアドレス</label>
+                            <input type="email" name="email" placeholder="メールアドレスを入力してください" required id="email">
+                        </div>
+                        <div class="m-register__group">
+                            <label for="password">パスワード</label>
+                            <input type="text" name="password" placeholder="パスワードを入力してください" required id="password">
+                        </div>
+                        <div class="m-register__group">
+                            <label for="confirmPassword">（確認用）パスワード</label>
+                            <input type="text" name="confirmPassword" required id="confirmPassword">
+                        </div>
+                        <input type="submit" value="登録" class="m-register__submit">
+                    </form>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+
+</html>
