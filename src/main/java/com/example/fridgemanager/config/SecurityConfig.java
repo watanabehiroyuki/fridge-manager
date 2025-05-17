@@ -11,6 +11,11 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.fridgemanager.service.CustomUserDetailsService;
 
+// import org.springframework.web.cors.CorsConfiguration;
+// import org.springframework.web.cors.CorsConfigurationSource;
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+// import java.util.List;
+
 @Configuration
 public class SecurityConfig {
 	
@@ -23,8 +28,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+            .csrf().disable()
             .authorizeHttpRequests(authz -> authz
-            		.antMatchers("/register", "/login","/api/notify/send").permitAll() // 認証不要なURL
+            		.antMatchers("/api/register","register-sucess", "/login","/api/notify/send").permitAll() // 認証不要なURL
                 .anyRequest().authenticated() // その他は認証が必要
             )
             .formLogin(form -> form
@@ -46,4 +52,20 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
+
+    // @Bean
+    // public CorsConfigurationSource corsConfigurationSource() {
+    // CorsConfiguration configuration = new CorsConfiguration();
+    // configuration.setAllowedOrigins(List.of("http://localhost:5500")); // ← HTMLの表示元に合わせる
+    // configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    // configuration.setAllowedHeaders(List.of("*"));
+    // configuration.setAllowCredentials(true); // Cookieなどが必要な場合
+
+    // UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    // source.registerCorsConfiguration("/**", configuration);
+    // return source;
+    // }
 }
+
+
+
