@@ -30,16 +30,12 @@ public class SecurityConfig {
         return http
             .csrf().disable()
             .authorizeHttpRequests(authz -> authz
-            		.antMatchers("/api/register","register-sucess", "/login","/api/notify/send").permitAll() // 認証不要なURL
+            		.antMatchers("/api/register","register-sucess", "/api/login","/api/notify/send").permitAll() // 認証不要なURL
                 .anyRequest().authenticated() // その他は認証が必要
             )
-            .formLogin(form -> form
-                .loginPage("/login") // ログインページのURL
-                .defaultSuccessUrl("/home", true) // 成功時にリダイレクト
-                .failureUrl("/login?error=true") // 失敗時
-                .permitAll()
-            )
-            .logout(logout -> logout.permitAll())
+            .formLogin().disable() // ← これ重要！フォームログインは無効
+            .logout().logoutUrl("/api/logout") // ログアウトもAPIで
+            .and()
             .build();
     }
 
