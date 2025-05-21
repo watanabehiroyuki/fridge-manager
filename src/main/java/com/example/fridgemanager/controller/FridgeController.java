@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.fridgemanager.dto.FridgeDTO;
+import com.example.fridgemanager.dto.FridgeDetailDTO;
+import com.example.fridgemanager.dto.FridgeItemDTO;
 import com.example.fridgemanager.dto.ShareRequest;
 import com.example.fridgemanager.dto.UserResponseDTO;
 import com.example.fridgemanager.entity.Fridge;
+import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.entity.User;
 import com.example.fridgemanager.repository.UserRepository;
+import com.example.fridgemanager.service.FridgeItemService;
 import com.example.fridgemanager.service.FridgeService;
 
 @RestController
@@ -28,11 +33,14 @@ public class FridgeController {
 
     private final FridgeService fridgeService;
     private final UserRepository userRepository;
+    private final FridgeItemService fridgeItemService;
+
 
     @Autowired
-    public FridgeController(FridgeService fridgeService, UserRepository userRepository) {
+    public FridgeController(FridgeService fridgeService, UserRepository userRepository, FridgeItemService fridgeItemService) {
         this.fridgeService = fridgeService;
         this.userRepository = userRepository;
+        this.fridgeItemService = fridgeItemService;
     }
 
     // 冷蔵庫の作成
@@ -54,9 +62,16 @@ public class FridgeController {
     
     // ログインユーザーのメールアドレス取得
     @GetMapping
-    public List<Fridge> getUserFridges(Principal principal) {
+    public List<FridgeDTO> getUserFridges(Principal principal) {
         String email = principal.getName();
-        return fridgeService.getFridgesByUserEmail(email);
+        List<Fridge> fridges = fridgeService.getFridgesByUserEmail(email);
+
+        List<FridgeDTO> dtoList = new ArrayList<>();
+        for (Fridge fridge : fridges) {
+            dtoList.add(new FridgeDTO(fridge.getId(), fridge.getName()));
+        }
+
+        return dtoList;
     }
 
 
@@ -64,6 +79,26 @@ public class FridgeController {
     @GetMapping("/{id}")
     public Fridge getFridge(@PathVariable Long id) {
         return fridgeService.getFridgeById(id);
+    }
+    
+    
+    @GetMapping("/{id}/detail")
+    public FridgeDetailDTO getFridgeDetail(@PathVariable Long id) {
+        Fridge fridge = fridgeService.getFridgeById(id);
+        List<FridgeItem> items = fridgeItemService.getItemsByFridge(fridge);
+
+        List<FridgeItemDTO> itemDTOs = new ArrayList<>();
+        for (FridgeItem item : items) {
+            itemDTOs.add(new FridgeItemDTO(
+                item.getId(),
+                item.getName(),
+                item.getCategory(),
+                item.getQuantity(),
+                item.getExpirationDate()
+            ));
+        }
+
+        return new FridgeDetailDTO(fridge.getId(), fridge.getName(), itemDTOs);
     }
     
     // シェアしたい冷蔵庫とユーザのメールを取得

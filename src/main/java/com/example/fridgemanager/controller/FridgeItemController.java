@@ -1,5 +1,6 @@
 package com.example.fridgemanager.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.fridgemanager.dto.FridgeItemDTO;
 import com.example.fridgemanager.entity.Fridge;
 import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.repository.FridgeRepository;
@@ -46,10 +48,23 @@ public class FridgeItemController {
 
     // 冷蔵庫ごとのアイテム一覧取得
     @GetMapping
-    public List<FridgeItem> getItemsByFridge(@PathVariable Long fridgeId) {
+    public List<FridgeItemDTO> getItemsByFridge(@PathVariable Long fridgeId) {
         Fridge fridge = fridgeRepository.findById(fridgeId)
                 .orElseThrow(() -> new RuntimeException("Fridge not found"));
-        return fridgeItemService.getItemsByFridge(fridge);
+        List<FridgeItem> items = fridgeItemService.getItemsByFridge(fridge);
+        List<FridgeItemDTO> dtoList = new ArrayList<>();
+
+        for (FridgeItem item : items) {
+            dtoList.add(new FridgeItemDTO(
+                item.getId(),
+                item.getName(),
+                item.getCategory(),
+                item.getQuantity(),
+                item.getExpirationDate()
+            ));
+        }
+
+        return dtoList;
     }
 
     // 通知対象アイテムの取得（全冷蔵庫からでOKの場合）
