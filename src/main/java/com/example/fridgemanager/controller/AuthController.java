@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.fridgemanager.dto.LoginRequest;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/api")
@@ -48,7 +52,31 @@ public class AuthController {
             return ResponseEntity.status(401).body("{\"error\":\"メールアドレスまたはパスワードが違います\"}");
         }
     }
+
     
+    @GetMapping("/auth/check")
+    public ResponseEntity<?> checkLogin() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+    if (authentication == null || !authentication.isAuthenticated() ||
+        authentication.getPrincipal().equals("anonymousUser")) {
+        return ResponseEntity.status(401).body("{\"error\":\"未ログイン\"}");
+    }
+
+    // ユーザー情報を返す（必要なら）
+    Object principal = authentication.getPrincipal();
+    String username;
+
+    if (principal instanceof UserDetails) {
+        username = ((UserDetails) principal).getUsername();
+    } else {
+        username = principal.toString();
+    }
+
+    return ResponseEntity.ok("{\"username\":\"" + username + "\"}");
+    }
+    
+
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         // ログイン状態のクリア
