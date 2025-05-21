@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.example.fridgemanager.service.FridgeService;
 
 @RestController
 @RequestMapping("/api/fridges")
+@CrossOrigin
 public class FridgeController {
 
     private final FridgeService fridgeService;
@@ -36,16 +38,19 @@ public class FridgeController {
     // 冷蔵庫の作成
     @PostMapping
     public Fridge createFridge(@RequestBody Fridge fridge, Principal principal) {
+        if (fridge.getUsers() == null ) {
+            fridge.setUsers(new ArrayList<>());
+        }
         User user = userRepository.findByEmail(principal.getName());
         return fridgeService.createFridge(fridge, user);
     }
 
     // ログインユーザーが属する冷蔵庫一覧を取得
-    // @GetMapping
-    // public List<Fridge> getMyFridges(Principal principal) {
+    //@GetMapping
+    //public List<Fridge> getMyFridges(Principal principal) {
     //    User user = userRepository.findByEmail(principal.getName());
     //    return fridgeService.getFridgesByUser(user);
-    // }
+    //}
     
     // ログインユーザーのメールアドレス取得
     @GetMapping
