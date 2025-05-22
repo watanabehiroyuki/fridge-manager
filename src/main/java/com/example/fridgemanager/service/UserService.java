@@ -15,9 +15,15 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    // パスワードをエンコードしてリポジトリに保存する
     public void registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
+    
+    // メールからユーザを取得
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 }
