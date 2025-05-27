@@ -26,6 +26,7 @@ public class FridgeService {
     public Fridge createFridge(Fridge fridge, User user) {
     	// Frigeにユーザーを追加
         fridge.getUsers().add(user);
+        user.getFridges().add(fridge);
         // userにFrigeを追加
         // user.getFridges().add(fridge);
         return fridgeRepository.save(fridge);
@@ -70,6 +71,7 @@ public class FridgeService {
         // すでに追加済みでなければ追加
         if (!fridge.getUsers().contains(userToAdd)) {
             fridge.getUsers().add(userToAdd);
+            userToAdd.getFridges().add(fridge);
             fridgeRepository.save(fridge);
         }
 
