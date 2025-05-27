@@ -130,4 +130,9 @@ public class FridgeController {
         fridgeService.deleteFridge(fridgeId);
     }
     
+    @GetMapping("/with-details")
+    public List<FridgeDetailDTO> getFridgeDetails(Principal principal) {
+        return fridgeService.getFridgeDetailsByUserEmail(principal.getName());
+    }
+    
 }

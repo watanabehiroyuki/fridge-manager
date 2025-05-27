@@ -6,7 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.fridgemanager.dto.FridgeDetailDTO;
+import com.example.fridgemanager.dto.FridgeItemDTO;
+import com.example.fridgemanager.dto.UserSimpleDTO;
 import com.example.fridgemanager.entity.Fridge;
+import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.entity.User;
 import com.example.fridgemanager.repository.FridgeRepository;
 import com.example.fridgemanager.repository.UserRepository;
@@ -96,6 +100,61 @@ public class FridgeService {
         fridge.getUsers().remove(userToRemove);
         fridgeRepository.save(fridge); 
     }
+    
+    // メールから全ての冷蔵庫と全ての食材と全ての共有しているユーザを取得
+    public List<FridgeDetailDTO> getFridgeDetailsByUserEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        // --- ① この人が使っている冷蔵庫のリストを取得
+        List<Fridge> fridges = user.getFridges();
+        // --- 結果用のリストを作る
+        List<FridgeDetailDTO> result = new ArrayList<>();
+        
+        // --- ② 冷蔵庫ごとに繰り返し
+        for (Fridge fridge : fridges) {
+        	 // --- この冷蔵庫の中の食材をリストに変換
+            List<FridgeItemDTO> itemDTOs = new ArrayList<>();
+            for (FridgeItem item : fridge.getFridgeItems()) {
+            	// item = 冷蔵庫の中の1つの食材
+            	FridgeItemDTO itemDTO = new FridgeItemDTO(
+            		item.getId(),
+                    item.getName(),
+                    item.getCategory(),
+                    item.getQuantity(),
+                    item.getExpirationDate()
+                 );
+                itemDTOs.add(itemDTO);
+            }
+
+            // --- この冷蔵庫を一緒に使っている人のリストを作る
+            List<UserSimpleDTO> userDTOs = new ArrayList<>();
+            // u = 冷蔵庫を共有している1人のユーザー
+            for (User u : fridge.getUsers()) {
+                UserSimpleDTO userDTO = new UserSimpleDTO(
+                    u.getId(),
+                    u.getUsername()
+                );
+                userDTOs.add(userDTO);
+            }
+
+            // --- この冷蔵庫の情報を1つのDTOにまとめる
+            FridgeDetailDTO fridgeDetail = new FridgeDetailDTO(
+                fridge.getId(),
+                fridge.getName(),
+                itemDTOs,
+                userDTOs
+            );
+
+            // この冷蔵庫の情報を結果リストに追加
+            result.add(fridgeDetail);
+        }
+
+        return result;
+    }
+
 
 
 }
