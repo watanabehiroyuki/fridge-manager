@@ -1,5 +1,6 @@
 package com.example.fridgemanager.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,8 +27,14 @@ public class Fridge {
     private String name; // 例：「自宅」「職場」
 
     // ユーザーとの多対多
-    @ManyToMany(mappedBy = "fridges")
-    private List<User> users;
+    @ManyToMany
+    @JoinTable(
+        name = "user_fridge",
+        joinColumns = @JoinColumn(name = "fridge_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users = new ArrayList<>();
+
 
     // 食材との1対多
     @OneToMany(mappedBy = "fridge", cascade = CascadeType.ALL, orphanRemoval = true)
