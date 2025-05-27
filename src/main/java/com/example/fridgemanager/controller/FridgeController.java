@@ -101,10 +101,11 @@ public class FridgeController {
         return new FridgeDetailDTO(fridge.getId(), fridge.getName(), itemDTOs);
     }
     
-    // シェアしたい冷蔵庫とユーザのメールを取得
+    // シェアしたい冷蔵庫とユーザのメールを取得し追加する
     @PostMapping("/{fridgeId}/share")
-    public Fridge shareFridge(@PathVariable Long fridgeId, @RequestBody ShareRequest request) {
-        return fridgeService.addUserToFridge(fridgeId, request.getEmail());
+    public FridgeDTO shareFridge(@PathVariable Long fridgeId, @RequestBody ShareRequest request) {
+    	Fridge fridge = fridgeService.addUserToFridge(fridgeId, request.getEmail());
+        return new FridgeDTO(fridge);
     }
     
     // 冷蔵庫に関連するユーザを取得

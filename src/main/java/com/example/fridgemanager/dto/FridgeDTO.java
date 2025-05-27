@@ -1,14 +1,32 @@
 package com.example.fridgemanager.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.fridgemanager.entity.Fridge;
+import com.example.fridgemanager.entity.User;
+
 public class FridgeDTO {
     private Long id;
     private String name;
+    private List<UserResponseDTO> users = new ArrayList<>();
+
+    public FridgeDTO(Fridge fridge) {
+        this.id = fridge.getId();
+        this.name = fridge.getName();
+        if (fridge.getUsers() != null) {
+            for (User user : fridge.getUsers()) {
+                users.add(new UserResponseDTO(user.getId(), user.getUsername(), user.getEmail()));
+            }
+        }
+    }
 
     public FridgeDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
-
+        
+        
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
