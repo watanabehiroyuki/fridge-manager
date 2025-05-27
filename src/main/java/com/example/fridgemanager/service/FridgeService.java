@@ -27,7 +27,7 @@ public class FridgeService {
     	// Frigeにユーザーを追加
         fridge.getUsers().add(user);
         // userにFrigeを追加
-        user.getFridges().add(fridge);
+        // user.getFridges().add(fridge);
         return fridgeRepository.save(fridge);
     }
     
