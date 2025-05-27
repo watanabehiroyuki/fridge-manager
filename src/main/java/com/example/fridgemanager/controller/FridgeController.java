@@ -46,9 +46,6 @@ public class FridgeController {
     // 冷蔵庫の作成
     @PostMapping
     public Fridge createFridge(@RequestBody Fridge fridge, Principal principal) {
-        if (fridge.getUsers() == null ) {
-            fridge.setUsers(new ArrayList<>());
-        }
         User user = userRepository.findByEmail(principal.getName());
         return fridgeService.createFridge(fridge, user);
     }
