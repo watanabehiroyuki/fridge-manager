@@ -35,7 +35,7 @@ public class User {
     private String password;
 
     
-    @ManyToMany
+    @ManyToMany(mappedBy = "users")
     private List<Fridge> fridges = new ArrayList<>();
 
     // --- コンストラクタ ---
