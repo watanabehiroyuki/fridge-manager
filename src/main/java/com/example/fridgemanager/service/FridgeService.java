@@ -12,8 +12,11 @@ import com.example.fridgemanager.dto.UserSimpleDTO;
 import com.example.fridgemanager.entity.Fridge;
 import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.entity.User;
+import com.example.fridgemanager.exception.FridgeNotFoundException;
+import com.example.fridgemanager.exception.UserNotFoundException;
 import com.example.fridgemanager.repository.FridgeRepository;
 import com.example.fridgemanager.repository.UserRepository;
+
 
 @Service
 public class FridgeService {
@@ -41,13 +44,13 @@ public class FridgeService {
     //    return fridgeRepository.findByUsers(user);
     //}
     
-    // メールから関係する冷蔵庫を返す
+    // メールアドレスから、そのユーザーの冷蔵庫一覧を取得する（ユーザがみつからなければエラーを返す）
     public List<Fridge> getFridgesByUserEmail(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new RuntimeException("ユーザーが見つかりません: " + email);
+            throw new UserNotFoundException("User not found: " + email);
         }
-        return new ArrayList<>(user.getFridges()); // Set → List に変換
+        return new ArrayList<>(user.getFridges()); 
     }
     
     // 冷蔵庫を削除する
@@ -58,18 +61,18 @@ public class FridgeService {
     
     // 特定の冷蔵庫をIDで取得（見つからなければエラー）
     public Fridge getFridgeById(Long id) {
-        return fridgeRepository.findById(id).orElseThrow(() -> new RuntimeException("Fridge not found"));
+        return fridgeRepository.findById(id).orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + id));
     }
     
     // 冷蔵庫を共有したいユーザを追加する
     public Fridge addUserToFridge(Long fridgeId, String email) {
     	// 冷蔵庫がなければエラーを返す
         Fridge fridge = fridgeRepository.findById(fridgeId)
-            .orElseThrow(() -> new RuntimeException("Fridge not found"));
+            .orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + fridgeId));
         // ユーザがいないければエラーを返す
         User userToAdd = userRepository.findByEmail(email);
         if (userToAdd == null) {
-            throw new RuntimeException("User not found");
+            throw new UserNotFoundException("User not found: " + email);
         }
 
         // すでに追加済みでなければ追加
@@ -85,17 +88,18 @@ public class FridgeService {
     // 冷蔵庫に関係するユーザ一覧を取得する
     public List<User> getUsersByFridgeId(Long fridgeId) {
         Fridge fridge = fridgeRepository.findById(fridgeId)
-            .orElseThrow(() -> new RuntimeException("Fridge not found"));
+            .orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + fridgeId));
         return fridge.getUsers();
     }
 
     // 共有したユーザの削除
     public void removeUserFromFridge(Long fridgeId, Long userId) {
         Fridge fridge = fridgeRepository.findById(fridgeId)
-            .orElseThrow(() -> new RuntimeException("Fridge not found"));
+            .orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + fridgeId));
 
         User userToRemove = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new UserNotFoundException("User not found" + userId
+            		));
         // 冷蔵庫に登録されている特定のユーザを削除する
         fridge.getUsers().remove(userToRemove);
         fridgeRepository.save(fridge); 
@@ -105,7 +109,7 @@ public class FridgeService {
     public List<FridgeDetailDTO> getFridgeDetailsByUserEmail(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new RuntimeException("User not found");
+        	throw new UserNotFoundException("User not found: " + email);
         }
 
         // --- ① この人が使っている冷蔵庫のリストを取得
