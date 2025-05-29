@@ -33,17 +33,19 @@ public class FridgeItemService {
     	// 冷蔵庫との関連をセット
     	item.setFridge(fridge);
     	if (item.getExpirationDate() == null) {
-    		item.setExpirationDate(calculateDefaultExpiration(item.getName()));
+    		item.setExpirationDate(calculateDefaultExpiration(item.getName(),item.getCategory()));
     	}
         return fridgeItemRepository.save(item);
     }
     
     // 賞味期限を名前に応じて計算（自動設定ロジック）
-    private LocalDate calculateDefaultExpiration(String name) {
+    private LocalDate calculateDefaultExpiration(String name, String category) {
         if (name.contains("じゃがいも")) {
             return LocalDate.now().plusMonths(3);
         } else if (name.contains("玉ねぎ")) {
             return LocalDate.now().plusMonths(2);
+        } else if (category.contains("魚")) {
+        	return LocalDate.now().plusDays(2);
         } else if (name.contains("魚")) {
         	return LocalDate.now().plusDays(2);
         } else {
