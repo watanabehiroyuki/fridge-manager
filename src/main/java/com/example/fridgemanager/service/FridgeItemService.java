@@ -46,6 +46,8 @@ public class FridgeItemService {
             return LocalDate.now().plusMonths(2);
         } else if (category.contains("魚")) {
         	return LocalDate.now().plusDays(2);
+        } else if (category.contains("肉")) {
+        	return LocalDate.now().plusDays(2);
         } else if (name.contains("魚")) {
         	return LocalDate.now().plusDays(2);
         } else {
