@@ -12,10 +12,12 @@ import com.example.fridgemanager.entity.User;
 public class NotificationService {
 
     private final FridgeItemService fridgeItemService;
+    private final EmailService emailService;
 
     @Autowired
-    public NotificationService(FridgeItemService fridgeItemService) {
+    public NotificationService(FridgeItemService fridgeItemService, EmailService emailService) {
         this.fridgeItemService = fridgeItemService;
+        this.emailService = emailService;
     }
 
     public void sendNotifications() {
@@ -38,11 +40,10 @@ public class NotificationService {
                 continue;
             }
             // 冷蔵庫を取得し、それに関連するユーザーを取得しループ
-            for (User user : item.getFridge().getUsers()) {
-                // 仮の通知処理（本当はメールを送信）
-                System.out.println("通知 → " + user.getEmail() +
-                        "：[" + item.getName() + "] の賞味期限が " +
-                        item.getExpirationDate() + " に近づいています！");
+            for (User user : users) {
+            	String subject = "【冷蔵庫管理】賞味期限が近い食材があります";
+            	String body = EmailContentBuilder.buildNotificationBody(user, List.of(item));
+            	emailService.sendEmail(user.getEmail(), subject, body);
             }
         }
     }
