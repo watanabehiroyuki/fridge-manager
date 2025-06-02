@@ -1,5 +1,6 @@
 package com.example.fridgemanager.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class NotificationService {
             // 冷蔵庫を取得し、それに関連するユーザーを取得しループ
             for (User user : users) {
             	String subject = "【冷蔵庫管理】賞味期限が近い食材があります";
-            	String body = EmailContentBuilder.buildNotificationBody(user, List.of(item));
+            	String body = EmailContentBuilder.buildNotificationBody(user, Collections.singletonList(item));
             	emailService.sendEmail(user.getEmail(), subject, body);
             }
         }
