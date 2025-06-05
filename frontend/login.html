@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <script type="module" src="/src/js/include/head.js"></script>
+</head>
+
+<body>
+    <header id="header"></header>
+    <main>
+        <div class="g-container">
+            <div class="m-login">
+                <h1 class="m-ttl">ログイン</h1>
+                <form class="m-form" id="loginForm">
+                    <div class="m-form__group">
+                        <label for="email">メールアドレス</label>
+                        <input type="email" name="email" placeholder="メールアドレスを入力してください" required id="email">
+                    </div>
+                    <div class="m-form__group">
+                        <label for="password">パスワード</label>
+                        <input type="text" name="password" placeholder="パスワードを入力してください" required id="password">
+                    </div>
+                    <div class="m-btn">
+                        <input type="submit" value="ログインする" class="m-btn__btn">
+                    </div>
+                </form>
+                <div class="m-btn">
+                    <a href="/register.html" class="m-btn__btn">新規登録</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer id="footer"></footer>
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

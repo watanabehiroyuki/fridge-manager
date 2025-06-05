@@ -12,7 +12,7 @@ if (form) {
 
 
     try {
-      const res = await fetch('http://localhost:8080/api/register', {
+      const res = await fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -31,10 +31,16 @@ if (form) {
         throw new Error(msg);
       }
 
-      location.href = 'register-sucess.html';
+
+      document.getElementById('registerSuccess').classList.add('is-active');
+      document.getElementById('registerDefault').classList.add('is-hidden');
+      
     } catch (err) {
-      document.getElementById('registerFalse').classList.add('is-active');
-      document.getElementById('registerFalse').textContent = err.message;
+      const el = document.getElementById('registerFalse');
+      if (el) {
+        el.classList.add('is-active');
+        el.textContent = err.message;
+      }
     }
   });
 }

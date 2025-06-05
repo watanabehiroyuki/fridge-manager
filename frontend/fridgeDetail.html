@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <script type="module" src="/src/js/include/head.js"></script>
+</head>
+
+<body>
+    <header id="header"></header>
+    <main>
+        <div class="g-container">
+            <div class="m-fridge-detail">
+                <h1 class="m-ttl">冷蔵庫の中身</h1>
+                <div class="m-fridge-detail-table">
+                    <div class="m-fridge-detail-table__row">
+                        <p class="m-fridge-detail-table__row-item">食材名</p>
+                        <p class="m-fridge-detail-table__row-item">カテゴリー</p>
+                        <p class="m-fridge-detail-table__row-item">期限</p>
+                        <p class="m-fridge-detail-table__row-item">個数</p>
+                    </div>
+                    <div class="m-fridge-detail-table__row" id="fridgeItemsAdd">
+                        <div class="m-fridge-detail__add-btn"><button id="fridgeItemsAddTriger">+</button></div>
+                    </div>
+                    <div id="fridgeItemsList">
+                        <!-- 食材のリストがここに挿入されます -->
+                    </div>
+                </div>
+                <div class="m-btn">
+                    <button type="button" class="m-btn__btn" id="fridgeItemsRemoveSum">一括削除</button>
+                </div>
+            </div>
+            <template id="fridgeItemFormTemplate">
+                <form class="m-fridge-detail-form">
+                    <input type="checkbox" name="fridgeItemCheck" value="">
+                    <input type="text" name="fridgeItemName" placeholder="食材名" required />
+                    <select name="fridgeItemCategory" required>
+                        <option value="" disabled selected>カテゴリー</option>
+                        <option value="野菜・果物">野菜・果物</option>
+                        <option value="肉・魚">肉・魚</option>
+                        <option value="乳製品・大豆製品">乳製品・大豆製品</option>
+                        <option value="調味料・ソース">調味料・ソース</option>
+                        <option value="飲み物・デザート">飲み物・デザート</option>
+                        <option value="常備食・乾物系">常備食・乾物系</option>
+                        <option value="主食">主食</option>
+                        <option value="手作り・作り置き">手作り・作り置き</option>
+                        <option value="その他">その他</option>
+                    </select>
+                    <input type="date" name="fridgeItemExpirationDate">
+                    <input type="number" name="fridgeItemQuantity">
+                    <button class="m-fridge-detail__switch-btn" type="button"></button>
+                    <button class="m-fridge-detail-table__remove-btn" type="button" data-switch="remove">削除</button>
+                </form>
+            </template>
+        </div>
+    </main>
+    <footer id="footer"></footer>
+    <script type="module" src="/src/js/auth/checkLogin.js"></script>
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

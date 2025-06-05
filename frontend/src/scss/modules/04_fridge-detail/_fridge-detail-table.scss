@@ -1,0 +1,33 @@
+/* modules/04_fridge-detail/_fridge-detail-table.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-detail-table {
+  & {
+    &__row{
+      @extend %container;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  @include pc {
+    &__row-item{
+      padding: vw(10px, $pc);
+
+      &:nth-child(1){
+        width: vw(400px, $pc);
+      }
+      &:nth-child(2){
+        width: vw(350px, $pc);
+      }
+      &:nth-child(3){
+        width: vw(150px, $pc);
+      }
+      &:nth-child(4){
+        flex: 1;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,12 @@
+/* modules/04_fridge-detail/_fridge-detail.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-detail {
+  & {
+  }
+
+  @include pc {
+  }
+
+}

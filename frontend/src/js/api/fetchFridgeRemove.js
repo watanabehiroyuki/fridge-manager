@@ -1,0 +1,29 @@
+// -- api/fetchFridgeRemove.js
+
+// 新規追加ボタンをクリックしたときの処理
+async function fetchFridgeRemove(fridgeId) {
+    try {
+      const res = await fetch(`/api/fridges/${fridgeId}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        const msg =
+          errorData?.error ??
+          (res.status === 400 && '入力エラー') ??
+          '登録に失敗しました';
+        throw new Error(msg);
+      }
+
+      console.log('冷蔵庫 削除成功');
+      
+    } catch (err) {
+      console.log(err);
+    }
+
+};
+
+export { fetchFridgeRemove }
+
