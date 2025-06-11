@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <script type="module" src="/src/js/include/head.js"></script>
+    <link rel="stylesheet" href="/src/scss/style.scss">
+</head>
+
+<body>
+    <header id="header"></header>
+    <main>
+        <div class="g-container">
+            <div class="m-users-register">
+                <form class="m-users-register__form" id="usersSearchForm">
+                    <div class="m-users-form__inputarea">
+                        <label for="email">共有したいユーザーのメールアドレスを入力してください</label>
+                        <input type="email" name="userSearchEmail" placeholder="〇〇@examle.com" required id="email" />
+                    </div>
+                    <button type="submit" class="m-users-form__submit">検索</button>
+                </form>
+                <div id="usersSearchFalse"></div>
+                <div class="m-btn">
+                    <a href="/fridges.html" class="m-btn__btn">冷蔵庫一覧へ戻る</a>
+                </div>
+                <template id="userShareTemplate">
+                    <div class="m-users__share">
+                        <p class="m-users__share-name" data-text="userName"></p>
+                        <button type="button" class="m-users__share-btn" data-action="share">追加</button>
+                    </div>
+                </template>
+            </div>
+
+        </div>
+    </main>
+    <footer id="footer"></footer>
+    <script type="module" src="/src/js/main.js"></script>
+    
+</body>
+</html>

@@ -1,16 +1,15 @@
 // // -- render/renderFridgeItemsSummary.js
 
 import { createfridgeItemForm } from '../template/createFridgeItemForm.js';
+import { renderFridgeItemSortCategory } from './renderFridgeItemSort.js';
+import { renderFridgeItemSortLimit } from './renderFridgeItemSort.js';
 
 // ---- 冷蔵庫の中身一覧 表示
-// renderFridgeItemsSummary(render/renderFridgeItemsSummary.js)
 function renderFridgeItemSummary(fridgeItems) {
   const list = document.getElementById('fridgeItemsList');
   list.innerHTML = ''; // 初期化
 
-  if (!fridgeItems.length) {
-    return;
-  }
+  if (!fridgeItems.length) return;
 
   // 一覧レンダリング
   fridgeItems.forEach(fridgeItem => {
@@ -50,8 +49,10 @@ function renderFridgeItemSummary(fridgeItems) {
     quantityInput.value = fridgeItem.quantity ? fridgeItem.quantity : 1;
 
     list.appendChild(form);
-
   });
+
+  renderFridgeItemSortCategory();
+  renderFridgeItemSortLimit();
 }
 
 export { renderFridgeItemSummary };

@@ -54,7 +54,7 @@ function renderFridgeSummary(fridges) {
       });
     }
     const moreLink = li.querySelector('.m-fridges__users-more');
-    moreLink.href = `/usersRegister.html?fridgeId=${fridge.id}`;
+    moreLink.href = `/userShare.html?fridgeId=${fridge.id}`;
 
     // 冷蔵庫詳細画面へのリンク
     const link = li.querySelector('.m-fridges__more-link');
