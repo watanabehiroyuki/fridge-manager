@@ -1,0 +1,46 @@
+// -- api/fetchFridgeSummary.js
+
+import { renderFridgeSummary } from '../render/renderFridgeSummary.js';
+import { handleFridgeRemoveClick } from '../handlers/handleFridgeRemoveClick.js';
+import { handleFridgeRemoveSumClick } from '../handlers/handleFridgeRemoveSumClick.js';
+import { handleUserRemoveClick } from '../handlers/handleUserRemoveClick.js';
+
+// 冷蔵庫一覧を取得
+async function fetchFridgeSummary() {
+
+  console.log('[描画] fetchFridgeSummary 実行');
+
+  if (window.location.pathname !== '/fridges.html') {
+    // ここが一覧画面じゃなければ何もしない
+    console.log('冷蔵庫一覧取得不要');
+    return;
+  }
+  
+  try {
+    const res = await fetch('/api/fridges/with-details', {
+      credentials: 'include',
+    });
+  
+    if (!res.ok) {
+      throw new Error(`取得失敗: ステータス ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    // 確認用ログ
+    console.log("冷蔵庫一覧：", data);
+
+    renderFridgeSummary(data);
+    handleFridgeRemoveClick();
+    handleFridgeRemoveSumClick();
+    handleUserRemoveClick();
+
+    console.log('[描画] fetchFridgeSummary 完了');
+    
+  } catch (err) {
+    console.log(err.message); 
+  }
+};
+fetchFridgeSummary();
+
+export { fetchFridgeSummary }

@@ -1,0 +1,15 @@
+/* modules/00_common/_ttl.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-ttl {
+  & {
+    text-align: center;
+    font-weight: $bold;
+  }
+
+  @include pc {
+    margin: vw(50px, $pc) 0;
+  }
+
+}

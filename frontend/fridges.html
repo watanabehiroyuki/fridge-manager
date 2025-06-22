@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <script type="module" src="/src/js/include/head.js"></script>
+    <link rel="stylesheet" href="/src/scss/style.scss">
+</head>
+
+<body>
+    <header id="header"></header>
+    <main>
+        <div class="g-container">
+            <div class="m-fridge">
+                <h1 class="m-ttl">冷蔵庫一覧</h1>
+                <div>
+                    <button type="button" id="fridgeAddTriger">+</button>
+                    <div id="fridgeAddContainer"></div>
+                </div>
+                <div class="m-fridge__list" id="fridgeList">
+                </div>
+                <!-- template -->
+                <!-- 冷蔵庫欄 -->
+                <template id="fridgeBoxTemplate">
+                <li class="m-fridge__item">
+                    <input type="checkbox" value="" name="fridgeRemoveCheck" class="m-fridge__check">
+                    <p class="m-fridge__name"></p>
+                    <ul class="m-fridge__contents">
+                    </ul>
+                    <div class="m-fridge__users">
+                        <p class="m-fridge__users-label">ユーザー名：</p>
+                        <div class="m-fridge__users-list">
+                            <a href="" class="m-fridge__users-more">+</a>
+                        </div>
+                    </div>
+                    <a href="/fridgeDetail.html?fridgeId=1" class="m-fridge__more-link">→</a>
+                    <button type="button" class="m-fridge__remove-btn" value="">削除</button>
+                </li>
+                </template>
+                <!-- /冷蔵庫欄 -->
+                <!-- 冷蔵庫 登録フォーム -->
+                 <template id="fridgeAddFormTemplate">
+                    <form class="m-fridge-add-form">
+                        <div class="m-fridge-add-form__inputarea">
+                            <label for="fridgeName">冷蔵庫名</label>
+                            <input type="text" name="fridgeName" placeholder="冷蔵庫名を入力してください" id="fridgeName" required />
+                        </div>
+                        <button type="button" class="m-fridge-add-form__submit">追加</button>
+                    </form>
+                 </template>
+                <!-- / 冷蔵庫 登録フォーム -->
+                <!-- /template -->
+                 <button type="button" class="m-fridge__remove-sum" id="fridgeRemoveSumBtn">一括削除</button>
+            </div>
+        </div>
+    </main>
+    <footer id="footer"></footer>
+    <script type="module" src="/src/js/auth/checkLogin.js"></script>
+    <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

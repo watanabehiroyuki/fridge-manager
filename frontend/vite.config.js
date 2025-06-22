@@ -9,12 +9,20 @@ export default defineConfig({
     rollupOptions: {
       input: {
         register: resolve(__dirname, 'register.html'),
-        registerSucess: resolve(__dirname, 'register-sucess.html'),
         // login: 'public/login.html',
       },
     },
   },
   server: {
     port: 5173,        // 開発サーバーのポート（任意）
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false
+      }
+    }
   },
 });
+
+

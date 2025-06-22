@@ -1,0 +1,34 @@
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Color
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$palette: (
+  bk: (
+    base: #222,
+    bdr: #555,
+  ),
+  wt: (
+    base: #fff,
+    bg: #F2F2F2,
+  ),
+  gry: (
+    bg: #EDEDED,
+  ),
+  red: (
+    base: #CC0000,
+    thin: #FFEDED,
+  ),
+  blu: (
+    base: #557EC4,
+  ),
+  ochr: (
+    base: #97763A,
+    light: #F1B21A,
+  ),
+  grn: (
+    base: #317787,
+    light: #00CC92,
+  ),
+  org: (
+    base: #F66020,
+  )
+  ) !default;
