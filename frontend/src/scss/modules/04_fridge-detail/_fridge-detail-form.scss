@@ -4,14 +4,112 @@
 
 .m-fridge-detail-form {
   & {
-    // display: none;
-    
-    // &.is-active{
-    //   display: block;
-    // }
+    display: flex;
+    align-items: center;
+
+    &.is-hidden{
+      display: none;
+    }
+
+    &__remove-check{
+      @include checkbox(color(pink));
+    }
+
+    &__item{
+      @include input;
+
+      &.is-disabled{
+        pointer-events: none;
+        background-color: color(gry,thin);
+        border-color: color(gry);
+      }
+    }
+
+    button[data-switch="edit"]{
+      @include icon(color(ylw,thin), color(ylw), 30px, 30px);
+      &::after{
+        @include svg;
+        mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22199.994%22%20height%3D%22200%22%20viewBox%3D%220%200%20199.994%20200%22%3E%3Cpath%20d%3D%22M141.32%2C0%2C23.972%2C117.348l15.861%2C15.867L157.181%2C15.867Zm18.973%2C18.973L42.939%2C136.327l20.729%2C20.729L181.022%2C39.7Zm23.835%2C23.84L66.779%2C160.161l15.867%2C15.861L199.994%2C58.674ZM21.043%2C121.467%2C0%2C200l78.533-21.043Zm4.7%2C14.242%2C38.546%2C38.546L26.117%2C184.476l-10.6-10.6Z%22%2F%3E%3C%2Fsvg%3E');
+        background-color: color(ylw);
+      }
+    }
+
+    button[data-switch="add"],
+    button[data-switch="update"]{
+      @include icon(color(blu,thin), color(blu), 30px, 30px);
+      &::after{
+        @include svg;
+        mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22170.57%22%20viewBox%3D%220%200%20200%20170.57%22%3E%3Cpath%20d%3D%22M190.7%2C263.769a22.288%2C22.288%2C0%2C0%2C0-16.9%2C8.2L87.768%2C374.526%2C54.414%2C322.551A22.287%2C22.287%2C0%2C1%2C0%2C16.9%2C346.627l49.716%2C77.462a22.287%2C22.287%2C0%2C0%2C0%2C35.825%2C2.288l105.508-125.76A22.287%2C22.287%2C0%2C0%2C0%2C190.7%2C263.769Z%22%20transform%3D%22translate(-13.367%20-263.766)%22%2F%3E%3C%2Fsvg%3E');
+        background-color: color(blu);
+      }
+    }
+
+    button[data-switch="remove"]{
+      @include icon(color(pink,thin), color(pink), 30px, 30px);
+      &::after{
+        content: "×";
+      }
+    }
   }
 
   @include pc {
+    margin: vw(5px, $pc);
+    &__remove-check{
+      margin-right: vw(15px, $pc);
+    }
+
+    &__items{
+      width: vw(650px, $pc);
+      display: flex;
+      margin-right: vw(5px, $pc);
+    }
+
+    &__item{
+      &:nth-child(1){
+        width: vw(250px, $pc);
+      }
+      &:nth-child(2){
+        width: vw(180px, $pc);
+      }
+      &:nth-child(3){
+        width: vw(135px, $pc);
+      }
+      &:nth-child(4){
+        flex: 1;
+      }
+    }
+
+    button[data-switch="add"],
+    button[data-switch="edit"],
+    button[data-switch="update"],
+    button[data-switch="remove"]{
+      margin: vw(2.5px, $pc);
+      &::after{
+        width: vw(15px, $pc);
+        height: vw(15px, $pc);
+        font-size: vw(15px, $pc);
+      }
+    }
+
+    button[data-switch="add"],
+    button[data-switch="update"]{
+      &:hover{
+        background-color: color(blu);
+        &::after{
+          background-color: color(wt);
+        }
+      }
+    }
+
+    button[data-switch="edit"]{
+      &:hover{
+        background-color: color(ylw);
+        &::after{
+          background-color: color(ylw,thin);
+        }
+      }
+    }
+
   }
 
 }

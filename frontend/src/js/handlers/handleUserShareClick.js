@@ -4,7 +4,7 @@ import { handleUserSharePack } from './handleUserSharePack.js';
 
 function handleUserShareClick() {
 
-    const shareBoxes = document.querySelectorAll('.m-users__share');
+    const shareBoxes = document.querySelectorAll('.m-share-add');
     if (shareBoxes.length) {
         shareBoxes.forEach((shareBox) => {
             const shareBtn = shareBox.querySelector('button[data-action="share"]');

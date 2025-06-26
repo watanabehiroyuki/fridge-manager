@@ -1,6 +1,7 @@
 // -- handlers/handleFridgeItemRemoveSumPack.js
 
 import { fetchFridgeItemRemove } from '../api/fetchFridgeItemRemove.js';
+import { fetchFridgeItemSummary } from '../api/fetchFridgeItemSummary.js';
 
 // フォームの入力値を取得してAPIに送信する関数
 function handleFridgeItemRemoveSumPack() {

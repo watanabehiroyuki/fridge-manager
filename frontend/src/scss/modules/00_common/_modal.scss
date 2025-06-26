@@ -1,0 +1,69 @@
+/* modules/00_common/_modal.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-modal{
+  &{
+    z-index: 10;
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100svh;
+    overflow: hidden;
+    &__bg{
+      width: 100%;
+      height: 100%;
+      background-color: rgba(color(bk), 0.5);
+    }
+  
+    &__cont{
+      background-color: color(blu,thin);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  
+    &__close{
+      position: absolute;
+      @include icon(color(wt), color(bk), 30px, 30px);
+      &::after{
+        content: "×";
+      }
+    }
+  
+    &__txt{
+      font-weight: $bold;
+      line-height: 1.5;
+      text-align: center;
+    }
+  }
+
+  @include pc {
+    &__bg{
+    }
+  
+    &__cont{
+      width: vw(350px, $pc);
+      height: auto;
+      border-radius: vw(10px, $pc);
+      padding: vw(50px, $pc) vw(25px, $pc);
+  
+    }
+  
+    &__close{
+      top: vw(-10px, $pc);
+      right:vw(-10px, $pc);
+      &::after{
+        font-size: vw(18px, $pc);
+      }
+    }
+  
+    &__txt{
+      font-size: vw(18px, $pc);
+
+    }
+  }
+
+}

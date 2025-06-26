@@ -7,21 +7,31 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    
     &__btn{
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 999px;
-      border: 1px solid color(bk);
-      background-color: color(bk);
+      border: 1px solid color(grn);
+      background-color: color(grn);
       color: color(wt);
       font-weight: $bold;
       letter-spacing: 0.1em;
       transition: background-color .2s, color .2s;
-  
+      font-weight: $bold;
       &:hover{
         background-color: color(wt);
-        color: color(bk);
+        color: color(grn);
+      }
+    }
+
+    &__btn--pink{
+      @extend .m-btn__btn;
+      border: 1px solid color(pink);
+      background-color: color(pink);
+      &:hover{
+        color: color(pink);
       }
     }
   }
@@ -29,10 +39,12 @@
   @include pc {
     gap: 0 vw(20px, $pc);
     margin-top: vw(50px, $pc);
+
     &__btn{
-      min-width: vw(100px, $pc);
+      min-width: vw(200px, $pc);
       min-height: vw(30px, $pc);
-      padding: vw(20px, $pc);
+      padding: vw(15px, $pc);
+      font-size: vw(15px, $pc);
     }
   }
 

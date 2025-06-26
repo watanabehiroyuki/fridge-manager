@@ -5,6 +5,8 @@ import { handleFridgeRegisterClick } from '../handlers/handleFridgeRegisterClick
 // 新規追加フォームをレンダリングする関数
 function renderFridgeAdd() {
   const form = createFridgeAddForm();
+  const submitbtn = form.querySelector('button');
+  submitbtn.classList.add('is-disabled');
   const container = document.getElementById('fridgeAddContainer');
   container.appendChild(form);
   handleFridgeRegisterClick(form);

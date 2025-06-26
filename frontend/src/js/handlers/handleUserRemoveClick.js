@@ -4,7 +4,7 @@ import { handleUserRemovePack } from './handleUserRemovePack.js';
 
 // ユーザーラベルの×アイコンを押した時の処理
 async function handleUserRemoveClick() {
-  const fridges = document.querySelectorAll('.m-fridges__item');
+  const fridges = document.querySelectorAll('.m-fridge__box');
   if (fridges.length) {
     fridges.forEach(fridge => {
       const userRemoves = fridge.querySelectorAll('button[data-user="remove"]');

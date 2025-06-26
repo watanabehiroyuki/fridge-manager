@@ -1,0 +1,38 @@
+/* modules/03_share/share-add.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-share-add {
+    & {
+        display: flex;
+        align-items: center;
+
+        &__username{
+            font-weight: $bold;
+        }
+
+        &__share-btn{
+            border: 2px solid color(grn);
+            font-weight: $bold;
+            color: color(grn);
+            background-color: color(wt);
+        }
+    }
+  
+    @include pc {
+      margin: vw(25px, $pc) auto;
+      gap: 0 vw(10px, $pc);
+
+      &__share-btn{
+        border-radius: vw(5px, $pc);
+        padding: vw(5px, $pc);
+        font-size: vw(15px, $pc);
+        &:hover{
+            color: color(wt);
+            background-color: color(grn);
+        }
+    }
+  
+    }
+  
+  }

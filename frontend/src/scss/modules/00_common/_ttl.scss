@@ -5,11 +5,13 @@
 .m-ttl {
   & {
     text-align: center;
-    font-weight: $bold;
+    font-weight: $black;
+    color: color(bk);
+    letter-spacing: 0.1em;
   }
 
   @include pc {
     margin: vw(50px, $pc) 0;
+    font-size: vw(30px, $pc);
   }
-
 }

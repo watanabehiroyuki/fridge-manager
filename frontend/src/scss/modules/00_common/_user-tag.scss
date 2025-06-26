@@ -1,0 +1,46 @@
+/* modules/00_common/_user-tag.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-user-tag {
+  & {
+    background-color: color(blu,thin);
+    display: flex;
+    align-items: center;
+
+    &__username{
+      font-weight: $bold;
+    }
+
+    &__remove-btn{
+      background-color: color(wt);
+      border-radius: 50%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      @include icon(color(wt), color(bk), 35px, 35px);
+      &::after{
+        content: "×";
+      }
+    }
+  }
+
+  @include pc {
+    border-radius: vw(5px, $pc);
+    padding: vw(5px, $pc);
+
+    &__username{
+      font-size: vw(15px, $pc);
+    }
+
+    &__remove-btn{
+      width: vw(20px, $pc);
+      height: vw(20px, $pc);
+      margin-left: vw(5px, $pc);
+      &::after{
+        font-size: vw(15px, $pc);
+      }
+    }
+  }
+
+}

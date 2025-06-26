@@ -1,7 +1,6 @@
 // -- handlers/handleFridgeItemAddClick.js
 
 import { renderFridgeItemAdd } from '../render/renderFridgeItemAdd.js';
-import { handleFridgeItemRegisterClick} from './handleFridgeItemRegisterClick.js';
 
 // 新規追加ボタンをクリックしたときの処理
 function handleFridgeItemAddClick() {
@@ -10,7 +9,6 @@ function handleFridgeItemAddClick() {
       triger.addEventListener('click', (e) => {
         e.preventDefault();
         renderFridgeItemAdd();
-        handleFridgeItemRegisterClick();
       });
     } 
   };

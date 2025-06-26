@@ -5,7 +5,7 @@ function createUserShareBox() {
     const clone = template.content.cloneNode(true);
     const wrapper = document.createElement('div');
     wrapper.appendChild(clone);
-    const box = wrapper.querySelector('.m-users__share');
+    const box = wrapper.querySelector('.m-share-add');
     return box;
   }
   

@@ -66,6 +66,14 @@ svg {
   height: auto;
 }
 
+button{
+  border: none;
+}
+
+ul,ol{
+  list-style: none;
+}
+
 // input[type="text"],
 // input[type="email"],
 // input[type="url"],
@@ -106,6 +114,13 @@ button {
   outline: none;
 }
 
+input[type="checkbox"] {
+  border-radius: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
 [data-hidden] {
   @include hidden;
 }
@@ -128,6 +143,7 @@ a {
 ul,ol{
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 @include pc {

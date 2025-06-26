@@ -12,27 +12,29 @@
         <div class="g-container">
             <div class="m-fridge">
                 <h1 class="m-ttl">冷蔵庫一覧</h1>
-                <div>
-                    <button type="button" id="fridgeAddTriger">+</button>
-                    <div id="fridgeAddContainer"></div>
+                <div class="m-fridge__add">
+                    <div id="fridgeAddContainer" class="m-fridge__add-show"></div>
+                    <button type="button" class="m-fridge__add-btn" id="fridgeAddTriger">追加</button>
                 </div>
-                <div class="m-fridge__list" id="fridgeList">
-                </div>
+                <ul class="m-fridge__list" id="fridgeList">
+                </ul>
                 <!-- template -->
                 <!-- 冷蔵庫欄 -->
                 <template id="fridgeBoxTemplate">
-                <li class="m-fridge__item">
+                <li class="m-fridge__box">
                     <input type="checkbox" value="" name="fridgeRemoveCheck" class="m-fridge__check">
-                    <p class="m-fridge__name"></p>
-                    <ul class="m-fridge__contents">
-                    </ul>
-                    <div class="m-fridge__users">
-                        <p class="m-fridge__users-label">ユーザー名：</p>
-                        <div class="m-fridge__users-list">
-                            <a href="" class="m-fridge__users-more">+</a>
+                    <div class="m-fridge__box-inner">
+                        <p class="m-fridge__name"></p>
+                        <ul class="m-fridge__contents">
+                        </ul>
+                        <div class="m-fridge__users">
+                            <p class="m-fridge__users-label">ユーザー名：</p>
+                            <div class="m-fridge__users-list">
+                                <a href="" class="m-fridge__users-more">追加画面へ</a>
+                            </div>
                         </div>
                     </div>
-                    <a href="/fridgeDetail.html?fridgeId=1" class="m-fridge__more-link">→</a>
+                    <a href="/fridgeDetail.html?fridgeId=1" class="m-fridge__more-link">詳細へ</a>
                     <button type="button" class="m-fridge__remove-btn" value="">削除</button>
                 </li>
                 </template>
@@ -44,12 +46,15 @@
                             <label for="fridgeName">冷蔵庫名</label>
                             <input type="text" name="fridgeName" placeholder="冷蔵庫名を入力してください" id="fridgeName" required />
                         </div>
-                        <button type="button" class="m-fridge-add-form__submit">追加</button>
+                        <button type="button" class="m-fridge-add-form__submit">登録</button>
                     </form>
                  </template>
                 <!-- / 冷蔵庫 登録フォーム -->
                 <!-- /template -->
-                 <button type="button" class="m-fridge__remove-sum" id="fridgeRemoveSumBtn">一括削除</button>
+                 <div class="m-btn">
+                    <button type="button" class="m-btn__btn--pink" id="fridgeRemoveSumBtn">一括削除</button>
+                 </div>
+                 
             </div>
         </div>
     </main>

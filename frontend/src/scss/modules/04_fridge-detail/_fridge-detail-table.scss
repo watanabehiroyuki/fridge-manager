@@ -4,28 +4,71 @@
 
 .m-fridge-detail-table {
   & {
-    &__row{
-      @extend %container;
+    @extend %container;
+
+    &__head{
       display: flex;
       align-items: center;
+
+      h3{
+        background-color: color(grn);
+        color: color(wt);
+        font-weight: $bold;
+        border-right: 1px solid color(wt);
+        box-sizing: border-box;
+        &:last-child{
+          border-right:none;
+        }
+      }
+    }
+
+    &__add-btn{
+      @include icon(color(grn), color(grn,thin), 30px, 30px);
+      &::after{
+        content: "＋";
+      }
     }
   }
 
   @include pc {
-    &__row-item{
-      padding: vw(10px, $pc);
+    margin-top: vw(60px, $pc);
 
-      &:nth-child(1){
-        width: vw(400px, $pc);
+    &__head{
+      margin-left: vw(30px, $pc);
+      width: vw(650px, $pc);
+      h3{
+        padding: vw(10px, $pc);
+        font-size: vw(15px, $pc);
+
+        &:first-child{
+          border-top-left-radius: vw(10px, $pc);
+        }
+        &:last-child{
+          border-top-right-radius: vw(10px, $pc);
+        }
+        &:nth-child(1){
+          width: vw(250px, $pc);
+        }
+        &:nth-child(2){
+          width: vw(180px, $pc);
+        }
+        &:nth-child(3){
+          width: vw(135px, $pc);
+        }
+        &:nth-child(4){
+          flex: 1;
+        }
       }
-      &:nth-child(2){
-        width: vw(350px, $pc);
-      }
-      &:nth-child(3){
-        width: vw(150px, $pc);
-      }
-      &:nth-child(4){
-        flex: 1;
+    }
+
+    &__add{
+      padding: vw(10px, $pc) 0;
+      margin-left: vw(30px, $pc);
+    }
+
+    &__add-btn{
+      &::after{
+        font-size: vw(15px, $pc);
       }
     }
   }

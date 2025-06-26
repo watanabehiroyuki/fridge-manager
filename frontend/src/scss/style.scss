@@ -57,12 +57,12 @@
 // ==================================================
 // _Status
 // ==================================================
-// @use "status/is";
+@use "status/is";
 
 // ==================================================
 // _Global
 // ==================================================
-// @use "global/header" as g-header;
+@use "global/footer" as g-footer;
 
 // ...以下、必要に応じて増設
 
@@ -73,17 +73,26 @@
 @use "modules/00_common/btn" as m-btn;
 @use "modules/00_common/ttl" as m-ttl;
 @use "modules/00_common/form" as m-form;
+@use "modules/00_common/modal" as m-modal;
+@use "modules/00_common/user-tag" as m-user-tag;
+
 
 // 01：ユーザー新規登録画面
 @use "modules/01_register/register" as m-register;
 
 // 02：冷蔵庫一覧画面
+@use "modules/02_fridge/fridge" as m-fridge;
+@use "modules/02_fridge/fridge-add-form" as m-fridge-add-form;
 
 // 03：冷蔵庫共有画面
+@use "modules/03_share/share" as m-share;
+@use "modules/03_share/share-search" as m-share-search;
+@use "modules/03_share/share-add" as m-share-add;
 
 // 04：冷蔵庫詳細画面
 @use "modules/04_fridge-detail/fridge-detail" as m-fridge-detail;
 @use "modules/04_fridge-detail/fridge-detail-form" as m-fridge-detail-form;
+@use "modules/04_fridge-detail/fridge-detail-sort" as m-fridge-detail-sort;
 @use "modules/04_fridge-detail/fridge-detail-table" as m-fridge-detail-table;
 
 // ...以下、必要に応じて増設

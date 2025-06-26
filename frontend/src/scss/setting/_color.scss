@@ -3,32 +3,30 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $palette: (
   bk: (
-    base: #222,
-    bdr: #555,
+    base: #000,
   ),
   wt: (
     base: #fff,
-    bg: #F2F2F2,
   ),
   gry: (
-    bg: #EDEDED,
-  ),
-  red: (
-    base: #CC0000,
-    thin: #FFEDED,
-  ),
-  blu: (
-    base: #557EC4,
-  ),
-  ochr: (
-    base: #97763A,
-    light: #F1B21A,
+    base: #ccc,
+    thin: #eee,
   ),
   grn: (
-    base: #317787,
-    light: #00CC92,
+    base: #0b9b8a,
+    thin: #97E8DE,
+    ylw: #65AE0C,
   ),
-  org: (
-    base: #F66020,
+  pink: (
+    base: #f596a1,
+    thin: #fadeeb,
+  ),
+  blu: (
+    base: #5DABE6,
+    thin: #c4e1f6,
+  ),
+  ylw: (
+    base: #f9c975,
+    thin: #FDE6BF,
   )
   ) !default;

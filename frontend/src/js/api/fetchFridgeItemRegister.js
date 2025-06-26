@@ -1,9 +1,9 @@
 // -- api/fetchFridgeItemRegister.js
 
-import { fetchFridgeItemSummary } from './fetchFridgeItemSummary.js';
+import { renderFridgeItemAddReset } from '../render/renderFridgeItemAddReset.js';
 
 // APIへPOSTリクエストを送信して冷蔵庫アイテムを登録する関数
-async function fetchFridgeItemRegister(name, category, expirationDate, quantity) {
+async function fetchFridgeItemRegister(name, category, expirationDate, quantity, registerForm) {
 
       // URLからfridgeIdを取得
       const urlParams = new URLSearchParams(window.location.search);
@@ -32,7 +32,7 @@ async function fetchFridgeItemRegister(name, category, expirationDate, quantity)
       // ログ出力（確認用）
       console.log('食材の追加に成功');
 
-      fetchFridgeItemSummary(); // 一覧の再取得/再描画
+      renderFridgeItemAddReset(registerForm);
       
     } catch (err) {
         console.error('エラー:', err);

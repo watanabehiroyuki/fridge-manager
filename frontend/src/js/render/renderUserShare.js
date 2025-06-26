@@ -1,7 +1,26 @@
 // -- render/renderUserShare.js
 
+import { createModal } from '../template/createModal.js';
+
+function renderShareFridge() {
+    if (window.location.pathname !== '/userShare.html') return;
+
+    const nameBox = document.getElementById('txtShareFridgeName');
+    if (!nameBox) return;
+
+    // URLからfridgeNameを取得
+    const urlParams = new URLSearchParams(window.location.search);
+    const fridgeName = urlParams.get('fridgeName');
+    
+    nameBox.textContent = fridgeName;
+}
+renderShareFridge();
+
 function renderUserShare(shareBox,email) {
-    console.log(email , 'に共有しました');
+    const modal = createModal();
+    shareBox.after(modal);
+    const txtBox = modal.querySelector('p[data-txt="result"]');
+    txtBox.textContent = `${email} に共有しました`;
     shareBox.remove();
 };
 

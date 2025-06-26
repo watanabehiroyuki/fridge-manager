@@ -4,6 +4,7 @@
 
 .m-form {
   & {
+    @extend %container;
 
     &__group{
       display: flex;
@@ -12,14 +13,12 @@
         font-weight: $bold;
       }
       input{
-        border: 1px solid color(bk,bdr);
+        @include input;
       }
     }
   }
 
   @include pc {
-    max-width: vw(750px, $pc);
-    margin: 0 auto;
     
     &__group{
       &:not(:last-child){
@@ -27,14 +26,11 @@
       }
 
       label{
-        font-size: vw(20px, $pc);
+        font-size: vw(15px, $pc);
         width: vw(220px, $pc);
       }
       input{
-        font-size: vw(20px, $pc);
         flex: 1;
-        border-radius: vw(5px, $pc);
-        padding: vw(10px, $pc);
       }
     }
   }

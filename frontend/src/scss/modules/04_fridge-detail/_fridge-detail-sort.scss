@@ -1,0 +1,43 @@
+/* modules/04_fridge-detail/_fridge-detail-sort.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-detail-sort {
+  & {
+    @extend %container;
+    display: flex;
+    flex-wrap: wrap;
+
+    &__ttl{
+      font-weight: $bold;
+      width: 100%;
+    }
+
+    &__item{
+      label{
+        font-weight: $bold;
+      }
+
+      input[type="checkbox"]{
+        @include checkbox(color(bk));
+      }
+    }
+
+  }
+
+  @include pc {
+    gap: vw(25px, $pc);
+    margin-top: vw(45px, $pc);
+
+    &__ttl{
+      font-size: vw(15px, $pc);
+    }
+
+    &__item{
+      label{
+        font-size: vw(15px, $pc);
+      }
+    }
+  }
+
+}

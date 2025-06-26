@@ -10,22 +10,28 @@
     <header id="header"></header>
     <main>
         <div class="g-container">
-            <div class="m-users-register">
-                <form class="m-users-register__form" id="usersSearchForm">
-                    <div class="m-users-form__inputarea">
-                        <label for="email">共有したいユーザーのメールアドレスを入力してください</label>
-                        <input type="email" name="userSearchEmail" placeholder="〇〇@examle.com" required id="email" />
-                    </div>
-                    <button type="submit" class="m-users-form__submit">検索</button>
+            <div class="m-share">
+                <h1 class="m-share__ttl"><strong id="txtShareFridgeName" class="is-marker"></strong>を共有するユーザーのメールアドレスを検索してください</h1>
+                <form class="m-share-search__form" id="usersSearchForm">
+                    <input type="email" name="userSearchEmail" class="m-share-search__input" placeholder="〇〇@examle.com" required />
+                    <button type="submit" class="m-share-search__submit-btn">検索</button>
                 </form>
-                <div id="usersSearchFalse"></div>
                 <div class="m-btn">
                     <a href="/fridges.html" class="m-btn__btn">冷蔵庫一覧へ戻る</a>
                 </div>
                 <template id="userShareTemplate">
-                    <div class="m-users__share">
-                        <p class="m-users__share-name" data-text="userName"></p>
-                        <button type="button" class="m-users__share-btn" data-action="share">追加</button>
+                    <div class="m-share-add">
+                        <p class="m-user-tag"><span class="m-user-tag__username" data-text="userName"></span></p>
+                        <button type="button" class="m-share-add__share-btn" data-action="share">共有</button>
+                    </div>
+                </template>
+                <template id="modalTemplate">
+                    <div class="m-modal">
+                        <div class="m-modal__bg"></div>
+                        <div class="m-modal__cont">
+                            <button class="m-modal__close" data-action="close">閉じる</button>
+                            <p class="m-modal__txt" data-txt="result"></p>
+                        </div>
                     </div>
                 </template>
             </div>

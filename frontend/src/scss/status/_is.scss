@@ -1,0 +1,16 @@
+/* setting/_base.scss
+-------------------------------------------------- */
+@use "../setting/import" as *;
+
+.is-marker{
+  &{
+    background-color: color(ylw);
+    font-weight: $black;
+  }
+
+  @include pc {
+    border-radius: vw(5px, $pc);
+    margin: 0 vw(5px, $pc);
+    padding: vw(2.5px, $pc) vw(5px, $pc);
+  }
+}

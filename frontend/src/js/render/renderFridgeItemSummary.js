@@ -4,6 +4,21 @@ import { createfridgeItemForm } from '../template/createFridgeItemForm.js';
 import { renderFridgeItemSortCategory } from './renderFridgeItemSort.js';
 import { renderFridgeItemSortLimit } from './renderFridgeItemSort.js';
 
+
+function renderFridgeName() {
+  if (window.location.pathname !== '/fridgeDetail.html') return;
+
+  const nameBox = document.getElementById('txtFridgeName');
+  if (!nameBox) return;
+
+  // URLからfridgeNameを取得
+  const urlParams = new URLSearchParams(window.location.search);
+  const fridgeName = urlParams.get('fridgeName');
+  
+  nameBox.textContent = fridgeName;
+}
+renderFridgeName();
+
 // ---- 冷蔵庫の中身一覧 表示
 function renderFridgeItemSummary(fridgeItems) {
   const list = document.getElementById('fridgeItemsList');
@@ -28,8 +43,7 @@ function renderFridgeItemSummary(fridgeItems) {
     // 入力項目を無効化
     const formItems = form.querySelectorAll('input:not([type="checkbox"]), select');
     formItems.forEach(item => {
-      item.classList.add('m-fridge-detail-table__row-item');
-      item.disabled = true;
+      item.classList.add('is-disabled');
     });
     
     // 食材名

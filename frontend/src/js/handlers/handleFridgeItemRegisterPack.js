@@ -12,7 +12,7 @@ function handleFridgeItemRegisterPack(registerForm) {
     // ログ出力（確認用）
     console.log('ユーザーが入力した食材追加データを取得:', JSON.stringify({ name, category, expirationDate, quantity }));
 
-    fetchFridgeItemRegister(name, category, expirationDate, quantity);
+    fetchFridgeItemRegister(name, category, expirationDate, quantity, registerForm);
 };
 
 export { handleFridgeItemRegisterPack };

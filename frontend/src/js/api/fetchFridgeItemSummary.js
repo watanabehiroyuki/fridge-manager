@@ -1,4 +1,4 @@
-// fetchFridgeItemsSummaryy(api/fetchFridgeSummary.js)
+// api/fetchFridgeItemSummary.js
 
 import { renderFridgeItemSummary } from '../render/renderFridgeItemSummary.js';
 import { handleFridgeItemEditClick } from '../handlers/handleFridgeItemEditClick.js';
@@ -35,6 +35,8 @@ async function fetchFridgeItemSummary() {
     handleFridgeItemEditClick();
     handleFridgeItemRemoveClick();
     handleFridgeItemRemoveSumClick();
+
+    console.log('[描画] fetchFridgeItemSummary 完了');
 
   } catch (err) {
     console.log(err.message); 

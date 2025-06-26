@@ -1,0 +1,23 @@
+/* setting/_base.scss
+-------------------------------------------------- */
+@use "../setting/import" as *;
+
+.g-footer{
+  &{
+    background-color: color(blu,thin);
+  }
+
+  @include pc {
+    margin-top: vw(50px, $pc);
+    padding: 1px 0 vw(50px, $pc);
+
+    &__btns{
+      margin-top: 0;
+
+    }
+
+    &__btn{
+      
+    }
+  }
+}

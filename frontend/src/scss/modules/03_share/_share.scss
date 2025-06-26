@@ -1,0 +1,23 @@
+/* modules/03_share/share.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-share {
+  & {
+    @extend %container;
+
+    &__ttl {
+      font-weight: $bold;
+    }
+  }
+
+  @include pc {
+    margin: vw(50px, $pc) auto;
+
+    &__ttl {
+      font-size: vw(20px, $pc);
+      margin-bottom: vw(15px, $pc);
+    }
+  }
+
+}

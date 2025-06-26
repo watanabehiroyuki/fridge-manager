@@ -1,0 +1,61 @@
+/* modules/02_fridge/_fridge-add-form.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-add-form {
+  & {
+    display: flex;
+    align-items: flex-end;
+    &__inputarea{
+      flex: 1;
+      label{
+        font-weight: $bold;
+        display: block;
+      }
+      input{
+        @include input;
+      }
+    }
+
+    &__submit{
+      @include icon(color(blu,thin), color(blu), 45px, 45px);
+      &::after{
+        @include svg;
+        mask-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22170.57%22%20viewBox%3D%220%200%20200%20170.57%22%3E%3Cpath%20d%3D%22M190.7%2C263.769a22.288%2C22.288%2C0%2C0%2C0-16.9%2C8.2L87.768%2C374.526%2C54.414%2C322.551A22.287%2C22.287%2C0%2C1%2C0%2C16.9%2C346.627l49.716%2C77.462a22.287%2C22.287%2C0%2C0%2C0%2C35.825%2C2.288l105.508-125.76A22.287%2C22.287%2C0%2C0%2C0%2C190.7%2C263.769Z%22%20transform%3D%22translate(-13.367%20-263.766)%22%2F%3E%3C%2Fsvg%3E');
+        background-color: color(blu);
+      }
+
+      &.is-disabled{
+        pointer-events: none;
+        background-color: color(gry);
+        &::after{
+          background-color: color(wt);
+        }
+      }
+    }
+
+  }
+
+  @include pc {
+    gap: 0 vw(20px, $pc);
+    &__inputarea{
+      label{
+        font-size: vw(20px, $pc);
+        margin-bottom: vw(10px, $pc);
+      }
+    }
+
+    &__submit{
+      &:hover{
+        background-color: color(blu);
+        &::after{
+          background-color: color(wt);
+        }
+      }
+      &::after{
+        width: vw(20px, $pc);
+        height: vw(20px, $pc);
+      }
+    }
+  }
+}
