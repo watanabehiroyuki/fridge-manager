@@ -8,8 +8,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import com.example.fridgemanager.service.CustomUserDetailsService;
+import javax.servlet.http.HttpServletResponse;
+
 
 // import org.springframework.web.cors.CorsConfiguration;
 // import org.springframework.web.cors.CorsConfigurationSource;
@@ -34,9 +36,12 @@ public class SecurityConfig {
                 .anyRequest().authenticated() // その他は認証が必要
             )
             .formLogin().disable() // ← これ重要！フォームログインは無効
-            .logout().logoutUrl("/api/logout") // ログアウトもAPIで
-            .permitAll()
-            .and()
+            .logout(logout -> logout
+            .logoutUrl("/api/logout") // ログアウトもAPIで
+            .logoutSuccessHandler((request, response, authentication) -> {
+                response.setStatus(HttpServletResponse.SC_OK); // リダイレクトなし
+            })
+            )
             .build();
     }
 
