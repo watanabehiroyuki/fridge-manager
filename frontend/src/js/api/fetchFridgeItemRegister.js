@@ -1,6 +1,7 @@
 // -- api/fetchFridgeItemRegister.js
 
 import { renderFridgeItemAddReset } from '../render/renderFridgeItemAddReset.js';
+import { renderFetchError } from '../render/renderFetchError.js';
 
 // APIへPOSTリクエストを送信して冷蔵庫アイテムを登録する関数
 async function fetchFridgeItemRegister(name, category, expirationDate, quantity, registerForm) {
@@ -35,7 +36,7 @@ async function fetchFridgeItemRegister(name, category, expirationDate, quantity,
       renderFridgeItemAddReset(registerForm);
       
     } catch (err) {
-        console.error('エラー:', err);
+      renderFetchError(err);
     }
   };
 

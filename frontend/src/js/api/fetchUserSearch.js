@@ -1,6 +1,7 @@
 // -- api/fetchUserSearch.js
 
 import { renderUserSearch } from '../render/renderUserSearch.js'
+import { renderFetchError } from '../render/renderFetchError.js';
 
 async function fetchUserSearch(email) {
   console.log(email);
@@ -16,7 +17,7 @@ async function fetchUserSearch(email) {
       renderUserSearch(userEmail);
       
     } catch (err) {
-      console.error(err);
+      renderFetchError(err);
     }
 };
 

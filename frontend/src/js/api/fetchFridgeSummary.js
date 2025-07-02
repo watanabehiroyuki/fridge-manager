@@ -4,6 +4,7 @@ import { renderFridgeSummary } from '../render/renderFridgeSummary.js';
 import { handleFridgeRemoveClick } from '../handlers/handleFridgeRemoveClick.js';
 import { handleFridgeRemoveSumClick } from '../handlers/handleFridgeRemoveSumClick.js';
 import { handleUserRemoveClick } from '../handlers/handleUserRemoveClick.js';
+import { renderFetchError } from '../render/renderFetchError.js';
 
 // 冷蔵庫一覧を取得
 async function fetchFridgeSummary() {
@@ -38,7 +39,7 @@ async function fetchFridgeSummary() {
     console.log('[描画] fetchFridgeSummary 完了');
     
   } catch (err) {
-    console.log(err.message); 
+    renderFetchError(err);
   }
 };
 fetchFridgeSummary();

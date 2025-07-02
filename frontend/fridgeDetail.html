@@ -83,6 +83,7 @@
             </div>
             <div class="m-btn">
                 <button type="button" class="m-btn__btn--pink" id="fridgeItemsRemoveSum">一括削除</button>
+                <a href="/fridges.html" class="m-btn__btn">冷蔵庫一覧へ戻る</a>
             </div>
             
             <!-- template -->
@@ -110,6 +111,17 @@
                     <button class="m-fridge-detail-table__remove-btn" type="button" data-switch="remove">削除</button>
                 </form>
             </template>
+            <!-- モーダル -->
+            <template id="modalTemplate">
+                <div class="m-modal">
+                    <div class="m-modal__bg"></div>
+                    <div class="m-modal__cont">
+                        <button class="m-modal__close" data-action="close">閉じる</button>
+                        <p class="m-modal__txt" data-txt="result"></p>
+                    </div>
+                </div>
+            </template>
+            <!-- /モーダル -->
             <!-- /template -->
         </div>
     </main>

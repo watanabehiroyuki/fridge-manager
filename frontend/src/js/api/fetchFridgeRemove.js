@@ -1,4 +1,5 @@
 // -- api/fetchFridgeRemove.js
+import { renderFetchError } from '../render/renderFetchError.js';
 
 // 新規追加ボタンをクリックしたときの処理
 async function fetchFridgeRemove(fridgeId) {
@@ -20,7 +21,7 @@ async function fetchFridgeRemove(fridgeId) {
       console.log('冷蔵庫 削除成功');
       
     } catch (err) {
-      console.log(err);
+      renderFetchError(err);
     }
 
 };

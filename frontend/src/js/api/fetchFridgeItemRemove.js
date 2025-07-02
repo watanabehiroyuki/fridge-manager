@@ -1,5 +1,7 @@
 // -- api/fetchFridgeItemRemove.js
 
+import { renderFetchError } from '../render/renderFetchError.js';
+
 // 冷蔵庫アイテムを削除するAPIリクエスト
 async function fetchFridgeItemRemove(itemId) {
 
@@ -26,7 +28,7 @@ async function fetchFridgeItemRemove(itemId) {
       console.log('食品の削除成功');
   
     } catch (err) {
-      console.error('エラー:', err);
+      renderFetchError(err);
     }
   };
 

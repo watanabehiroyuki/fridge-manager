@@ -1,6 +1,7 @@
 // // -- api/fetchUserLogin.js
 
 import { renderUserLogin } from '../render/renderUserLogin.js';
+import { renderFetchError } from '../render/renderFetchError.js';
 
 async function fetchUserLogin(email, password) {
 
@@ -19,7 +20,7 @@ async function fetchUserLogin(email, password) {
         renderUserLogin();
         
       } catch (err) {
-        console.log(err.message);
+        renderFetchError(err);
       }
 }
 

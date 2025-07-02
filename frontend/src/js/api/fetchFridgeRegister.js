@@ -2,6 +2,7 @@
 
 
 import { renderFridgeFormReset } from '../render/renderFridgeFormReset.js';
+import { renderFetchError } from '../render/renderFetchError.js';
 
 // 新規追加ボタンをクリックしたときの処理
 async function fetchFridgeRegister(name,form) {
@@ -28,7 +29,7 @@ async function fetchFridgeRegister(name,form) {
       await renderFridgeFormReset(form);
       
     } catch (err) {
-      console.log(err);
+      renderFetchError(err);
     }
 
 };

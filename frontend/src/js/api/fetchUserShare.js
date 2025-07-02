@@ -1,6 +1,7 @@
 // -- api/fetchUserShare.js
 
 import { renderUserShare } from '../render/renderUserShare.js'
+import { renderFetchError } from '../render/renderFetchError.js';
 
 async function fetchUserShare(shareBox,email) {
 
@@ -23,7 +24,7 @@ async function fetchUserShare(shareBox,email) {
       renderUserShare(shareBox,email);
       
     } catch (err) {
-      console.error(err);
+      renderFetchError(err);
     }
 };
 

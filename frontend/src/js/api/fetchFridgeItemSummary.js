@@ -4,6 +4,7 @@ import { renderFridgeItemSummary } from '../render/renderFridgeItemSummary.js';
 import { handleFridgeItemEditClick } from '../handlers/handleFridgeItemEditClick.js';
 import { handleFridgeItemRemoveClick } from '../handlers/handleFridgeItemRemoveClick.js';
 import { handleFridgeItemRemoveSumClick } from '../handlers/handleFridgeItemRemoveSumClick.js';
+import { renderFetchError } from '../render/renderFetchError.js';
 
 async function fetchFridgeItemSummary() {
   if (window.location.pathname !== '/fridgeDetail.html') {
@@ -39,7 +40,7 @@ async function fetchFridgeItemSummary() {
     console.log('[描画] fetchFridgeItemSummary 完了');
 
   } catch (err) {
-    console.log(err.message); 
+    renderFetchError(err);
   }
 };
 

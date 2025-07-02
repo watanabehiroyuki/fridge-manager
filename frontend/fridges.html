@@ -50,7 +50,17 @@
                     </form>
                  </template>
                 <!-- / 冷蔵庫 登録フォーム -->
-                <!-- /template -->
+                <!-- モーダル -->
+                <template id="modalTemplate">
+                    <div class="m-modal">
+                        <div class="m-modal__bg"></div>
+                        <div class="m-modal__cont">
+                            <button class="m-modal__close" data-action="close">閉じる</button>
+                            <p class="m-modal__txt" data-txt="result"></p>
+                        </div>
+                    </div>
+                </template>
+                <!-- /モーダル -->
                  <div class="m-btn">
                     <button type="button" class="m-btn__btn--pink" id="fridgeRemoveSumBtn">一括削除</button>
                  </div>

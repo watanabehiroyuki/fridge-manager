@@ -1,6 +1,7 @@
 // // -- api/fetchUserLogout.js
 
 import { renderUserLogout } from '../render/renderUserLogout.js';
+import { renderFetchError } from '../render/renderFetchError.js';
 
 async function fetchUserLogout() {
 
@@ -16,7 +17,7 @@ async function fetchUserLogout() {
         renderUserLogout();
         
       } catch (err) {
-        console.log(err.message);
+        renderFetchError(err);
       }
 }
 

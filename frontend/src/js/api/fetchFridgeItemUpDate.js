@@ -1,6 +1,7 @@
 // -- api/fetchFridgeItemUpDate.js)
 
 import { fetchFridgeItemSummary } from './fetchFridgeItemSummary.js';
+import { renderFetchError } from '../render/renderFetchError.js';
 
 // APIリクエストを送信して冷蔵庫アイテムを更新する関数
 async function fetchFridgeItemUpDate(itemId, name, category, expirationDate, quantity) {
@@ -32,7 +33,7 @@ async function fetchFridgeItemUpDate(itemId, name, category, expirationDate, qua
       fetchFridgeItemSummary();
   
     } catch (err) {
-      console.error('エラー:', err);
+      renderFetchError(err);
     }
   };
 

@@ -61,6 +61,8 @@ import './render/renderFridgeItemRegister.js';
 import './render/renderFridgeItemUpDate.js';
 import './render/renderFridgeItemRemove.js';
 import './render/renderFridgeItemSort.js';
+import './render/renderFetchError.js';
+
 // - template
 import './template/createModal.js';
 import './template/createUserShareBox.js';

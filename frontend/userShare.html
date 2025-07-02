@@ -19,24 +19,23 @@
                 <div class="m-btn">
                     <a href="/fridges.html" class="m-btn__btn">冷蔵庫一覧へ戻る</a>
                 </div>
-                <template id="userShareTemplate">
-                    <div class="m-share-add">
-                        <p class="m-user-tag"><span class="m-user-tag__username" data-text="userName"></span></p>
-                        <button type="button" class="m-share-add__share-btn" data-action="share">共有</button>
-                    </div>
-                </template>
-                <template id="modalTemplate">
-                    <div class="m-modal">
-                        <div class="m-modal__bg"></div>
-                        <div class="m-modal__cont">
-                            <button class="m-modal__close" data-action="close">閉じる</button>
-                            <p class="m-modal__txt" data-txt="result"></p>
-                        </div>
-                    </div>
-                </template>
             </div>
-
         </div>
+        <template id="userShareTemplate">
+            <div class="m-share-add">
+                <p class="m-user-tag"><span class="m-user-tag__username" data-text="userName"></span></p>
+                <button type="button" class="m-share-add__share-btn" data-action="share">共有</button>
+            </div>
+        </template>
+        <template id="modalTemplate">
+            <div class="m-modal">
+                <div class="m-modal__bg"></div>
+                <div class="m-modal__cont">
+                    <button class="m-modal__close" data-action="close">閉じる</button>
+                    <p class="m-modal__txt" data-txt="result"></p>
+                </div>
+            </div>
+        </template>
     </main>
     <footer id="footer"></footer>
     <script type="module" src="/src/js/main.js"></script>

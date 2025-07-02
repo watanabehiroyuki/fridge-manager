@@ -1,4 +1,5 @@
 // // -- api/fetchUserRemove.js
+import { renderFetchError } from '../render/renderFetchError.js';
 
 async function fetchUserRemove(fridgeId,userId) {
 
@@ -13,7 +14,7 @@ async function fetchUserRemove(fridgeId,userId) {
         console.log("[完了]ユーザー削除");
         
       } catch (err) {
-        console.log(err.message);
+        renderFetchError(err);
       }
 }
 

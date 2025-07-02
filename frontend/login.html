@@ -22,11 +22,22 @@
                     </div>
                     <div class="m-btn">
                         <input type="submit" value="ログインする" class="m-btn__btn">
-                        <!-- <a href="/register.html" class="m-btn__btn">新規登録</a> -->
+                        <a href="/register.html" class="m-btn__btn--pink">新規登録</a>
                     </div>
                 </form>
             </div>
         </div>
+        <!-- モーダル -->
+        <template id="modalTemplate">
+            <div class="m-modal">
+                <div class="m-modal__bg"></div>
+                <div class="m-modal__cont">
+                    <button class="m-modal__close" data-action="close">閉じる</button>
+                    <p class="m-modal__txt" data-txt="result"></p>
+                </div>
+            </div>
+        </template>
+        <!-- /モーダル -->
     </main>
     <script type="module" src="/src/js/main.js"></script>
 </body>
