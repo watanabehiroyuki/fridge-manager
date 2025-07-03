@@ -29,9 +29,10 @@
         font-size: vw(15px, $pc);
         width: vw(220px, $pc);
       }
-      input{
-        flex: 1;
-      }
+    }
+
+    &__input-wrap{
+      flex: 1;
     }
   }
 

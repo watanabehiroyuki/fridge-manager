@@ -1,4 +1,4 @@
-// -- render/renderFridgeItemAdd.js
+// -- render/renderFridgeAdd.js
 import { createFridgeAddForm } from '../template/createFridgeAddForm.js';
 import { handleFridgeRegisterClick } from '../handlers/handleFridgeRegisterClick.js';
 

@@ -70,6 +70,11 @@ import './template/createFridgeBox.js';
 import './template/createFridgeAddForm.js';
 import './template/createFridgeItemForm.js';
 
+// - valid
+import './valid/password.js';
+
+
+
 
 //  CSS
 import '../scss/style.scss';

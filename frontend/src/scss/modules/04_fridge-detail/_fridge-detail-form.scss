@@ -50,6 +50,16 @@
         content: "×";
       }
     }
+
+    button[data-switch="add"]{
+      &.is-disabled{
+        pointer-events: none;
+        background-color: color(gry);
+        &::after{
+          background-color: color(wt);
+        }
+      }
+    }
   }
 
   @include pc {

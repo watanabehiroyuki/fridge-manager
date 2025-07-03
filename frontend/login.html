@@ -14,11 +14,15 @@
                 <form class="m-form" id="userLoginForm">
                     <div class="m-form__group">
                         <label for="email">メールアドレス</label>
-                        <input type="email" name="email" placeholder="メールアドレスを入力してください" required id="email">
+                        <div class="m-form__input-wrap">
+                            <input type="email" name="email" placeholder="メールアドレスを入力してください" required id="email">
+                        </div>
                     </div>
                     <div class="m-form__group">
                         <label for="password">パスワード</label>
-                        <input type="text" name="password" placeholder="パスワードを入力してください" required id="password">
+                        <div class="m-form__input-wrap">
+                            <input type="text" name="password" placeholder="パスワードを入力してください" required id="password" class="">
+                        </div>
                     </div>
                     <div class="m-btn">
                         <input type="submit" value="ログインする" class="m-btn__btn">

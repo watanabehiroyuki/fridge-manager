@@ -2,8 +2,13 @@
 
 function renderFridgeRegisterBtnActive(registerForm,registerBtn){
   const input = registerForm.querySelector('input[name="fridgeName"]');
-  input.addEventListener('input', (e) => {
-    registerBtn.classList.remove('is-disabled');
+  input.addEventListener('change', (e) => {
+    const value = input.value;
+    if(value){
+      registerBtn.classList.remove('is-disabled');
+    } else {
+      registerBtn.classList.add('is-disabled');
+    }
   })
 }
 

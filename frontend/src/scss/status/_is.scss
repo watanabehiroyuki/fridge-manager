@@ -14,3 +14,20 @@
     padding: vw(2.5px, $pc) vw(5px, $pc);
   }
 }
+
+.is-validError{
+  &{
+    color: color(pink);
+    font-weight: $bold;
+  }
+
+  @include pc {
+    font-size: vw(14px, $pc);
+    margin-top: vw(7px, $pc);
+  }
+
+  @include sp {
+    font-size: vw(14px);
+    margin-top: vw(7px);
+  }
+}

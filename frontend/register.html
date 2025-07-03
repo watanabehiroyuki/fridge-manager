@@ -22,19 +22,27 @@
                     <form class="m-form" id="userRegisterForm">
                         <div class="m-form__group">
                             <label for="username">ユーザー名</label>
-                            <input type="text" name="username" placeholder="ユーザー名を入力してください" required id="username">
+                            <div class="m-form__input-wrap">
+                                <input type="text" name="username" placeholder="ユーザー名を入力してください" required id="username">
+                            </div>
                         </div>
                         <div class="m-form__group">
                             <label for="email">メールアドレス</label>
-                            <input type="email" name="email" placeholder="メールアドレスを入力してください" required id="email">
+                            <div class="m-form__input-wrap">
+                                <input type="email" name="email" placeholder="メールアドレスを入力してください" required id="email">
+                            </div>
                         </div>
                         <div class="m-form__group">
                             <label for="password">パスワード</label>
-                            <input type="text" name="password" placeholder="パスワードを入力してください" required id="password">
+                            <div class="m-form__input-wrap">
+                                <input type="text" name="password" placeholder="パスワードを入力してください" required id="password" class="js-valid-password">
+                            </div>
                         </div>
                         <div class="m-form__group">
                             <label for="confirmPassword">（確認用）パスワード</label>
-                            <input type="text" name="confirmPassword" required id="confirmPassword">
+                            <div class="m-form__input-wrap">
+                                <input type="text" name="confirmPassword" required id="confirmPassword" class="js-valid-password-confirm">
+                            </div>
                         </div>
                         <div class="m-btn">
                             <input type="submit" value="登録" class="m-btn__btn">

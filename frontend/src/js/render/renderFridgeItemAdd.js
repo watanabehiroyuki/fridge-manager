@@ -9,6 +9,7 @@ function renderFridgeItemAdd() {
     const addBtn = form.querySelector('button.m-fridge-detail-form__switch-btn');
     addBtn.textContent = '追加'; 
     addBtn.dataset.switch = 'add';
+    addBtn.classList.add('is-disabled');
     const removeBtn = form.querySelector('button[data-switch="remove"]');
     removeBtn.style.opacity = '0';
     const checkRemove = form.querySelector('[name="fridgeItemCheck"]');
