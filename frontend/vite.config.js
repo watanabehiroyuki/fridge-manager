@@ -9,7 +9,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         register: resolve(__dirname, 'register.html'),
-        // login: 'public/login.html',
+        login: resolve(__dirname, 'login.html'),
+        fridges: resolve(__dirname, 'fridges.html'),
+        fridgeDetail: resolve(__dirname, 'fridgeDetail.html'),
+        userShare: resolve(__dirname, 'userShare.html')
       },
     },
   },
