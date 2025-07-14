@@ -1,14 +1,11 @@
-# Java 17 を使うベースイメージ
-FROM eclipse-temurin:17-jdk
+# === ① ビルドステージ ===
+FROM maven:3-eclipse-temurin-11 AS build
+COPY ./ /home/app
+WORKDIR /home/app
+RUN mvn clean package -Dmaven.test.skip=true
 
-# 作業ディレクトリを作成
-WORKDIR /fridge-manager
-
-# Maven Wrapper を含む全ファイルをコピー
-COPY . .
-
-# Mavenでビルド
-RUN ./mvnw clean package -DskipTests
-
-# JARファイルの名前に合わせて調整する（以下は例）
-CMD ["java", "-jar", "target/fridge-manager-0.0.1-SNAPSHOT.jar"]
+# === ② 実行ステージ ===
+FROM eclipse-temurin:11-alpine
+COPY --from=build /home/app/target/fridge-manager-0.0.1-SNAPSHOT.jar /usr/local/lib/app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/app.jar"]

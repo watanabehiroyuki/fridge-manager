@@ -1,0 +1,6 @@
+frontend/
+node_modules/
+.dockerignore
+Dockerfile
+README.md
+*.log
