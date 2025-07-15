@@ -3,6 +3,7 @@ import { resolve } from 'path'
 
 export default defineConfig({
   root: '.',           // プロジェクトルート（必要なら変更）
+  base: './', 
   publicDir: 'public', // 静的ファイル用
   build: {
     outDir: 'dist',    // ビルド出力先
