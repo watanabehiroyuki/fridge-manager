@@ -8,7 +8,7 @@ async function includeHTML(selector, file, callback) {
   element.innerHTML = html;
   if (typeof callback === 'function') callback();
 }
-includeHTML('#header', '/public/partials/header.html');
-includeHTML('#footer', '/public/partials/footer.html', () => {
+includeHTML('#header', '/partials/header.html');
+includeHTML('#footer', '/partials/footer.html', () => {
   handleUserLogoutClick();
 });
