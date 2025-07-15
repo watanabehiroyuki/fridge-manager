@@ -1,6 +1,6 @@
 // -- handlers/handleFridgeItemEditClick.js
 import { renderFridgeItemEdit } from '../render/renderFridgeItemEdit.js';
-import { handleFridgeItemUpdateClick } from '../handlers/handleFridgeItemUpdateClick.js';
+import { handleFridgeItemUpdateClick } from '../handlers/handleFridgeItemUpDateClick.js';
 
 // 編集ボタンをクリックしたときの処理
 function handleFridgeItemEditClick() {
