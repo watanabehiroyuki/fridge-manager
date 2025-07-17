@@ -18,7 +18,7 @@ async function fetchFridgeSummary() {
   }
   
   try {
-    const res = await fetch('/api/fridges/with-details', {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/fridges/with-details`, {
       credentials: 'include',
     });
   

@@ -4,7 +4,7 @@ import { renderFetchError } from '../render/renderFetchError.js';
 // 新規追加ボタンをクリックしたときの処理
 async function fetchFridgeRemove(fridgeId) {
     try {
-      const res = await fetch(`/api/fridges/${fridgeId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/fridges/${fridgeId}`, {
         method: 'DELETE',
         credentials: 'include'
       });

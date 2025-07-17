@@ -10,7 +10,7 @@ async function fetchFridgeItemRemove(itemId) {
     const fridgeId = urlParams.get('fridgeId');
   
     try {
-      const res = await fetch(`/api/fridges/${fridgeId}/items/${itemId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/fridges/${fridgeId}/items/${itemId}`, {
         method: 'DELETE',
          credentials: 'include'
       });

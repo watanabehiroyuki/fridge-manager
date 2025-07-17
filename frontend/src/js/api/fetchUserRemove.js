@@ -4,7 +4,7 @@ import { renderFetchError } from '../render/renderFetchError.js';
 async function fetchUserRemove(fridgeId,userId) {
 
     try {
-        const res = await fetch(`/api/fridges/${fridgeId}/users/${userId}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/fridges/${fridgeId}/users/${userId}`, {
           method: 'DELETE',
           credentials: 'include',
         });

@@ -6,7 +6,7 @@ import { renderFetchError } from '../render/renderFetchError.js';
 async function fetchUserLogout() {
 
     try {
-        const res = await fetch(`/api/logout`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/logout`, {
           method: 'POST',
           credentials: 'include'
         });

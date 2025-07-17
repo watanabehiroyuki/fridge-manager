@@ -6,7 +6,7 @@ import { renderFetchError } from '../render/renderFetchError.js';
 async function fetchUserSearch(email) {
   console.log(email);
   try {
-      const res = await fetch(`/api/users/search?email=${encodeURIComponent(email)}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/search?email=${encodeURIComponent(email)}`, {
         credentials: 'include'
       });
 

@@ -9,7 +9,7 @@ async function fetchFridgeItemUpDate(itemId, name, category, expirationDate, qua
     const urlParams = new URLSearchParams(window.location.search);
     const fridgeId = urlParams.get('fridgeId');
     try {
-      const res = await fetch(`/api/fridges/${fridgeId}/items/${itemId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/fridges/${fridgeId}/items/${itemId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

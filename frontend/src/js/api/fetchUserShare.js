@@ -10,7 +10,7 @@ async function fetchUserShare(shareBox,email) {
   const fridgeId = urlParams.get('fridgeId');
 
   try {
-      const res = await fetch(`/api/fridges/${fridgeId}/share`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/fridges/${fridgeId}/share`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

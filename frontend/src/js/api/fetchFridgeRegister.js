@@ -7,7 +7,7 @@ import { renderFetchError } from '../render/renderFetchError.js';
 // 新規追加ボタンをクリックしたときの処理
 async function fetchFridgeRegister(name,form) {
     try {
-      const res = await fetch('/api/fridges', {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/fridges`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
