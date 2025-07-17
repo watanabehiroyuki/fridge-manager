@@ -6,7 +6,7 @@ import { renderFetchError } from '../render/renderFetchError.js';
 async function fetchUserRegister(username, email, password, confirmPassword) {
 
     try {
-        const res = await fetch(`/api/register`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/register`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
