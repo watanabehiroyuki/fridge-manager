@@ -3,4 +3,3 @@
 /fridges.html   /fridges.html   200
 /fridgeDetail.html   /fridgeDetail.html   200
 /userShare.html   /userShare.html   200
-/api/*  https://fridge-manager-backend.onrender.com/api/:splat  200

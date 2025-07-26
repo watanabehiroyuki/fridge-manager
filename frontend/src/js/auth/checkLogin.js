@@ -9,7 +9,7 @@
   if (ignorePaths.includes(path)) return;
 
   try {
-    const res = await fetch('/api/auth/check', {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/check`, {
       credentials: 'include',
     });
 
