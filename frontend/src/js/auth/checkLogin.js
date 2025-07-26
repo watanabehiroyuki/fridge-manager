@@ -1,15 +1,15 @@
 // -- auth/checkLogin.js
 
-// ---- ログインチェック
+const API_BASE = 'https://fridge-manager-backend.onrender.com'; // Render のURL
+
 (async () => {
   const path = window.location.pathname;
   const ignorePaths = ['/login.html', '/register.html', '/'];
 
-  // ログインチェック対象外ページなら終了
   if (ignorePaths.includes(path)) return;
 
   try {
-    const res = await fetch('/api/auth/check', {
+    const res = await fetch(`${API_BASE}/api/auth/check`, {
       credentials: 'include',
     });
 
@@ -21,5 +21,3 @@
     window.location.href = '/login.html';
   }
 })();
-
-
