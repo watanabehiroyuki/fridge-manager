@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
                     "http://localhost:5173", // 開発環境
                     "https://fridge-manager-portfolio.netlify.app" // 本番フロントエンド
                 )
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowCredentials(true);
     }
 }
