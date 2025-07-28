@@ -1,1 +1,0 @@
-(async()=>{const e=window.location.pathname;if(!["/login.html","/register.html","/"].includes(e))try{(await fetch("https://fridge-manager-backend.onrender.com/api/auth/check",{credentials:"include"})).ok||(window.location.href="/login.html")}catch(n){console.error("ログイン確認失敗:",n),window.location.href="/login.html"}})();
