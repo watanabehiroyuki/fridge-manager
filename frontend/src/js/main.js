@@ -1,3 +1,5 @@
+console.log('API_BASE:', import.meta.env.VITE_API_BASE_URL);
+
 // - partials
 import './include/partials.js';
 // - api
