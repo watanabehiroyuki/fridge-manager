@@ -11,9 +11,10 @@ async function fetchFridgeSummary() {
 
   console.log('[描画] fetchFridgeSummary 実行');
 
-  if (window.location.pathname !== '/fridges.html') {
     // ここが一覧画面じゃなければ何もしない
-    console.log('冷蔵庫一覧取得不要');
+    const path = window.location.pathname.toLowerCase();
+  if (!(path.includes('fridges'))) {
+    console.log('not fridge detail page, skipping fetch');
     return;
   }
   
