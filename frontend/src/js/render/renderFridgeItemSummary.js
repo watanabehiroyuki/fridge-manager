@@ -6,8 +6,13 @@ import { renderFridgeItemSortLimit } from './renderFridgeItemSort.js';
 
 
 function renderFridgeName() {
-  if (window.location.pathname !== '/fridgeDetail.html') return;
-
+  // ここが詳細画面じゃなければ何もしない
+    const path = window.location.pathname.toLowerCase();
+  if (!(path.includes('fridgedetail'))) {
+    console.log('not fridge detail page, skipping fetch');
+    return;
+  }
+  
   const nameBox = document.getElementById('txtFridgeName');
   if (!nameBox) return;
 

@@ -7,9 +7,10 @@ import { handleFridgeItemRemoveSumClick } from '../handlers/handleFridgeItemRemo
 import { renderFetchError } from '../render/renderFetchError.js';
 
 async function fetchFridgeItemSummary() {
-  if (window.location.pathname !== '/fridgeDetail.html') {
-    // ここが詳細画面じゃなければ何もしない
-    console.log('fridgeItemShow.js: this is not /fridgeDetail.html, skipping fetch.');
+  // ここが詳細画面じゃなければ何もしない
+    const path = window.location.pathname.toLowerCase();
+  if (!(path.includes('fridgedetail'))) {
+    console.log('not fridge detail page, skipping fetch');
     return;
   }
 

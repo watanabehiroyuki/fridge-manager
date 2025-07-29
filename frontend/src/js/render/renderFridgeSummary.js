@@ -81,7 +81,7 @@ function renderFridgeSummary(fridges) {
 
     // 冷蔵庫詳細画面へのリンク
     const link = li.querySelector('.m-fridge__more-link');
-    link.href = `/fridgeDetail.html?fridgeId=${fridge.id}&fridgeName=${fridge.name}`;
+    link.href = `/fridgedetail?fridgeId=${fridge.id}&fridgeName=${fridge.name}`;
 
     // 削除ボタン
     const removeBtn = li.querySelector('.m-fridge__remove-btn');
