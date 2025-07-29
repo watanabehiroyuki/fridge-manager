@@ -130,21 +130,9 @@ public class FridgeController {
         fridgeService.deleteFridge(fridgeId);
     }
     
-    // @GetMapping("/with-details")
-    // public List<FridgeDetailDTO> getFridgeDetails(Principal principal) {
-    //     return fridgeService.getFridgeDetailsByUserEmail(principal.getName());
-    // }
-
-        @GetMapping("/with-details")
-        public List<FridgeDetailDTO> getFridgeDetails(Principal principal) {
-            System.out.println("DEBUG: /with-details called");
-            if (principal == null) {
-                System.out.println("DEBUG: principal is NULL!");
-                throw new RuntimeException("Principal is null");
-            }
-            System.out.println("DEBUG: principal = " + principal.getName());
-
-            return fridgeService.getFridgeDetailsByUserEmail(principal.getName());
+    @GetMapping("/with-details")
+    public List<FridgeDetailDTO> getFridgeDetails(Principal principal) {
+        return fridgeService.getFridgeDetailsByUserEmail(principal.getName());
     }
     
 }
