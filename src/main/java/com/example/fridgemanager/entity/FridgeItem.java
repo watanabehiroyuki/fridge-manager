@@ -27,7 +27,8 @@ public class FridgeItem {
 
     private LocalDate expirationDate; // 賞味期限
     
-    @Column(columnDefinition = "TINYINT(1)")
+    // @Column(columnDefinition = "TINYINT(1)")
+    @Column
     private boolean consumed = false; // 消費済み
     
     @ManyToOne
