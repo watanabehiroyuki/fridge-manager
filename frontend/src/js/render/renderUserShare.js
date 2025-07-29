@@ -3,7 +3,13 @@
 import { createModal } from '../template/createModal.js';
 
 function renderShareFridge() {
-    if (window.location.pathname !== '/userShare.html') return;
+    
+    // ここがユーザー追加画面じゃなければ何もしない
+    const path = window.location.pathname.toLowerCase();
+    if (!(path.includes('usershare'))) {
+        console.log('not userShare page, skipping fetch');
+        return;
+    }
 
     const nameBox = document.getElementById('txtShareFridgeName');
     if (!nameBox) return;
