@@ -11,10 +11,13 @@ import com.example.fridgemanager.dto.FridgeItemDTO;
 import com.example.fridgemanager.dto.UserSimpleDTO;
 import com.example.fridgemanager.entity.Fridge;
 import com.example.fridgemanager.entity.FridgeItem;
+import com.example.fridgemanager.entity.Role;
 import com.example.fridgemanager.entity.User;
+import com.example.fridgemanager.entity.UserFridge;
 import com.example.fridgemanager.exception.FridgeNotFoundException;
 import com.example.fridgemanager.exception.UserNotFoundException;
 import com.example.fridgemanager.repository.FridgeRepository;
+import com.example.fridgemanager.repository.UserFridgeRepository;
 import com.example.fridgemanager.repository.UserRepository;
 
 
@@ -22,21 +25,30 @@ import com.example.fridgemanager.repository.UserRepository;
 public class FridgeService {
 
     private final FridgeRepository fridgeRepository;
+    private final UserFridgeRepository userFridgeRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public FridgeService(FridgeRepository fridgeRepository, UserRepository userRepository) {
+    public FridgeService(FridgeRepository fridgeRepository, UserFridgeRepository userFridgeRepository, UserRepository userRepository) {
         this.fridgeRepository = fridgeRepository;
+        this.userFridgeRepository = userFridgeRepository;
         this.userRepository = userRepository;
     }
     // 新規冷蔵庫を追加
-    public Fridge createFridge(Fridge fridge, User user) {
-    	// Frigeにユーザーを追加
-        fridge.getUsers().add(user);
-        user.getFridges().add(fridge);
-        // userにFrigeを追加
-        // user.getFridges().add(fridge);
-        return fridgeRepository.save(fridge);
+    public Fridge createFridge(User user, String fridgeName) {
+        // 冷蔵庫を作成
+        Fridge fridge = new Fridge();
+        fridge.setName(fridgeName);
+        fridge = fridgeRepository.save(fridge);
+        // UserFridge（中間テーブル）に登録
+        UserFridge userFridge = new UserFridge();
+        userFridge.setUser(user);
+        userFridge.setFridge(fridge);
+        userFridge.setRole(Role.OWNER);
+
+        userFridgeRepository.save(userFridge);
+
+        return fridge;
     }
     
     // ユーザーと関係する冷蔵庫を返す
@@ -50,7 +62,11 @@ public class FridgeService {
         if (user == null) {
             throw new UserNotFoundException("User not found: " + email);
         }
-        return new ArrayList<>(user.getFridges()); 
+        List<Fridge> fridges = new ArrayList<>();
+        for (UserFridge uf : user.getUserFridges()) {
+            fridges.add(uf.getFridge());
+        }
+        return fridges;
     }
     
     // 冷蔵庫を削除する
@@ -75,13 +91,21 @@ public class FridgeService {
             throw new UserNotFoundException("User not found: " + email);
         }
 
-        // すでに追加済みでなければ追加
-        if (!fridge.getUsers().contains(userToAdd)) {
-            fridge.getUsers().add(userToAdd);
-            userToAdd.getFridges().add(fridge);
-            fridgeRepository.save(fridge);
+        // すでにそのユーザーが登録されていないか確認
+        boolean alreadyExists = userFridgeRepository.findByUserIdAndFridgeId(userToAdd.getId(), fridgeId).isPresent();
+        // すでに追加済みなら何もしない
+        if (alreadyExists) {
+            return fridge; 
         }
 
+        // 中間エンティティを作成して保存
+        UserFridge userFridge = new UserFridge();
+        userFridge.setUser(userToAdd);
+        userFridge.setFridge(fridge);
+        userFridge.setRole(Role.MEMBER);
+
+        userFridgeRepository.save(userFridge);
+        
         return fridge;
     }
     
@@ -89,20 +113,26 @@ public class FridgeService {
     public List<User> getUsersByFridgeId(Long fridgeId) {
         Fridge fridge = fridgeRepository.findById(fridgeId)
             .orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + fridgeId));
-        return fridge.getUsers();
+        List<User> users = new ArrayList<>();
+        for (UserFridge uf : fridge.getUserFridges()) {
+            users.add(uf.getUser());
+        }
+        return users;
     }
 
     // 共有したユーザの削除
     public void removeUserFromFridge(Long fridgeId, Long userId) {
-        Fridge fridge = fridgeRepository.findById(fridgeId)
-            .orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + fridgeId));
+        UserFridge userFridge = userFridgeRepository.findByUserIdAndFridgeId(userId, fridgeId)
+                .orElseThrow(() -> new IllegalArgumentException("指定されたユーザーと冷蔵庫の関係が見つかりません"));
 
-        User userToRemove = userRepository.findById(userId)
-            .orElseThrow(() -> new UserNotFoundException("User not found" + userId
-            		));
-        // 冷蔵庫に登録されている特定のユーザを削除する
-        fridge.getUsers().remove(userToRemove);
-        fridgeRepository.save(fridge); 
+            if (userFridge.getRole() == Role.OWNER) {
+                int ownerCount = userFridgeRepository.countByFridgeIdAndRole(fridgeId, Role.OWNER);
+                if (ownerCount <= 1) {
+                    throw new IllegalStateException("この冷蔵庫にはオーナーが1人しかいないため、削除できません。");
+                }
+            }
+
+            userFridgeRepository.delete(userFridge);
     }
     
     // メールから全ての冷蔵庫と全ての食材と全ての共有しているユーザを取得
@@ -113,7 +143,10 @@ public class FridgeService {
         }
 
         // --- ① この人が使っている冷蔵庫のリストを取得
-        List<Fridge> fridges = user.getFridges();
+        List<Fridge> fridges = new ArrayList<>();
+        for (UserFridge uf : user.getUserFridges()) {
+            fridges.add(uf.getFridge());
+        }
         // --- 結果用のリストを作る
         List<FridgeDetailDTO> result = new ArrayList<>();
         
@@ -136,10 +169,12 @@ public class FridgeService {
             // --- この冷蔵庫を一緒に使っている人のリストを作る
             List<UserSimpleDTO> userDTOs = new ArrayList<>();
             // u = 冷蔵庫を共有している1人のユーザー
-            for (User u : fridge.getUsers()) {
+            for (UserFridge uf : fridge.getUserFridges()) {
+            	User users = uf.getUser();
                 UserSimpleDTO userDTO = new UserSimpleDTO(
-                    u.getId(),
-                    u.getUsername()
+                    users.getId(),
+                    users.getUsername(),
+                    uf.getRole()
                 );
                 userDTOs.add(userDTO);
             }

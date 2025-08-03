@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.fridgemanager.dto.FridgeDTO;
 import com.example.fridgemanager.dto.FridgeDetailDTO;
 import com.example.fridgemanager.dto.FridgeItemDTO;
+import com.example.fridgemanager.dto.FridgeRequestDTO;
 import com.example.fridgemanager.dto.ShareRequest;
 import com.example.fridgemanager.dto.UserResponseDTO;
 import com.example.fridgemanager.entity.Fridge;
@@ -45,9 +46,9 @@ public class FridgeController {
 
     // 冷蔵庫の作成
     @PostMapping
-    public Fridge createFridge(@RequestBody Fridge fridge, Principal principal) {
+    public Fridge createFridge(@RequestBody FridgeRequestDTO request, Principal principal) {
         User user = userRepository.findByEmail(principal.getName());
-        return fridgeService.createFridge(fridge, user);
+        return fridgeService.createFridge(user, request.getName());
     }
 
     // ログインユーザーが属する冷蔵庫一覧を取得

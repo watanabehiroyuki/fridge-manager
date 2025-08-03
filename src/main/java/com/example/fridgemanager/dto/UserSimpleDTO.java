@@ -1,12 +1,16 @@
 package com.example.fridgemanager.dto;
 
+import com.example.fridgemanager.entity.Role;
+
 public class UserSimpleDTO {
     private Long id;
     private String username;
+    private Role role;
 
-    public UserSimpleDTO(Long id, String username) {
+    public UserSimpleDTO(Long id, String username, Role role) {
         this.id = id;
         this.username = username;
+        this.role = role;
     }
 
     // Getter & Setter
@@ -21,5 +25,12 @@ public class UserSimpleDTO {
     }
     public void setUsername(String username) { 
     	this.username = username; 
+    }
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

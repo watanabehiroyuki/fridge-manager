@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.fridgemanager.entity.Fridge;
 import com.example.fridgemanager.entity.User;
+import com.example.fridgemanager.entity.UserFridge;
 
 public class FridgeDTO {
     private Long id;
@@ -14,9 +15,15 @@ public class FridgeDTO {
     public FridgeDTO(Fridge fridge) {
         this.id = fridge.getId();
         this.name = fridge.getName();
-        if (fridge.getUsers() != null) {
-            for (User user : fridge.getUsers()) {
-                users.add(new UserResponseDTO(user.getId(), user.getUsername(), user.getEmail()));
+        if (fridge.getUserFridges() != null) {
+            for (UserFridge uf : fridge.getUserFridges()) {
+            	User user = uf.getUser();
+                users.add(new UserResponseDTO(
+                		user.getId(), 
+                		user.getUsername(), 
+                		user.getEmail(),
+                		uf.getRole()
+                	));
             }
         }
     }
@@ -27,9 +34,27 @@ public class FridgeDTO {
     }
         
         
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<UserResponseDTO> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserResponseDTO> users) {
+        this.users = users;
+    }
 }
