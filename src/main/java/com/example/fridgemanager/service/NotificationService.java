@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.entity.User;
+import com.example.fridgemanager.entity.UserFridge;
 
 @Service
 public class NotificationService {
@@ -32,16 +33,15 @@ public class NotificationService {
             }
             
             // fridge が null の場合もスキップ
-            if (item.getFridge() == null || item.getFridge().getUsers() == null) {
+            if (item.getFridge() == null || item.getFridge().getUserFridges() == null) {
                 continue; 
             }
             
-            List<User> users = item.getFridge().getUsers();
-            if (users == null || users.isEmpty()) {
-                continue;
-            }
-            // 冷蔵庫を取得し、それに関連するユーザーを取得しループ
-            for (User user : users) {
+            // Fridge に紐づく全ての UserFridge 経由でユーザーを取得
+            for (UserFridge uf : item.getFridge().getUserFridges()) {
+                User user = uf.getUser();
+                if (user == null) continue;
+                
             	String subject = "【冷蔵庫管理】賞味期限が近い食材があります";
             	String body = EmailContentBuilder.buildNotificationBody(user, Collections.singletonList(item));
             	emailService.sendEmail(user.getEmail(), subject, body);
