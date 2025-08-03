@@ -127,8 +127,11 @@ public class FridgeController {
     
     // 冷蔵庫自体を削除する
     @DeleteMapping("/{fridgeId}")
-    public void deleteFridge(@PathVariable Long fridgeId) {
-        fridgeService.deleteFridge(fridgeId);
+    public void deleteFridge(@PathVariable Long fridgeId, Principal principal) {
+        // 現在ログイン中のユーザーを取得
+        User requestingUser = userRepository.findByEmail(principal.getName());
+        // サービスに冷蔵庫IDとリクエストユーザーを渡す
+        fridgeService.deleteFridge(fridgeId, requestingUser);
     }
     
     @GetMapping("/with-details")

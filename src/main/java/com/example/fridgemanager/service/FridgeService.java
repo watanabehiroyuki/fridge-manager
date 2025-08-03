@@ -70,7 +70,22 @@ public class FridgeService {
     }
     
     // 冷蔵庫を削除する
-    public void deleteFridge(Long fridgeId) {
+    public void deleteFridge(Long fridgeId, User requestingUser) {
+        Fridge fridge = fridgeRepository.findById(fridgeId)
+                .orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + fridgeId));
+        // オーナー権限があるか確認
+        boolean isOwner = false;
+        for (UserFridge uf : fridge.getUserFridges()) {
+            if (uf.getUser().getId().equals(requestingUser.getId()) && uf.getRole() == Role.OWNER) {
+                isOwner = true;
+                break;
+            }
+        }
+        
+        if (!isOwner) {
+            throw new RuntimeException("オーナーのみがこの冷蔵庫を削除できます");
+        }
+        
         fridgeRepository.deleteById(fridgeId);
     }
     
