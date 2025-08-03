@@ -3,11 +3,12 @@ package com.example.fridgemanager.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -35,8 +36,8 @@ public class User {
     private String password;
 
     
-    @ManyToMany(mappedBy = "users")
-    private List<Fridge> fridges = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserFridge> userFridges = new ArrayList<>();
 
     // --- コンストラクタ ---
 
@@ -83,12 +84,13 @@ public class User {
         this.password = password;
     }
 
-    public List<Fridge> getFridges() {
-        return fridges;
+    public List<UserFridge> getUserFridges() {
+        return userFridges;
     }
 
-    public void setFridges(List<Fridge> fridges) {
-        this.fridges = fridges;
+    public void setUserFridges(List<UserFridge> userFridges) {
+        this.userFridges = userFridges;
     }
+
 
 }
