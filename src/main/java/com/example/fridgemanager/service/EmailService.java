@@ -50,7 +50,7 @@ public class EmailService {
 
             // 送信リクエストを作成
             SendEmailRequest request = SendEmailRequest.builder()
-                .source("your-verified-sender@example.com") // SESで認証済みの送信元
+                .source("watanabe@wizway.co.jp") // SESで認証済みの送信元
                 .destination(destination)
                 .message(message)
                 .build();
@@ -63,5 +63,24 @@ public class EmailService {
         } catch (SesException e) {
             System.err.println("❌ メール送信失敗: " + e.awsErrorDetails().errorMessage());
         }
+    }
+    
+    public void sendTestEmail() {
+    try {
+        String to = "watanabe@wizway.co.jp"; // SESでVerifyしたアドレスに変更
+        String subject = "【冷蔵庫管理】テストメール";
+        String body = "これはAmazon SESからのテストメールです。";
+
+        System.out.println("📨 メール送信処理開始");
+        sendEmail(to, subject, body);
+        System.out.println("✅ sendEmail() 実行完了");
+    } catch (SesException e) {
+        System.err.println("❌ SES 例外発生");
+        e.printStackTrace();
+        System.err.println("❌ エラー詳細: " + e.awsErrorDetails().errorMessage());
+    } catch (Exception e) {
+        System.err.println("❌ その他の例外発生");
+        e.printStackTrace();
+    }
     }
 }
