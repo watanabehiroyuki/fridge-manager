@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.example.fridgemanager.entity.FridgeItem;
@@ -22,6 +23,14 @@ public class NotificationService {
         this.emailService = emailService;
     }
 
+    // 毎朝9時に自動実行（Asia/Tokyo 時間）
+    @Scheduled(cron = "0 0 9 * * ?", zone = "Asia/Tokyo")
+    public void runNotificationBatch() {
+        System.out.println("🔔 通知バッチを実行中...");
+        // 既存メソッドを呼び出し
+        sendNotifications(); 
+    }
+    
     public void sendNotifications() {
     	// 賞味期限から2日前から3日過ぎた食材をリストに入れる
         List<FridgeItem> items = fridgeItemService.getItemsForNotification();
