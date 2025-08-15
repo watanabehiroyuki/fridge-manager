@@ -1,2 +1,6 @@
 /target/
+/frontend/dist/
+application.properties
 .DS_Store
+.env
+
