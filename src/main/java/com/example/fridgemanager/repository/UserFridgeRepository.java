@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import com.example.fridgemanager.entity.Fridge;
 import com.example.fridgemanager.entity.Role;
 import com.example.fridgemanager.entity.UserFridge;
 import com.example.fridgemanager.entity.UserFridgeId;
@@ -20,4 +23,8 @@ public interface UserFridgeRepository extends JpaRepository<UserFridge, UserFrid
     int countByFridgeIdAndRole(Long fridgeId, Role role);
     // 特定の共有ユーザー削除用
     void deleteByUserIdAndFridgeId(Long userId, Long fridgeId);
+    
+    // 新規追加：ユーザーが属するFridge一覧を取得
+    @Query("SELECT uf.fridge FROM UserFridge uf WHERE uf.user.id = :userId")
+    List<Fridge> findFridgesByUserId(@Param("userId") Long userId);
 }

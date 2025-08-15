@@ -58,7 +58,7 @@ public class FridgeService {
     
     // メールアドレスから、そのユーザーの冷蔵庫一覧を取得する（ユーザがみつからなければエラーを返す）
     public List<Fridge> getFridgesByUserEmail(String email) {
-        User user = userRepository.findByEmail(email);
+    	User user = userRepository.findByEmailWithFridges(email);
         if (user == null) {
             throw new UserNotFoundException("User not found: " + email);
         }
