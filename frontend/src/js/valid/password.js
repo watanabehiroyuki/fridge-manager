@@ -20,7 +20,7 @@ function ValidPassword() {
             const errorMessageBox = document.createElement('p');
             errorMessageBox.classList.add('is-validError');
             passwordInput.after(errorMessageBox);
-            errorMessageBox.textContent = '半角数字のみの8文字以上で入力してください。';
+            errorMessageBox.textContent = '大文字、小文字、ローマ字を使って8文字以上で入力して下さい';
           }
         }
 
