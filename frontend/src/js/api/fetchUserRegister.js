@@ -14,7 +14,7 @@ async function fetchUserRegister(username, email, password, confirmPassword) {
           body: JSON.stringify({ username, email, password, confirmPassword })
         });
     
-        if (!res.ok) throw new Error('ユーザーの削除に失敗しました');
+        if (!res.ok) throw new Error('ユーザーの登録に失敗しました');
 
         console.log("[完了]ユーザー新規登録");
         renderUserRegister();
