@@ -131,6 +131,11 @@ public class FridgeItemService {
 
         return result;
     }
+    
+    // 今日通知済みか更新する
+    public void saveAll(List<FridgeItem> items) {
+        fridgeItemRepository.saveAll(items);
+    }
 
 
 }

@@ -27,6 +27,9 @@ public class FridgeItem {
 
     private LocalDate expirationDate; // 賞味期限
     
+    @Column(name = "last_notified_date")
+    private LocalDate lastNotifiedDate;
+    
     @Column(columnDefinition = "TINYINT(1)")
     private boolean consumed = false; // 消費済み
     
@@ -73,6 +76,14 @@ public class FridgeItem {
 
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
+    }
+    
+    public LocalDate getLastNotifiedDate() {
+        return lastNotifiedDate;
+    }
+
+    public void setLastNotifiedDate(LocalDate lastNotifiedDate) {
+        this.lastNotifiedDate = lastNotifiedDate;
     }
     
     public boolean isConsumed() {
