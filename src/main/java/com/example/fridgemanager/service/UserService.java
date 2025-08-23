@@ -17,6 +17,10 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     // パスワードをエンコードしてリポジトリに保存する
     public void registerUser(User user) {
+    	// メールの重複チェック
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            throw new IllegalArgumentException("このメールアドレスは既に登録されています");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
