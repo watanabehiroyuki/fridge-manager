@@ -136,6 +136,21 @@ public class FridgeItemService {
     public void saveAll(List<FridgeItem> items) {
         fridgeItemRepository.saveAll(items);
     }
+    
+    // 1週間以上賞味期限が過ぎた食材を削除する
+    public List<FridgeItem> getItemsExpiredOverAWeek() {
+        LocalDate thresholdDate = LocalDate.now().minusWeeks(1);
+        List<FridgeItem> items = fridgeItemRepository.findAll();
+        List<FridgeItem> result = new ArrayList<>();
+        
+        for (FridgeItem item : items) {
+            if (item.getExpirationDate() != null &&
+                item.getExpirationDate().isBefore(thresholdDate)) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
 
 
 }
