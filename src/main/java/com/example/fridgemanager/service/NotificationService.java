@@ -27,15 +27,15 @@ public class NotificationService {
     }
 
     // 毎朝9時に自動実行（Asia/Tokyo 時間）
-    @Scheduled(cron = "0 30 8 * * ?", zone = "Asia/Tokyo")
+    @Scheduled(cron = "0 0 9 * * ?", zone = "Asia/Tokyo")
     public void runNotificationBatch() {
         System.out.println("🔔 通知バッチを実行中...");
         // 既存メソッドを呼び出し
         sendNotifications(); 
     }
     
-    // 毎朝4時に古い食材を自動削除（Tokyo時間）
-    @Scheduled(cron = "0 0 4 * * ?", zone = "Asia/Tokyo")
+    // 毎朝8時に古い食材を自動削除（Tokyo時間）
+    @Scheduled(cron = "0 30 8 * * ?", zone = "Asia/Tokyo")
     public void deleteOldExpiredItems() {
         // 
         List<FridgeItem> oldItems = fridgeItemService.getItemsExpiredOverAWeek();
