@@ -2,7 +2,6 @@ package com.example.fridgemanager.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -108,29 +107,32 @@ public class FridgeItemService {
         LocalDate startNotify = today.minusDays(3); // 過ぎて3日以内
         LocalDate endNotify = today.plusDays(2);    // 2日後まで
 
-        List<FridgeItem> items = fridgeItemRepository.findAll();
-        List<FridgeItem> result = new ArrayList<>();
-
-        // フィルタリング
-        for (FridgeItem item : items) {
-            LocalDate exp = item.getExpirationDate();
-            if (exp != null && !exp.isBefore(startNotify) && !exp.isAfter(endNotify)) {
-                result.add(item);
-            }
-        }
-
-        // ソート
-        Collections.sort(result, new Comparator<FridgeItem>() {
-            @Override
-            public int compare(FridgeItem a, FridgeItem b) {
-                if (a.getExpirationDate() == null) return 1;
-                if (b.getExpirationDate() == null) return -1;
-                return a.getExpirationDate().compareTo(b.getExpirationDate());
-            }
-        });
-
-        return result;
-    }
+        // リポジトリから対象の食材を取得する
+        return fridgeItemRepository.findItemsWithUserFridgesForNotification(startNotify, endNotify);
+        
+		/*        List<FridgeItem> items = fridgeItemRepository.findAll();
+		List<FridgeItem> result = new ArrayList<>();
+		
+		// フィルタリング
+		for (FridgeItem item : items) {
+		    LocalDate exp = item.getExpirationDate();
+		    if (exp != null && !exp.isBefore(startNotify) && !exp.isAfter(endNotify)) {
+		        result.add(item);
+		    }
+		}
+		
+		// ソート
+		Collections.sort(result, new Comparator<FridgeItem>() {
+		    @Override
+		    public int compare(FridgeItem a, FridgeItem b) {
+		        if (a.getExpirationDate() == null) return 1;
+		        if (b.getExpirationDate() == null) return -1;
+		        return a.getExpirationDate().compareTo(b.getExpirationDate());
+		    }
+		});
+		
+		return result;
+		*/    }
     
     // 今日通知済みか更新する
     public void saveAll(List<FridgeItem> items) {

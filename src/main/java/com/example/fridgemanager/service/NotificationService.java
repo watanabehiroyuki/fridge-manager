@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.entity.User;
@@ -48,6 +49,7 @@ public class NotificationService {
     }
     
     // ユーザに賞味期限が近いor切れている食材を通知する
+    @Transactional
     public void sendNotifications() {
     	// 賞味期限から2日前から3日過ぎた食材をリストに入れる
         List<FridgeItem> items = fridgeItemService.getItemsForNotification();
