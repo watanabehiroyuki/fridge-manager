@@ -37,6 +37,21 @@ public class FridgeItem {
     @JoinColumn(name = "fridge_id", nullable = false)
     private Fridge fridge;
 
+    // Setにおいて2つのオブジェクトが「同じか？」を判断
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FridgeItem that = (FridgeItem) o;
+        return id != null && id.equals(that.id);
+    }
+
+    // SetやMapなどが内部で使う"データの位置を探すための番号（ハッシュ値）"**を返す
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+    
     // ゲッター・セッター
     public Long getId() {
         return id;

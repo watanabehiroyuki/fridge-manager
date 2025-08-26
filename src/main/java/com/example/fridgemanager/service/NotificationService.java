@@ -3,8 +3,10 @@ package com.example.fridgemanager.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -57,7 +59,7 @@ public class NotificationService {
         List<FridgeItem> notifiedItems = new ArrayList<>();
         
         // ユーザーごとに食材をまとめる
-        Map<User, List<FridgeItem>> userItemMap = new HashMap<>();
+        Map<User, Set<FridgeItem>> userItemMap = new HashMap<>();
         
         // 取得した食材でループ
         for (FridgeItem item : items) {
@@ -81,7 +83,7 @@ public class NotificationService {
                 if (user == null) continue;
                 
                 // Map に追加
-                userItemMap.putIfAbsent(user, new ArrayList<>());
+                userItemMap.putIfAbsent(user, new HashSet<>());
                 userItemMap.get(user).add(item);
             }
             // 通知済みに記録（item に対して1回だけ）
@@ -90,9 +92,9 @@ public class NotificationService {
         }
         
         // ユーザーごとに通知送信
-        for (Map.Entry<User, List<FridgeItem>> entry : userItemMap.entrySet()) {
+        for (Map.Entry<User, Set<FridgeItem>> entry : userItemMap.entrySet()) {
             User user = entry.getKey();
-            List<FridgeItem> userItems = entry.getValue();
+            List<FridgeItem> userItems = new ArrayList<>(entry.getValue());
                 
             	String subject = "【冷蔵庫管理】" + userItems.size() + "件の食材がまもなく賞味期限を迎えます";
             	String body = EmailContentBuilder.buildNotificationBody(user,userItems);
