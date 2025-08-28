@@ -50,7 +50,7 @@ public class EmailService {
 
             // 送信リクエストを作成
             SendEmailRequest request = SendEmailRequest.builder()
-                .source("watanabe@wizway.co.jp") // SESで認証済みの送信元
+                .source("") // SESで認証済みの送信元
                 .destination(destination)
                 .message(message)
                 .build();
@@ -67,7 +67,7 @@ public class EmailService {
     
     public void sendTestEmail() {
     try {
-        String to = "watanabe@wizway.co.jp"; // SESでVerifyしたアドレスに変更
+        String to = ""; // SESでVerifyしたアドレスに変更
         String subject = "【冷蔵庫管理】テストメール";
         String body = "これはAmazon SESからのテストメールです。";
 
