@@ -16,7 +16,7 @@ import com.example.fridgemanager.repository.FridgeItemRepository;
 @Service
 public class FridgeItemService {
 
-	// 全件取得（通知デバッグ用）
+	// 全件取得
 	public List<FridgeItem> getAllItems() {
 	    return fridgeItemRepository.findAll();
 	}
@@ -54,12 +54,12 @@ public class FridgeItemService {
         }
     }
     
-    // 全件取得
+    // 冷蔵庫ごとの食材を賞味期限昇順で取得
     public List<FridgeItem> getItemsByFridge(Fridge fridge) {
     	return fridgeItemRepository.findByFridgeOrderByExpirationDateAsc(fridge);
     }
 
-    // 賞味期限が早い順にソートする
+    // 食材を賞味期限順に全件ソート
     public List<FridgeItem> getItemsSortedByExpiration() {
         List<FridgeItem> items = fridgeItemRepository.findAll();
         Comparator<FridgeItem> expirationComparator = new Comparator<FridgeItem>() {
@@ -75,7 +75,7 @@ public class FridgeItemService {
     }
 
     
-    
+    // IDで食材取得
     public Optional<FridgeItem> getItemById(Long id) {
         return fridgeItemRepository.findById(id);
     }
@@ -85,7 +85,7 @@ public class FridgeItemService {
         return fridgeItemRepository.findByNameContainingIgnoreCase(keyword);
     }
     
-    // 登録したものに変更があった場合更新される
+    // 更新処理（IDで検索して存在すれば更新）
     public FridgeItem updateItem(Long id, FridgeItem updatedItem) {
         return fridgeItemRepository.findById(id).map(item -> {
             item.setName(updatedItem.getName());
@@ -96,12 +96,12 @@ public class FridgeItemService {
         }).orElseThrow(() -> new RuntimeException("Item not found"));
     }
     
-    // 消費したら削除する
+    // 削除処理
     public void deleteItem(Long id) {
         fridgeItemRepository.deleteById(id);
     }
     
-    // 賞味期限が3日過ぎたものから賞味期限が2日前のものを通知対象として抽出する
+    // 賞味期限が3日過ぎたものから賞味期限が2日前のものを通知対象として抽出
     public List<FridgeItem> getItemsForNotification() {
         LocalDate today = LocalDate.now();
         LocalDate startNotify = today.minusDays(3); // 過ぎて3日以内
@@ -109,37 +109,14 @@ public class FridgeItemService {
 
         // リポジトリから対象の食材を取得する
         return fridgeItemRepository.findItemsWithUserFridgesForNotification(startNotify, endNotify);
-        
-		/*        List<FridgeItem> items = fridgeItemRepository.findAll();
-		List<FridgeItem> result = new ArrayList<>();
-		
-		// フィルタリング
-		for (FridgeItem item : items) {
-		    LocalDate exp = item.getExpirationDate();
-		    if (exp != null && !exp.isBefore(startNotify) && !exp.isAfter(endNotify)) {
-		        result.add(item);
-		    }
-		}
-		
-		// ソート
-		Collections.sort(result, new Comparator<FridgeItem>() {
-		    @Override
-		    public int compare(FridgeItem a, FridgeItem b) {
-		        if (a.getExpirationDate() == null) return 1;
-		        if (b.getExpirationDate() == null) return -1;
-		        return a.getExpirationDate().compareTo(b.getExpirationDate());
-		    }
-		});
-		
-		return result;
-		*/    }
+    }
     
-    // 今日通知済みか更新する
+    // 通知後の更新保存（その日通知したかを更新）
     public void saveAll(List<FridgeItem> items) {
         fridgeItemRepository.saveAll(items);
     }
     
-    // 1週間以上賞味期限が過ぎた食材を削除する
+    // 1週間以上賞味期限が過ぎた食材を削除する（自動削除対象）
     public List<FridgeItem> getItemsExpiredOverAWeek() {
         LocalDate thresholdDate = LocalDate.now().minusWeeks(1);
         List<FridgeItem> items = fridgeItemRepository.findAll();

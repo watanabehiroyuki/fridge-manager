@@ -15,17 +15,23 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    // パスワードをエンコードしてリポジトリに保存する
+
+    /**
+     * ユーザーを新規登録（メールアドレス重複チェック + パスワード暗号化）
+     */
     public void registerUser(User user) {
     	// メールの重複チェック
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new IllegalArgumentException("このメールアドレスは既に登録されています");
         }
+        // パスワードをハッシュ化して保存
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
     
-    // メールからユーザを取得
+    /**
+     * メールアドレスでユーザーを検索
+     */
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }

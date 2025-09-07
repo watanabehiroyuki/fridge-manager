@@ -15,43 +15,74 @@ import com.example.fridgemanager.service.CustomUserDetailsService;
 
 @Configuration
 public class SecurityConfig {
-	
-    private final CustomUserDetailsService customUserDetailsService; // 追加！！
+    
+    // ユーザー情報を取得するサービス
+    private final CustomUserDetailsService customUserDetailsService;
 
     public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
     }
 
+    /**
+     * セキュリティフィルタチェーンの設定
+     * 認証・認可のルールを定義
+     * フォームログインは無効化（REST API向け構成）
+     * 特定のAPIエンドポイントは未認証でもアクセス可能にする
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .csrf().disable()
+        	// REST APIではCSRFトークンは不要のため無効化
+            .csrf().disable() 
+
             .authorizeHttpRequests(authz -> authz
-            		// 認証不要なURL"/api/email/test"は動確用
-            		.antMatchers("/api/register","register-sucess", "/api/login","/api/notify/send","/api/logout","/api/email/test").permitAll() 
-                .anyRequest().authenticated() // その他は認証が必要
+                // 以下のエンドポイントは未認証でもアクセス許可
+                .antMatchers(
+                    "/api/register",         // ユーザー登録
+                    "register-sucess",       // 登録完了ページ
+                    "/api/login",            // ログイン処理
+                    "/api/notify/send",      // 通知メール送信API（動作確認用など）
+                    "/api/logout",           // ログアウト処理
+                    "/api/email/test"        // メール送信のテスト用API
+                ).permitAll()
+
+                // 上記以外のすべてのリクエストは認証が必要
+                .anyRequest().authenticated()
             )
-            .formLogin().disable() // ← これ重要！フォームログインは無効
+
+            // デフォルトのログインフォームを無効化
+            .formLogin().disable()
+
+            // ログアウト処理の設定
             .logout(logout -> logout
-            .logoutUrl("/api/logout") // ログアウトもAPIで
-            .logoutSuccessHandler((request, response, authentication) -> {
-                response.setStatus(HttpServletResponse.SC_OK); // リダイレクトなし
-            })
+            	// ログアウト時にアクセスされるAPIパス
+                .logoutUrl("/api/logout") 
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    response.setStatus(HttpServletResponse.SC_OK); // リダイレクトしない
+                })
             )
+
             .build();
     }
 
+    /**
+     * パスワードエンコーダーのBean定義
+     * - BCryptを使ってパスワードを安全にハッシュ化
+     * - ユーザー登録時・ログイン認証時に使用
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
+    /**
+     * AuthenticationManagerのBean定義
+     * - サービス層で認証処理を行う
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-
 }
-
 
 

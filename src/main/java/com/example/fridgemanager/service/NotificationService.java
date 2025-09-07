@@ -29,7 +29,9 @@ public class NotificationService {
         this.emailService = emailService;
     }
 
-    // 毎朝9時に自動実行（Asia/Tokyo 時間）
+    /**
+     * 通知バッチ処理（毎朝9時実行）
+     */
     @Scheduled(cron = "0 0 9 * * ?", zone = "Asia/Tokyo")
     public void runNotificationBatch() {
         System.out.println("🔔 通知バッチを実行中...");
@@ -37,7 +39,10 @@ public class NotificationService {
         sendNotifications(); 
     }
     
-    // 毎朝8時に古い食材を自動削除（Tokyo時間）
+    /**
+     * 古い食材の自動削除（毎朝8:30実行）
+     * 賞味期限から1週間以上経過した食材を削除
+     */
     @Scheduled(cron = "0 30 8 * * ?", zone = "Asia/Tokyo")
     public void deleteOldExpiredItems() {
         // 
@@ -50,7 +55,10 @@ public class NotificationService {
         System.out.println("🗑️ 削除件数: " + oldItems.size());
     }
     
-    // ユーザに賞味期限が近いor切れている食材を通知する
+    /**
+     * 食材の通知処理（賞味期限が近い or 過ぎて間もない食材）
+     * 2日前〜3日後まで通知対象。消費済・通知済み・期限なしのものは除外。
+     */
     @Transactional
     public void sendNotifications() {
     	// 賞味期限から2日前から3日過ぎた食材をリストに入れる
@@ -61,7 +69,6 @@ public class NotificationService {
         // ユーザーごとに食材をまとめる
         Map<User, Set<FridgeItem>> userItemMap = new HashMap<>();
         
-        // 取得した食材でループ
         for (FridgeItem item : items) {
         	// 消費済みなら通知不要
             if (item.isConsumed()) continue; 
@@ -77,16 +84,15 @@ public class NotificationService {
                 continue; 
             }
             
-            // Fridge に紐づく全ての UserFridge 経由でユーザーを取得
+            // Fridge に紐づく全ユーザーへ通知対象として追加
             for (UserFridge uf : item.getFridge().getUserFridges()) {
                 User user = uf.getUser();
                 if (user == null) continue;
                 
-                // Map に追加
                 userItemMap.putIfAbsent(user, new HashSet<>());
                 userItemMap.get(user).add(item);
             }
-            // 通知済みに記録（item に対して1回だけ）
+            // 通知済みに記録
             item.setLastNotifiedDate(today);
             notifiedItems.add(item);
         }

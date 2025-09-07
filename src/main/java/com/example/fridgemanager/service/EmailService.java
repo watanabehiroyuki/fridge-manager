@@ -13,7 +13,7 @@ import software.amazon.awssdk.services.ses.model.SesException;
 
 @Service
 public class EmailService {
-	// SESにアクセスするための「入口」みたいなもの
+	// SESにアクセスするためのクライアント
     private final SesClient sesClient;
 
     public EmailService() {
@@ -22,19 +22,26 @@ public class EmailService {
             .build();
     }
 
+    /**
+     * 実際にメールを送信する処理
+     *
+     * @param toAddress 送信先メールアドレス（検証済み）
+     * @param subject   メールの件名
+     * @param body      メール本文（プレーンテキスト）
+     */
     public void sendEmail(String toAddress, String subject, String body) {
         try {
-        	// 誰に送る？（送信先の設定）
+        	// 宛先設定
             Destination destination = Destination.builder()
                 .toAddresses(toAddress)
                 .build();
 
-            // 件名と本文を作る
-            Content contentSubject = Content.builder() // 件名
+            // 件名・本文を作成
+            Content contentSubject = Content.builder()
                 .data(subject)
                 .build();
 
-            Content contentBody = Content.builder() // 本文
+            Content contentBody = Content.builder()
                 .data(body)
                 .build();
 
@@ -42,7 +49,7 @@ public class EmailService {
                 .text(contentBody)
                 .build();
 
-            // メッセージ全体を作る（件名と本文をまとめる）
+            // メッセージ全体構築
             Message message = Message.builder()
                 .subject(contentSubject)
                 .body(bodyContent)
@@ -55,7 +62,7 @@ public class EmailService {
                 .message(message)
                 .build();
 
-         // SESに送信依頼を出す！（ここで送信！）
+            // 送信処理
             sesClient.sendEmail(request);
 
             System.out.println("✅ メール送信成功: " + toAddress);
@@ -65,6 +72,9 @@ public class EmailService {
         }
     }
     
+    /**
+     * 確認用のテストメール送信処理
+     */
     public void sendTestEmail() {
     try {
         String to = ""; // SESでVerifyしたアドレスに変更

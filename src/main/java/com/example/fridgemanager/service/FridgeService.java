@@ -34,7 +34,7 @@ public class FridgeService {
         this.userFridgeRepository = userFridgeRepository;
         this.userRepository = userRepository;
     }
-    // 新規冷蔵庫を追加
+    // 新規冷蔵庫を追加（作成者をOWNERとして登録）
     public Fridge createFridge(User user, String fridgeName) {
         // 冷蔵庫を作成
         Fridge fridge = new Fridge();
@@ -51,12 +51,7 @@ public class FridgeService {
         return fridge;
     }
     
-    // ユーザーと関係する冷蔵庫を返す
-    //public List<Fridge> getFridgesByUser(User user) {
-    //    return fridgeRepository.findByUsers(user);
-    //}
-    
-    // メールアドレスから、そのユーザーの冷蔵庫一覧を取得する（ユーザがみつからなければエラーを返す）
+    // ユーザーのメールアドレスから冷蔵庫一覧を取得
     public List<Fridge> getFridgesByUserEmail(String email) {
     	User user = userRepository.findByEmailWithFridges(email);
         if (user == null) {
@@ -69,7 +64,7 @@ public class FridgeService {
         return fridges;
     }
     
-    // 冷蔵庫を削除する
+    // 冷蔵庫を削除（オーナーでなければエラー）
     public void deleteFridge(Long fridgeId, User requestingUser) {
         Fridge fridge = fridgeRepository.findById(fridgeId)
                 .orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + fridgeId));
@@ -90,12 +85,12 @@ public class FridgeService {
     }
     
     
-    // 特定の冷蔵庫をIDで取得（見つからなければエラー）
+    // IDで冷蔵庫を取得（存在しなければ例外）
     public Fridge getFridgeById(Long id) {
         return fridgeRepository.findById(id).orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + id));
     }
     
-    // 冷蔵庫を共有したいユーザを追加する
+    // ユーザーを冷蔵庫の共有メンバーとして追加
     public Fridge addUserToFridge(Long fridgeId, String email) {
     	// 冷蔵庫がなければエラーを返す
         Fridge fridge = fridgeRepository.findById(fridgeId)
@@ -124,7 +119,7 @@ public class FridgeService {
         return fridge;
     }
     
-    // 冷蔵庫に関係するユーザ一覧を取得する
+    // 冷蔵庫に紐づくユーザー一覧を取得
     public List<User> getUsersByFridgeId(Long fridgeId) {
         Fridge fridge = fridgeRepository.findById(fridgeId)
             .orElseThrow(() -> new FridgeNotFoundException("Fridge not found: id=" + fridgeId));
@@ -135,7 +130,7 @@ public class FridgeService {
         return users;
     }
 
-    // 共有したユーザの削除
+    // 冷蔵庫の共有メンバーを削除（オーナーが1人しかいない場合は削除不可）
     public void removeUserFromFridge(Long fridgeId, Long userId) {
         UserFridge userFridge = userFridgeRepository.findByUserIdAndFridgeId(userId, fridgeId)
                 .orElseThrow(() -> new IllegalArgumentException("指定されたユーザーと冷蔵庫の関係が見つかりません"));
@@ -150,27 +145,24 @@ public class FridgeService {
             userFridgeRepository.delete(userFridge);
     }
     
-    // メールから全ての冷蔵庫と全ての食材と全ての共有しているユーザを取得
+    // 指定メールアドレスのユーザーに関連する冷蔵庫・食材・ユーザーをまとめて取得
     public List<FridgeDetailDTO> getFridgeDetailsByUserEmail(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
         	throw new UserNotFoundException("User not found: " + email);
         }
 
-        // --- ① この人が使っている冷蔵庫のリストを取得
         List<Fridge> fridges = new ArrayList<>();
         for (UserFridge uf : user.getUserFridges()) {
             fridges.add(uf.getFridge());
         }
-        // --- 結果用のリストを作る
+
         List<FridgeDetailDTO> result = new ArrayList<>();
         
-        // --- ② 冷蔵庫ごとに繰り返し
         for (Fridge fridge : fridges) {
-        	 // --- この冷蔵庫の中の食材をリストに変換
+            // 食材リストの変換
             List<FridgeItemDTO> itemDTOs = new ArrayList<>();
             for (FridgeItem item : fridge.getFridgeItems()) {
-            	// item = 冷蔵庫の中の1つの食材
             	FridgeItemDTO itemDTO = new FridgeItemDTO(
             		item.getId(),
                     item.getName(),
@@ -181,9 +173,8 @@ public class FridgeService {
                 itemDTOs.add(itemDTO);
             }
 
-            // --- この冷蔵庫を一緒に使っている人のリストを作る
+            // 共有ユーザーリストの変換
             List<UserSimpleDTO> userDTOs = new ArrayList<>();
-            // u = 冷蔵庫を共有している1人のユーザー
             for (UserFridge uf : fridge.getUserFridges()) {
             	User users = uf.getUser();
                 UserSimpleDTO userDTO = new UserSimpleDTO(
@@ -194,7 +185,7 @@ public class FridgeService {
                 userDTOs.add(userDTO);
             }
 
-            // --- この冷蔵庫の情報を1つのDTOにまとめる
+            // 冷蔵庫の情報を1つのDTOにまとめる
             FridgeDetailDTO fridgeDetail = new FridgeDetailDTO(
                 fridge.getId(),
                 fridge.getName(),

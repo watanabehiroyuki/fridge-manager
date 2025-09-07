@@ -11,33 +11,42 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * FridgeItem
+ * - 冷蔵庫に登録された「食材」を表すエンティティ
+ * - どの冷蔵庫に属しているか、カテゴリ、数量、賞味期限、通知済みかどうかなどを持つ
+ */
 @Entity
 @Table(name = "fridge_items") 
 public class FridgeItem {
 
+    // 食材ID（主キー）
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name; // 食材名
-
-    private String category; // カテゴリ（例：野菜、肉、乳製品など）
-
-    private int quantity; // 数量
-
-    private LocalDate expirationDate; // 賞味期限
+    // 食材名
+    private String name; 
+    // カテゴリ
+    private String category; 
+    // 数量
+    private int quantity; 
+    // 賞味期限
+    private LocalDate expirationDate; 
     
+    // 最後に通知を送信した日（通知機能の重複防止に使用）
     @Column(name = "last_notified_date")
     private LocalDate lastNotifiedDate;
-    
+    // 消費済みフラグ（true: 消費済み, false: まだ残っている）
     @Column(columnDefinition = "TINYINT(1)")
     private boolean consumed = false; // 消費済み
     
+    // 関連付けられた冷蔵庫（多対一）    
     @ManyToOne
     @JoinColumn(name = "fridge_id", nullable = false)
     private Fridge fridge;
 
-    // Setにおいて2つのオブジェクトが「同じか？」を判断
+    // --- equals と hashCode ---
+    // Setなどでオブジェクトの重複判定に使用する
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,7 +55,6 @@ public class FridgeItem {
         return id != null && id.equals(that.id);
     }
 
-    // SetやMapなどが内部で使う"データの位置を探すための番号（ハッシュ値）"**を返す
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;

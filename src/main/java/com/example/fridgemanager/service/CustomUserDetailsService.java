@@ -17,6 +17,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Spring Security が認証時に呼び出すメソッド。
+     * メールアドレスを「ユーザー名」として使用し、対応するユーザー情報を取得する。
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // メールアドレスでユーザーを検索
@@ -27,12 +31,15 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("ユーザーが見つかりません");
         }
 
-        // ここで、ユーザーの情報をSpring Security用に変換
+     // Spring Security 用の UserDetails を生成して返却
         return org.springframework.security.core.userdetails.User
                 .builder()
-                .username(user.getEmail())  // メールアドレスをユーザー名として使用
-                .password(user.getPassword())  // パスワードをセット
-                .authorities("USER")  // 権限（今回は簡単に"USER"とする）
+                // メールアドレスをユーザー名として使用
+                .username(user.getEmail())  
+                // エンコード済みのパスワードを使用
+                .password(user.getPassword())
+                // 権限
+                .authorities("USER")  
                 .build();
     }
 }

@@ -28,7 +28,7 @@ import com.example.fridgemanager.service.FridgeItemService;
 import com.example.fridgemanager.service.FridgeService;
 
 @RestController
-@RequestMapping("/api/fridges")
+@RequestMapping("/api/fridges") // 冷蔵庫を扱うエンドポイント
 @CrossOrigin
 public class FridgeController {
 
@@ -44,21 +44,19 @@ public class FridgeController {
         this.fridgeItemService = fridgeItemService;
     }
 
-    // 冷蔵庫の作成
+    /**
+     * 冷蔵庫を新規作成する
+     * - リクエストされた名前で冷蔵庫を作成し、ログイン中のユーザーに紐付ける
+     */
     @PostMapping
     public Fridge createFridge(@RequestBody FridgeRequestDTO request, Principal principal) {
         User user = userRepository.findByEmail(principal.getName());
         return fridgeService.createFridge(user, request.getName());
     }
-
-    // ログインユーザーが属する冷蔵庫一覧を取得
-    //@GetMapping
-    //public List<Fridge> getMyFridges(Principal principal) {
-    //    User user = userRepository.findByEmail(principal.getName());
-    //    return fridgeService.getFridgesByUser(user);
-    //}
     
-    // ログインユーザーのメールアドレス取得
+    /**
+     * ログイン中ユーザーに紐づく冷蔵庫の一覧を取得する
+     */
     @GetMapping
     public List<FridgeDTO> getUserFridges(Principal principal) {
         String email = principal.getName();
@@ -72,19 +70,22 @@ public class FridgeController {
         return dtoList;
     }
 
-
-    // 単体取得（必要に応じて）
+    /**
+    * 指定されたIDの冷蔵庫情報を取得（必要に応じて使用）
+    */
     @GetMapping("/{id}")
     public Fridge getFridge(@PathVariable Long id) {
         return fridgeService.getFridgeById(id);
     }
     
-    
+    /**
+     * 冷蔵庫の詳細（食材リスト付き）を取得する
+     */
     @GetMapping("/{id}/detail")
     public FridgeDetailDTO getFridgeDetail(@PathVariable Long id) {
         Fridge fridge = fridgeService.getFridgeById(id);
         List<FridgeItem> items = fridgeItemService.getItemsByFridge(fridge);
-
+        
         List<FridgeItemDTO> itemDTOs = new ArrayList<>();
         for (FridgeItem item : items) {
             itemDTOs.add(new FridgeItemDTO(
@@ -99,14 +100,18 @@ public class FridgeController {
         return new FridgeDetailDTO(fridge.getId(), fridge.getName(), itemDTOs);
     }
     
-    // シェアしたい冷蔵庫とユーザのメールを取得し追加する
+    /**
+     * 冷蔵庫を他ユーザーと共有する（メール指定）
+     */
     @PostMapping("/{fridgeId}/share")
     public FridgeDTO shareFridge(@PathVariable Long fridgeId, @RequestBody ShareRequest request) {
     	Fridge fridge = fridgeService.addUserToFridge(fridgeId, request.getEmail());
         return new FridgeDTO(fridge);
     }
     
-    // 冷蔵庫に関連するユーザを取得
+    /**
+     * 冷蔵庫に共有されているユーザー一覧を取得
+     */
     @GetMapping("/{fridgeId}/users")
     public List<UserResponseDTO> getFridgeUsers(@PathVariable Long fridgeId) {
         List<User> users = fridgeService.getUsersByFridgeId(fridgeId);
@@ -119,13 +124,17 @@ public class FridgeController {
         return response;
     }
 
-    // 冷蔵庫の共有からユーザを削除する
+    /**
+     * 冷蔵庫の共有から特定ユーザーを削除する
+     */
     @DeleteMapping("/{fridgeId}/users/{userId}")
     public void removeFridgeUser(@PathVariable Long fridgeId, @PathVariable Long userId) {
         fridgeService.removeUserFromFridge(fridgeId, userId);
     }
     
-    // 冷蔵庫自体を削除する
+    /**
+     * 冷蔵庫自体を削除する（オーナーのみ許可）
+     */
     @DeleteMapping("/{fridgeId}")
     public void deleteFridge(@PathVariable Long fridgeId, Principal principal) {
         // 現在ログイン中のユーザーを取得
@@ -134,21 +143,13 @@ public class FridgeController {
         fridgeService.deleteFridge(fridgeId, requestingUser);
     }
     
+    /**
+     * 所有・共有中の冷蔵庫＋食材リストをすべて取得する
+     * - ホーム画面で一括表示する
+     */
     @GetMapping("/with-details")
     public List<FridgeDetailDTO> getFridgeDetails(Principal principal) {
         return fridgeService.getFridgeDetailsByUserEmail(principal.getName());
     }
-
-    //     @GetMapping("/with-details")
-    //     public List<FridgeDetailDTO> getFridgeDetails(Principal principal) {
-    //         System.out.println("DEBUG: /with-details called");
-    //         if (principal == null) {
-    //             System.out.println("DEBUG: principal is NULL!");
-    //             throw new RuntimeException("Principal is null");
-    //         }
-    //         System.out.println("DEBUG: principal = " + principal.getName());
-
-    //         return fridgeService.getFridgeDetailsByUserEmail(principal.getName());
-    // }
     
 }

@@ -6,8 +6,18 @@ import java.util.List;
 import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.entity.User;
 
+/**
+ * 通知メールの本文を構築するユーティリティクラス。
+ */
 public class EmailContentBuilder {
 
+    /**
+     * 食材の賞味期限通知メールの本文を生成する。
+     *
+     * @param user 通知先ユーザー
+     * @param items 対象のFridgeItemリスト
+     * @return メール本文（プレーンテキスト）
+     */
     public static String buildNotificationBody(User user, List<FridgeItem> items) {
         StringBuilder sb = new StringBuilder();
 

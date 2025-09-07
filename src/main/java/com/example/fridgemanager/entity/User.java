@@ -15,27 +15,40 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ * ユーザー情報を管理するエンティティ
+ * - 冷蔵庫の所有者・共有ユーザーの情報を保持
+ * - JPAで"users"テーブルにマッピング
+ */
 @Entity
-@Table(name = "users") // SQLの予約語を避けるため複数形が無難
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // 主キー（自動採番）
     private Long id;
 
     @NotBlank(message = "ユーザー名は必須です")
+    // 表示用ユーザー名
     private String username;
 
     @NotBlank(message = "メールアドレスは必須です")
     @Email(message = "正しいメールアドレス形式で入力してください")
+    // ログインにも利用されるメールアドレス
     private String email;
 
     //@NotBlank(message = "パスワードは必須です")
     @NotNull
     @Size(min = 6, message = "パスワードは6文字以上で入力してください")
+    // ハッシュ化されたパスワード
     private String password;
 
-    
+    /**
+     * ユーザーと冷蔵庫の関係を管理する中間テーブルへのリレーション
+     * - UserFridgeにより多対多を実現
+     * - orphanRemoval=true により関連がなくなったデータは自動削除
+     */   
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserFridge> userFridges = new ArrayList<>();
 
