@@ -8,18 +8,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import com.example.fridgemanager.service.CustomUserDetailsService;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import java.util.List;
+
+// import org.springframework.web.cors.CorsConfiguration;
+// import org.springframework.web.cors.CorsConfigurationSource;
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+// import java.util.List;
 
 @Configuration
 public class SecurityConfig {
-
-    private final CustomUserDetailsService customUserDetailsService;
+	
+    private final CustomUserDetailsService customUserDetailsService; // 追加！！
 
     public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
@@ -30,23 +32,15 @@ public class SecurityConfig {
         return http
             .csrf().disable()
             .authorizeHttpRequests(authz -> authz
-                .antMatchers(
-                    "/login",
-                    "/register",
-                    "/api/register",
-                    "/register-success",
-                    "/api/login",
-                    "/api/notify/send",
-                    "/api/logout"
-                ).permitAll()
-                .anyRequest().authenticated()
+            		.antMatchers("/api/register","register-sucess", "/api/login","/api/notify/send","/api/logout").permitAll() // 認証不要なURL
+                .anyRequest().authenticated() // その他は認証が必要
             )
-            .formLogin().disable()
+            .formLogin().disable() // ← これ重要！フォームログインは無効
             .logout(logout -> logout
-                .logoutUrl("/api/logout")
-                .logoutSuccessHandler((request, response, authentication) -> {
-                    response.setStatus(HttpServletResponse.SC_OK);
-                })
+            .logoutUrl("/api/logout") // ログアウトもAPIで
+            .logoutSuccessHandler((request, response, authentication) -> {
+                response.setStatus(HttpServletResponse.SC_OK); // リダイレクトなし
+            })
             )
             .build();
     }
@@ -55,22 +49,22 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://fridge-manager.netlify.app")); // ← フロントURLに合わせて変更
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
+    // @Bean
+    // public CorsConfigurationSource corsConfigurationSource() {
+    // CorsConfiguration configuration = new CorsConfiguration();
+    // configuration.setAllowedOrigins(List.of("http://localhost:5500")); // ← HTMLの表示元に合わせる
+    // configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    // configuration.setAllowedHeaders(List.of("*"));
+    // configuration.setAllowCredentials(true); // Cookieなどが必要な場合
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+    // UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    // source.registerCorsConfiguration("/**", configuration);
+    // return source;
+    // }
 }
