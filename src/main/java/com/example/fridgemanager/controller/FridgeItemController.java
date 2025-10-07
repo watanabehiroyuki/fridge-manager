@@ -22,7 +22,7 @@ import com.example.fridgemanager.repository.FridgeRepository;
 import com.example.fridgemanager.service.FridgeItemService;
 
 @RestController
-@RequestMapping("/api/fridges/{fridgeId}/items")  // 冷蔵庫ごとのアイテム操作に変更
+@RequestMapping("/api/fridges/{fridgeId}/items")  // 各冷蔵庫の食材を扱うエンドポイント
 @CrossOrigin
 public class FridgeItemController {
 
@@ -35,18 +35,24 @@ public class FridgeItemController {
         this.fridgeRepository = fridgeRepository;
     }
 
-    // 冷蔵庫に食材を追加する
+    /**
+     * 食材を新規追加する（指定した冷蔵庫IDに紐づけて登録）
+     */
     @PostMapping
     public FridgeItem createItem(
         @PathVariable Long fridgeId,
         @RequestBody FridgeItem item
     ) {
+    	// 冷蔵庫IDが存在するか確認（なければ例外）
         Fridge fridge = fridgeRepository.findById(fridgeId)
                 .orElseThrow(() -> new RuntimeException("Fridge not found"));
+        // サービス経由で保存処理
         return fridgeItemService.createItem(item, fridge);
     }
 
-    // 冷蔵庫ごとのアイテム一覧取得
+    /**
+     * 指定された冷蔵庫の全食材リストを取得（DTO形式で返す）
+     */
     @GetMapping
     public List<FridgeItemDTO> getItemsByFridge(@PathVariable Long fridgeId) {
         Fridge fridge = fridgeRepository.findById(fridgeId)
@@ -54,6 +60,7 @@ public class FridgeItemController {
         List<FridgeItem> items = fridgeItemService.getItemsByFridge(fridge);
         List<FridgeItemDTO> dtoList = new ArrayList<>();
 
+        // EntityをDTO に変換
         for (FridgeItem item : items) {
             dtoList.add(new FridgeItemDTO(
                 item.getId(),
@@ -67,12 +74,19 @@ public class FridgeItemController {
         return dtoList;
     }
 
-    // 通知対象アイテムの取得（全冷蔵庫からでOKの場合）
+    /**
+     * 通知対象となる食材のリストを取得
+     * - 冷蔵庫ごとの指定はなし（全アイテム対象）
+     * - 賞味期限が近い or 過ぎた食材を抽出する
+     */
     @GetMapping("/notify")
     public List<FridgeItem> getItemsForNotification() {
         return fridgeItemService.getItemsForNotification();
     }
 
+    /**
+     *　特定の食材アイテムをID指定で取得
+     */
     @GetMapping("/{itemId}")
     public FridgeItem getItem(
         @PathVariable Long fridgeId,
@@ -82,6 +96,9 @@ public class FridgeItemController {
         return optionalItem.orElseThrow(() -> new RuntimeException("Item not found"));
     }
 
+    /**
+     * 食材情報の更新
+     */
     @PutMapping("/{itemId}")
     public FridgeItem updateItem(
         @PathVariable Long fridgeId,
@@ -91,6 +108,10 @@ public class FridgeItemController {
         return fridgeItemService.updateItem(itemId, updatedItem);
     }
 
+    /**
+     * 食材の削除処理
+     * - 食材IDを指定して削除
+     */
     @DeleteMapping("/{itemId}")
     public void deleteItem(
         @PathVariable Long fridgeId,

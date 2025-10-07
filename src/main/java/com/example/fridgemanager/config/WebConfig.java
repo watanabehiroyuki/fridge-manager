@@ -10,10 +10,11 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(
-                    "http://localhost:5173", // 開発環境
-                    "https://fridge-manager-portfolio.netlify.app" // 本番フロントエンド
+                    "http://localhost:5173",
+                    "https://fridge-manager-portfolio.netlify.app" ,
+                    "http://35.72.189.212"
                 )
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true);
     }
 }

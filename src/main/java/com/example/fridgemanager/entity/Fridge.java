@@ -9,9 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,14 +23,8 @@ public class Fridge {
     @Column(nullable = false)
     private String name; // 例：「自宅」「職場」
 
-    // ユーザーとの多対多
-    @ManyToMany
-    @JoinTable(
-        name = "user_fridge",
-        joinColumns = @JoinColumn(name = "fridge_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<User> users = new ArrayList<>();
+    @OneToMany(mappedBy = "fridge", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserFridge> userFridges = new ArrayList<>();
 
 
     // 食材との1対多
@@ -67,14 +58,13 @@ public class Fridge {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<UserFridge> getUserFridges() {
+        return userFridges;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUserFridges(List<UserFridge> userFridges) {
+        this.userFridges = userFridges;
     }
-
     public List<FridgeItem> getFridgeItems() {
         return fridgeItems;
     }

@@ -1,5 +1,7 @@
 package com.example.fridgemanager.config;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,63 +10,79 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+
 import com.example.fridgemanager.service.CustomUserDetailsService;
-import javax.servlet.http.HttpServletResponse;
-
-
-// import org.springframework.web.cors.CorsConfiguration;
-// import org.springframework.web.cors.CorsConfigurationSource;
-// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-// import java.util.List;
 
 @Configuration
 public class SecurityConfig {
-	
-    private final CustomUserDetailsService customUserDetailsService; // 追加！！
+    
+    // ユーザー情報を取得するサービス
+    private final CustomUserDetailsService customUserDetailsService;
 
     public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
     }
 
+    /**
+     * セキュリティフィルタチェーンの設定
+     * 認証・認可のルールを定義
+     * フォームログインは無効化（REST API向け構成）
+     * 特定のAPIエンドポイントは未認証でもアクセス可能にする
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .csrf().disable()
+        	// REST APIではCSRFトークンは不要のため無効化
+            .csrf().disable() 
+
             .authorizeHttpRequests(authz -> authz
-            		.antMatchers("/api/register","register-sucess", "/api/login","/api/notify/send","/api/logout").permitAll() // 認証不要なURL
-                .anyRequest().authenticated() // その他は認証が必要
+                // 以下のエンドポイントは未認証でもアクセス許可
+                .antMatchers(
+                    "/api/register",         // ユーザー登録
+                    "register-sucess",       // 登録完了ページ
+                    "/api/login",            // ログイン処理
+                    "/api/notify/send",      // 通知メール送信API（動作確認用など）
+                    "/api/logout",           // ログアウト処理
+                    "/api/email/test"        // メール送信のテスト用API
+                ).permitAll()
+
+                // 上記以外のすべてのリクエストは認証が必要
+                .anyRequest().authenticated()
             )
-            .formLogin().disable() // ← これ重要！フォームログインは無効
+
+            // デフォルトのログインフォームを無効化
+            .formLogin().disable()
+
+            // ログアウト処理の設定
             .logout(logout -> logout
-            .logoutUrl("/api/logout") // ログアウトもAPIで
-            .logoutSuccessHandler((request, response, authentication) -> {
-                response.setStatus(HttpServletResponse.SC_OK); // リダイレクトなし
-            })
+            	// ログアウト時にアクセスされるAPIパス
+                .logoutUrl("/api/logout") 
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    response.setStatus(HttpServletResponse.SC_OK); // リダイレクトしない
+                })
             )
+
             .build();
     }
 
+    /**
+     * パスワードエンコーダーのBean定義
+     * - BCryptを使ってパスワードを安全にハッシュ化
+     * - ユーザー登録時・ログイン認証時に使用
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
+    /**
+     * AuthenticationManagerのBean定義
+     * - サービス層で認証処理を行う
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
-
-    // @Bean
-    // public CorsConfigurationSource corsConfigurationSource() {
-    // CorsConfiguration configuration = new CorsConfiguration();
-    // configuration.setAllowedOrigins(List.of("http://localhost:5500")); // ← HTMLの表示元に合わせる
-    // configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    // configuration.setAllowedHeaders(List.of("*"));
-    // configuration.setAllowCredentials(true); // Cookieなどが必要な場合
-
-    // UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    // source.registerCorsConfiguration("/**", configuration);
-    // return source;
-    // }
 }
+
+
