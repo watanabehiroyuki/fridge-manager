@@ -1,0 +1,1 @@
+(async()=>{const o=window.location.pathname;if(!["/login.html","/register.html","/"].includes(o))try{(await fetch("http://localhost:8080/api/auth/check",{credentials:"include"})).ok||(window.location.href="/login.html")}catch(t){console.error("ログイン確認失敗:",t),window.location.href="/login.html"}})();
