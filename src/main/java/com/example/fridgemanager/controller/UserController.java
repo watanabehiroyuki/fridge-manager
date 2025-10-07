@@ -21,19 +21,26 @@ import com.example.fridgemanager.entity.User;
 import com.example.fridgemanager.service.UserService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api") // 共通のAPIパス
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    /**
+     * ユーザー新規登録API（POST /api/register）
+     * - ユーザー名・メールアドレス・パスワードを受け取って登録
+     * - 確認用パスワードとの一致チェックあり
+     * - 登録済みメールアドレスはエラーを返す
+     */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody @Valid UserDTO userDTO) {
-            // ✅ パスワードと確認用パスワードの一致チェック
+            // パスワードと確認用パスワードの一致チェック
         if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())) {
             return ResponseEntity.status(400).body("{\"error\":\"パスワードが一致しません\"}");
         }
         try {
+        	// Entity に変換
             User user = new User();
             user.setUsername(userDTO.getUsername());
             user.setEmail(userDTO.getEmail());
@@ -52,16 +59,21 @@ public class UserController {
         }
     }
     
-    // ユーザー検索API（メールアドレス完全一致）
+    /**
+     * ユーザー検索API（GET /api/users/search?email=xxx）
+     * - メールアドレス完全一致で検索し、存在すればDTOで返す
+     * - 見つからなければ404エラー
+     */
     @GetMapping("/users/search")
     public ResponseEntity<?> searchUserByEmail(@RequestParam String email) {
+    	// メールアドレスで検索
         User user = userService.findByEmail(email);
         if (user == null) {
             Map<String, String> error = new HashMap<>();
             error.put("error", "ユーザーが見つかりません");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
-
+        // 見つかった場合はDTOで返却（パスワードは含めない）
         UserResponseDTO dto = new UserResponseDTO(user.getId(), user.getUsername(), user.getEmail());
         return ResponseEntity.ok(dto);
     }

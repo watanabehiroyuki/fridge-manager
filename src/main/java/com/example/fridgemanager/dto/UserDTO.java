@@ -1,12 +1,22 @@
 package com.example.fridgemanager.dto;
 
+/**
+ * UserDTO
+ * - ユーザー新規登録の際に使用するリクエストDTO
+ * - フロントエンドから送られるユーザー情報（ユーザー名、メール、パスワード、確認用パスワード）を保持する
+ * 
+ */
 public class UserDTO {
+    // 表示用ユーザー名
     private String username;
+    // メールアドレス
     private String email;
+    // パスワード
     private String password;
-    private String confirmPassword; // ここに確認用パスワードを設定
+ // 確認用パスワード（パスワードと一致しているかを登録時に検証）
+    private String confirmPassword;
 
-    // getterとsetterを追加
+    // --- Getter / Setter ---
     public String getUsername() {
         return username;
     }
