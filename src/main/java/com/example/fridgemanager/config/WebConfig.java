@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
                     "https://fridge-manager-portfolio.netlify.app" ,
                     "http://35.72.189.212"
                 )
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true);
     }
 }
