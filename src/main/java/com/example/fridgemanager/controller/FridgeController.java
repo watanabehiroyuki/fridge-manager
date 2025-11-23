@@ -74,8 +74,9 @@ public class FridgeController {
     * 指定されたIDの冷蔵庫情報を取得（必要に応じて使用）
     */
     @GetMapping("/{id}")
-    public Fridge getFridge(@PathVariable Long id) {
-        return fridgeService.getFridgeById(id);
+    public FridgeDTO getFridge(@PathVariable Long id) {
+        Fridge fridge = fridgeService.getFridgeById(id);
+        return new FridgeDTO(fridge.getId(), fridge.getName());
     }
     
     /**
