@@ -23,6 +23,7 @@ import com.example.fridgemanager.dto.UserResponseDTO;
 import com.example.fridgemanager.entity.Fridge;
 import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.entity.User;
+import com.example.fridgemanager.entity.UserFridge;
 import com.example.fridgemanager.repository.UserRepository;
 import com.example.fridgemanager.service.FridgeItemService;
 import com.example.fridgemanager.service.FridgeService;
@@ -115,11 +116,17 @@ public class FridgeController {
      */
     @GetMapping("/{fridgeId}/users")
     public List<UserResponseDTO> getFridgeUsers(@PathVariable Long fridgeId) {
-        List<User> users = fridgeService.getUsersByFridgeId(fridgeId);
+        Fridge fridge = fridgeService.getFridgeById(fridgeId);
         List<UserResponseDTO> response = new ArrayList<>();
 
-        for (User user : users) {
-            response.add(new UserResponseDTO(user.getId(), user.getUsername(), user.getEmail()));
+        for (UserFridge userFridge : fridge.getUserFridges()) {
+            User user = userFridge.getUser();
+            response.add(new UserResponseDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                userFridge.getRole()
+            ));
         }
 
         return response;
