@@ -19,8 +19,9 @@ public class WebConfig implements WebMvcConfigurer {
                     "http://192.168.*.*:5173", 
                     "http://10.*.*.*:5173",
                     "http://172.16.*.*:5173",
-                    "https://fridge-manager-portfolio.netlify.app" ,
-                    "https://fridge-manager-v2.netlify.app" ,
+                    "https://fridge-manager-portfolio.netlify.app",
+                    "https://fridge-manager.netlify.app",
+                    "https://fridge-manager-v2.netlify.app",
                     "http://35.72.189.212"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
