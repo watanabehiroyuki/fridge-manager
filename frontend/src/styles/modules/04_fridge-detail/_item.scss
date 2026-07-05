@@ -1,0 +1,149 @@
+/* modules/04_fridge-detail/_item.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-detail-item {
+  & {
+    background-color: color(wt);
+    position: relative;
+    &__category {
+      background-color: rgb(245, 245, 245);
+      display: inline-block;
+      line-height: 1;
+    }
+    &__name {
+    }
+    &__quantity {
+    }
+    &__date {
+      display: flex;
+      align-items: center;
+      &::before {
+        @include svg;
+        mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22lucide%20lucide-calendar%20w-4%20h-4%22%20data-fg-b3io158%3D%221.21%3A117.10178%3A%2Fcomponents%2FFridgeDetailScreen.tsx%3A437%3A33%3A18779%3A32%3Ae%3ACalendar%3A%3A%3A%3A%3A%3AC7bG%22%3E%3Cpath%20d%3D%22M8%202v4%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M16%202v4%22%3E%3C%2Fpath%3E%3Crect%20width%3D%2218%22%20height%3D%2218%22%20x%3D%223%22%20y%3D%224%22%20rx%3D%222%22%3E%3C%2Frect%3E%3Cpath%20d%3D%22M3%2010h18%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+        background-color: color(bk);
+      }
+    }
+    &__expired {
+      background-color: color(pink, thin);
+      color: color(pink);
+      font-weight: 700;
+    }
+    &__edit-btn {
+      font-size: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      @include hBase;
+      &::before {
+        @include svg;
+        mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22lucide%20lucide-square-pen%20w-5%20h-5%22%20data-fg-b3io162%3D%221.21%3A117.10178%3A%2Fcomponents%2FFridgeDetailScreen.tsx%3A447%3A31%3A19356%3A28%3Ae%3AEdit%3A%3A%3A%3A%3A%3AK8I%22%3E%3Cpath%20d%3D%22M12%203H5a2%202%200%200%200-2%202v14a2%202%200%200%200%202%202h14a2%202%200%200%200%202-2v-7%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M18.375%202.625a1%201%200%200%201%203%203l-9.013%209.014a2%202%200%200%201-.853.505l-2.873.84a.5.5%200%200%201-.62-.62l.84-2.873a2%202%200%200%201%20.506-.852z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+        background-color: color(blu);
+      }
+    }
+    &__remove-btn {
+      font-size: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      @include hBase;
+      &::before {
+        @include svg;
+        mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22lucide%20lucide-trash2%20lucide-trash-2%20w-4%20h-4%22%20data-fg-dymv96%3D%221.18%3A41.16951%3A%2Fcomponents%2FFridgeListScreen.tsx%3A264%3A25%3A10496%3A30%3Ae%3ATrash2%3A%3A%3A%3A%3A%3ACuIQ%22%3E%3Cpath%20d%3D%22M3%206h18%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M19%206v14c0%201-1%202-2%202H7c-1%200-2-1-2-2V6%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M8%206V4c0-1%201-2%202-2h4c1%200%202%201%202%202v2%22%3E%3C%2Fpath%3E%3Cline%20x1%3D%2210%22%20x2%3D%2210%22%20y1%3D%2211%22%20y2%3D%2217%22%3E%3C%2Fline%3E%3Cline%20x1%3D%2214%22%20x2%3D%2214%22%20y1%3D%2211%22%20y2%3D%2217%22%3E%3C%2Fline%3E%3C%2Fsvg%3E");
+        background-color: color(pink);
+      }
+    }
+    &__remove-check {
+      position: absolute;
+      background-color: color(wt);
+      border-color: color(bk);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      &:checked {
+        background-color: color(blu);
+        border-color: color(blu);
+        &::after {
+          @include svg;
+          mask-image: url("data:image/svg+xml;charset=utf8,%3C!--%20Generator%3A%20Adobe%20Illustrator%2018.1.1%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200)%20--%3E%3Csvg%20version%3D%221.1%22%20id%3D%22_x32_%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%20512%20512%22%20style%3D%22width%3A%20256px%3B%20height%3A%20256px%3B%20opacity%3A%201%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%20.st0%7Bfill%3A%234B4B4B%3B%7D%3C%2Fstyle%3E%3Cg%3E%20%3Cpolygon%20class%3D%22st0%22%20points%3D%22440.469%2C73.413%20218.357%2C295.525%2071.531%2C148.709%200%2C220.229%20146.826%2C367.055%20218.357%2C438.587%20289.878%2C367.055%20512%2C144.945%20%22%20style%3D%22fill%3A%20rgb(75%2C%2075%2C%2075)%3B%22%3E%3C%2Fpolygon%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+          background-color: color(bk);
+          display: block;
+        }
+      }
+    }
+  }
+
+  @include pc {
+    border-radius: vw(20px, $pc);
+    margin: vw(20px, $pc) auto;
+    box-shadow: 0 0 vw(8px, $pc) 0 rgba(0, 0, 0, 0.2);
+    padding: vw(30px, $pc);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__inner {
+      flex: 1;
+    }
+    &__category {
+      font-size: vw(14px, $pc);
+      padding: vw(7px, $pc);
+      border-radius: vw(5px, $pc);
+    }
+    &__name {
+      margin: vw(16px, $pc) 0;
+      font-size: vw(18px, $pc);
+    }
+    &__column {
+      display: flex;
+      align-items: center;
+      gap: 0 vw(40px, $pc);
+    }
+    &__quantity {
+      font-size: vw(14px, $pc);
+    }
+    &__date {
+      font-size: vw(14px, $pc);
+      gap: 0 vw(4px, $pc);
+      &::before {
+        width: vw(14px, $pc);
+        height: vw(14px, $pc);
+      }
+    }
+    &__expired {
+      border-radius: vw(3px, $pc);
+      font-size: vw(14px, $pc);
+      padding: vw(3px, $pc) vw(6px, $pc);
+    }
+    &__btns {
+      display: flex;
+      gap: 0 vw(10px, $pc);
+    }
+    &__edit-btn {
+      &::before {
+        width: vw(24px, $pc);
+        height: vw(24px, $pc);
+      }
+    }
+    &__remove-btn {
+      &::before {
+        width: vw(24px, $pc);
+        height: vw(24px, $pc);
+      }
+    }
+    &__remove-check {
+      top: vw(20px, $pc);
+      right: vw(20px, $pc);
+      width: vw(20px, $pc);
+      height: vw(20px, $pc);
+      border-radius: vw(3px, $pc) !important;
+      border: solid vw(1px, $pc);
+      &:checked {
+        &::after {
+          width: vw(15px, $pc);
+          height: vw(15px, $pc);
+        }
+      }
+    }
+  }
+}

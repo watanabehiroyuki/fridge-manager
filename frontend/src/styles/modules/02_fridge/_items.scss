@@ -1,0 +1,13 @@
+/* modules/02_fridge/_items.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-items {
+  & {
+  }
+
+  @include pc {
+    display: flex;
+    gap: vw(5px, $pc);
+  }
+}

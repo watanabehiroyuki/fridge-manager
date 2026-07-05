@@ -23,6 +23,7 @@ import com.example.fridgemanager.dto.UserResponseDTO;
 import com.example.fridgemanager.entity.Fridge;
 import com.example.fridgemanager.entity.FridgeItem;
 import com.example.fridgemanager.entity.User;
+import com.example.fridgemanager.entity.UserFridge;
 import com.example.fridgemanager.repository.UserRepository;
 import com.example.fridgemanager.service.FridgeItemService;
 import com.example.fridgemanager.service.FridgeService;
@@ -49,9 +50,10 @@ public class FridgeController {
      * - リクエストされた名前で冷蔵庫を作成し、ログイン中のユーザーに紐付ける
      */
     @PostMapping
-    public Fridge createFridge(@RequestBody FridgeRequestDTO request, Principal principal) {
+    public FridgeDTO createFridge(@RequestBody FridgeRequestDTO request, Principal principal) {
         User user = userRepository.findByEmail(principal.getName());
-        return fridgeService.createFridge(user, request.getName());
+        Fridge fridge = fridgeService.createFridge(user, request.getName());
+        return new FridgeDTO(fridge.getId(), fridge.getName());
     }
     
     /**
@@ -74,8 +76,9 @@ public class FridgeController {
     * 指定されたIDの冷蔵庫情報を取得（必要に応じて使用）
     */
     @GetMapping("/{id}")
-    public Fridge getFridge(@PathVariable Long id) {
-        return fridgeService.getFridgeById(id);
+    public FridgeDTO getFridge(@PathVariable Long id) {
+        Fridge fridge = fridgeService.getFridgeById(id);
+        return new FridgeDTO(fridge.getId(), fridge.getName());
     }
     
     /**
@@ -114,11 +117,12 @@ public class FridgeController {
      */
     @GetMapping("/{fridgeId}/users")
     public List<UserResponseDTO> getFridgeUsers(@PathVariable Long fridgeId) {
-        List<User> users = fridgeService.getUsersByFridgeId(fridgeId);
+        Fridge fridge = fridgeService.getFridgeById(fridgeId);
         List<UserResponseDTO> response = new ArrayList<>();
 
-        for (User user : users) {
-            response.add(new UserResponseDTO(user.getId(), user.getUsername(), user.getEmail()));
+        for (UserFridge uf : fridge.getUserFridges()) {
+            User user = uf.getUser();
+            response.add(new UserResponseDTO(user.getId(), user.getUsername(), user.getEmail(), uf.getRole()));
         }
 
         return response;

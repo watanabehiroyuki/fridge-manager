@@ -1,0 +1,83 @@
+/* modules/04_fridge-detail/_sort.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-detail-form {
+  & {
+    background-color: color(wt);
+    &__inner {
+    }
+    &__item {
+      &-ttl {
+        color: color(gry);
+        display: block;
+      }
+      &-value {
+        width: 100%;
+      }
+    }
+    &__submit-btn {
+      background-color: color(grn);
+      color: color(wt);
+      display: flex;
+      align-items: center;
+      @include hBase;
+      &::before {
+        @include svg;
+        mask-image: url("data:image/svg+xml;charset=utf8,%3C!--%20Generator%3A%20Adobe%20Illustrator%2018.1.1%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200)%20--%3E%3Csvg%20version%3D%221.1%22%20id%3D%22_x32_%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%20512%20512%22%20style%3D%22width%3A%20256px%3B%20height%3A%20256px%3B%20opacity%3A%201%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%20.st0%7Bfill%3A%234B4B4B%3B%7D%3C%2Fstyle%3E%3Cg%3E%20%3Cpolygon%20class%3D%22st0%22%20points%3D%22440.469%2C73.413%20218.357%2C295.525%2071.531%2C148.709%200%2C220.229%20146.826%2C367.055%20218.357%2C438.587%20289.878%2C367.055%20512%2C144.945%20%22%20style%3D%22fill%3A%20rgb(75%2C%2075%2C%2075)%3B%22%3E%3C%2Fpolygon%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+        background-color: color(wt);
+      }
+    }
+    &__cancel-btn {
+      background-color: color(blu);
+      color: color(wt);
+      display: flex;
+      align-items: center;
+      @include hBase;
+    }
+  }
+
+  @include pc {
+    border-radius: vw(20px, $pc);
+    margin: vw(20px, $pc) auto;
+    box-shadow: 0 0 vw(8px, $pc) 0 rgba(0, 0, 0, 0.2);
+    padding: vw(30px, $pc);
+
+    &__items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: vw(20px, $pc) vw(30px, $pc);
+      margin-bottom: vw(20px, $pc);
+    }
+    &__item {
+      width: calc(50% - vw(15px, $pc));
+      &-ttl {
+        font-size: vw(14px, $pc);
+        margin-bottom: vw(5px, $pc);
+      }
+      &-value {
+        padding: vw(5px, $pc);
+      }
+    }
+    &__btns {
+      display: flex;
+      gap: 0 vw(10px, $pc);
+    }
+    &__submit-btn {
+      gap: 0 vw(4px, $pc);
+      font-size: vw(14px, $pc);
+      border-radius: vw(5px, $pc);
+      padding: vw(10px, $pc);
+      &::before {
+        width: vw(10px, $pc);
+        height: vw(10px, $pc);
+      }
+    }
+    &__cancel-btn {
+      gap: 0 vw(4px, $pc);
+      font-size: vw(14px, $pc);
+      border-radius: vw(5px, $pc);
+      padding: vw(10px, $pc);
+    }
+  }
+}

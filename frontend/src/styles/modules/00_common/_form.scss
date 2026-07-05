@@ -1,0 +1,52 @@
+/* modules/00_common/_form.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-form {
+  & {
+    &__group {
+      label {
+        font-weight: $bold;
+        display: block;
+      }
+      input {
+        @include input;
+      }
+    }
+
+    &__submit-btn {
+      background-color: color(blu);
+      color: color(wt);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: $bold;
+      @include hBase;
+    }
+  }
+
+  @include pc {
+    margin: vw(40px, $pc) 0;
+    &__group {
+      label {
+        margin-bottom: vw(10px, $pc);
+        font-size: vw(16px, $pc);
+      }
+      + .m-form__group {
+        margin-top: vw(20px, $pc);
+      }
+    }
+
+    &__input {
+    }
+
+    &__submit-btn {
+      width: 100%;
+      margin-top: vw(30px, $pc);
+      border-radius: vw(5px, $pc);
+      padding: vw(15px, $pc);
+      gap: 0 vw(5px, $pc);
+      font-size: vw(18px, $pc);
+    }
+  }
+}

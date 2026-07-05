@@ -1,0 +1,54 @@
+/* global/_header.scss
+-------------------------------------------------- */
+@use "../setting/import" as *;
+
+.g-header {
+  & {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: color(wt);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+    &__ttl {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      color: color(bk);
+      @include hBase;
+      .icn {
+        background-color: color(blu, thin);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &::before {
+          @include svg;
+          mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22lucide%20lucide-refrigerator%20w-6%20h-6%22%20data-fg-dymv6%3D%221.18%3A7.12010%3A%2Fcomponents%2FFridgeListScreen.tsx%3A47%3A15%3A1433%3A65%3Ae%3ARefrigerator%3A%3A%3A%3A%3A%3AC3fA%22%20style%3D%22color%3A%20rgb(93%2C%20171%2C%20230)%3B%22%3E%3Cpath%20d%3D%22M5%206a4%204%200%200%201%204-4h6a4%204%200%200%201%204%204v14a2%202%200%200%201-2%202H7a2%202%200%200%201-2-2V6Z%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M5%2010h14%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M15%207v6%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+          background-color: color(blu);
+        }
+      }
+    }
+  }
+
+  @include pc {
+    height: vw(80px, $pc);
+    padding: 0 vw(25px, $pc);
+    box-shadow: 0 vw(5px, $pc) vw(5px, $pc) 0 rgba(0, 0, 0, 0.2);
+    &__ttl {
+      gap: 0 vw(10px, $pc);
+      font-size: vw(26px, $pc);
+      .icn {
+        border-radius: vw(10px, $pc);
+        width: vw(40px, $pc);
+        height: vw(40px, $pc);
+        &::before {
+          width: vw(25px, $pc);
+          height: vw(25px, $pc);
+        }
+      }
+    }
+  }
+}

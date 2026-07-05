@@ -1,0 +1,33 @@
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Color
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$palette: (
+  bk: (
+    base: #000,
+  ),
+  wt: (
+    base: #fff,
+  ),
+  gry: (
+    base: #ccc,
+    thin: #eee,
+    dark: #aaa,
+  ),
+  grn: (
+    base: #0b9b8a,
+    thin: #97e8de,
+    ylw: #65ae0c,
+  ),
+  pink: (
+    base: #f596a1,
+    thin: #fadeeb,
+  ),
+  blu: (
+    base: #5dabe6,
+    thin: #c4e1f6,
+  ),
+  ylw: (
+    base: #f9c975,
+    thin: #fde6bf,
+  ),
+) !default;

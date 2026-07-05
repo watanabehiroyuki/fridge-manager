@@ -1,0 +1,25 @@
+/* global/_logout-btn.scss
+-------------------------------------------------- */
+@use "../setting/import" as *;
+
+.g-logout-btn {
+  & {
+    display: flex;
+    align-items: center;
+    @include hBase;
+    &::after {
+      @include svg;
+      mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22lucide%20lucide-log-out%20w-5%20h-5%22%20data-fg-dymv13%3D%221.18%3A7.12010%3A%2Fcomponents%2FFridgeListScreen.tsx%3A57%3A15%3A1920%3A30%3Ae%3ALogOut%3A%3A%3A%3A%3A%3AEKxy%22%3E%3Cpath%20d%3D%22M9%2021H5a2%202%200%200%201-2-2V5a2%202%200%200%201%202-2h4%22%3E%3C%2Fpath%3E%3Cpolyline%20points%3D%2216%2017%2021%2012%2016%207%22%3E%3C%2Fpolyline%3E%3Cline%20x1%3D%2221%22%20x2%3D%229%22%20y1%3D%2212%22%20y2%3D%2212%22%3E%3C%2Fline%3E%3C%2Fsvg%3E");
+      background-color: color(bk);
+    }
+  }
+
+  @include pc {
+    gap: 0 vw(5px, $pc);
+    font-size: vw(15px, $pc);
+    &::after {
+      width: vw(20px, $pc);
+      height: vw(20px, $pc);
+    }
+  }
+}

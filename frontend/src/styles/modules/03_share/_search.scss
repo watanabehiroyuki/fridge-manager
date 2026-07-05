@@ -1,0 +1,112 @@
+/* modules/03_share/_search.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-share-search {
+  & {
+    &__ttl {
+      span {
+        display: block;
+        color: color(gry, dark);
+      }
+    }
+
+    &-form {
+      input {
+        width: 100%;
+      }
+      &__submit-btn {
+        background-color: color(blu);
+        color: color(wt);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include hBase;
+      }
+    }
+
+    &__result {
+    }
+
+    &__shareuser {
+    }
+
+    &__add-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: color(blu);
+      background-color: color(blu, thin);
+      @include hBase;
+      &::before {
+        @include svg;
+        mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22lucide%20lucide-user-plus%20w-4%20h-4%22%20data-fg-dymv99%3D%221.18%3A76.18283%3A%2Fcomponents%2FFridgeListScreen.tsx%3A274%3A25%3A11116%3A32%3Ae%3AUserPlus%3A%3A%3A%3A%3A%3ACQ4z%22%3E%3Cpath%20d%3D%22M16%2021v-2a4%204%200%200%200-4-4H6a4%204%200%200%200-4%204v2%22%3E%3C%2Fpath%3E%3Ccircle%20cx%3D%229%22%20cy%3D%227%22%20r%3D%224%22%3E%3C%2Fcircle%3E%3Cline%20x1%3D%2219%22%20x2%3D%2219%22%20y1%3D%228%22%20y2%3D%2214%22%3E%3C%2Fline%3E%3Cline%20x1%3D%2222%22%20x2%3D%2216%22%20y1%3D%2211%22%20y2%3D%2211%22%3E%3C%2Fline%3E%3C%2Fsvg%3E");
+        background-color: color(blu);
+      }
+    }
+
+    &__complete {
+      width: 100%;
+      color: color(blu);
+      background-color: color(blu, thin);
+    }
+  }
+
+  @include pc {
+    &__ttl {
+      font-size: vw(20px, $pc);
+      span {
+        font-size: vw(15px, $pc);
+        margin-top: vw(10px, $pc);
+      }
+    }
+
+    &-form {
+      margin-top: vw(30px, $pc);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 vw(10px, $pc);
+      input {
+        padding: vw(5px, $pc) vw(10px, $pc);
+        font-size: vw(15px, $pc);
+        flex: 1;
+      }
+      &__submit-btn {
+        font-size: vw(16px, $pc);
+        border-radius: vw(5px, $pc);
+        padding: vw(10px, $pc);
+      }
+    }
+
+    &__result {
+      margin-top: vw(30px, $pc);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0 vw(15px, $pc);
+    }
+
+    &__shareuser {
+      font-size: vw(16px, $pc);
+    }
+
+    &__add-btn {
+      border-radius: vw(5px, $pc);
+      padding: vw(10px, $pc);
+      gap: 0 vw(5px, $pc);
+      font-size: vw(16px, $pc);
+      &::before {
+        width: vw(20px, $pc);
+        height: vw(20px, $pc);
+      }
+    }
+
+    &__complete {
+      width: 100%;
+      border-radius: vw(5px, $pc);
+      padding: vw(12px, $pc);
+      margin-top: vw(15px, $pc);
+      font-size: vw(16px, $pc);
+    }
+  }
+}

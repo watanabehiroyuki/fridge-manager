@@ -1,0 +1,13 @@
+/* global/_container.scss
+-------------------------------------------------- */
+@use "../setting/import" as *;
+
+.g-container {
+  & {
+    @extend %container;
+  }
+
+  @include pc {
+    margin-top: vw(80px, $pc);
+  }
+}

@@ -1,0 +1,84 @@
+/* modules/04_fridge-detail/_sort.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-detail-sort {
+  & {
+    position: relative;
+    background-color: color(wt);
+    &__ttl {
+      display: flex;
+      align-items: center;
+      &::before {
+        @include svg;
+        mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22lucide%20lucide-funnel%20w-5%20h-5%22%20data-fg-b3io72%3D%221.21%3A104.4322%3A%2Fcomponents%2FFridgeDetailScreen.tsx%3A254%3A21%3A9182%3A30%3Ae%3AFilter%3A%3A%3A%3A%3A%3ADmce%22%3E%3Cpath%20d%3D%22M10%2020a1%201%200%200%200%20.553.895l2%201A1%201%200%200%200%2014%2021v-7a2%202%200%200%201%20.517-1.341L21.74%204.67A1%201%200%200%200%2021%203H3a1%201%200%200%200-.742%201.67l7.225%207.989A2%202%200%200%201%2010%2014z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+        background-color: color(bk);
+      }
+    }
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &__item {
+      display: flex;
+      align-items: center;
+      label {
+      }
+      input {
+        background-color: color(wt);
+        border-color: color(bk);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        &:checked {
+          background-color: color(blu);
+          border-color: color(blu);
+          &::after {
+            @include svg;
+            mask-image: url("data:image/svg+xml;charset=utf8,%3C!--%20Generator%3A%20Adobe%20Illustrator%2018.1.1%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200)%20--%3E%3Csvg%20version%3D%221.1%22%20id%3D%22_x32_%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%20512%20512%22%20style%3D%22width%3A%20256px%3B%20height%3A%20256px%3B%20opacity%3A%201%3B%22%20xml%3Aspace%3D%22preserve%22%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%20.st0%7Bfill%3A%234B4B4B%3B%7D%3C%2Fstyle%3E%3Cg%3E%20%3Cpolygon%20class%3D%22st0%22%20points%3D%22440.469%2C73.413%20218.357%2C295.525%2071.531%2C148.709%200%2C220.229%20146.826%2C367.055%20218.357%2C438.587%20289.878%2C367.055%20512%2C144.945%20%22%20style%3D%22fill%3A%20rgb(75%2C%2075%2C%2075)%3B%22%3E%3C%2Fpolygon%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+            background-color: color(bk);
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  @include pc {
+    border-radius: vw(20px, $pc);
+    box-shadow: 0 0 vw(8px, $pc) 0 rgba(0, 0, 0, 0.2);
+    padding: vw(30px, $pc);
+    margin-bottom: vw(60px, $pc);
+    &__ttl {
+      font-size: vw(20px, $pc);
+      gap: 0 vw(10px, $pc);
+      &::before {
+        width: vw(20px, $pc);
+        height: vw(20px, $pc);
+      }
+    }
+    &__list {
+      gap: vw(20px, $pc) vw(15px, $pc);
+      margin-top: vw(30px, $pc);
+    }
+    &__item {
+      gap: 0 vw(3px, $pc);
+      label {
+        font-size: vw(15px, $pc);
+      }
+      input {
+        width: vw(15px, $pc);
+        height: vw(15px, $pc);
+        border-radius: vw(3px, $pc) !important;
+        border: solid vw(1px, $pc);
+        &:checked {
+          &::after {
+            width: vw(12px, $pc);
+            height: vw(12px, $pc);
+          }
+        }
+      }
+    }
+  }
+}

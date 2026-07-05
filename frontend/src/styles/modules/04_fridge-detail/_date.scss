@@ -1,0 +1,42 @@
+/* modules/04_fridge-detail/_date.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-detail-date {
+  & {
+    position: absolute;
+    &__ttl {
+      display: flex;
+      align-items: center;
+      &::before {
+        @include svg;
+        mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22lucide%20lucide-arrow-up-down%20w-5%20h-5%22%20data-fg-b3io89%3D%221.21%3A104.4322%3A%2Fcomponents%2FFridgeDetailScreen.tsx%3A289%3A21%3A10885%3A35%3Ae%3AArrowUpDown%3A%3A%3A%3A%3A%3ABtG4%22%3E%3Cpath%20d%3D%22m21%2016-4%204-4-4%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M17%2020V4%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22m3%208%204-4%204%204%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M7%204v16%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+        background-color: color(bk);
+      }
+    }
+    &__select {
+      option {
+      }
+    }
+  }
+
+  @include pc {
+    top: vw(20px, $pc);
+    right: vw(30px, $pc);
+    &__ttl {
+      gap: 0 vw(3px, $pc);
+      font-size: vw(14px, $pc);
+      &::before {
+        width: vw(18px, $pc);
+        height: vw(18px, $pc);
+      }
+    }
+    &__select {
+      margin-top: vw(5px, $pc);
+      padding: vw(5px, $pc) vw(3px, $pc);
+      border-radius: vw(5px, $pc);
+      option {
+      }
+    }
+  }
+}

@@ -39,15 +39,14 @@ public class FridgeItemController {
      * 食材を新規追加する（指定した冷蔵庫IDに紐づけて登録）
      */
     @PostMapping
-    public FridgeItem createItem(
+    public FridgeItemDTO createItem(
         @PathVariable Long fridgeId,
         @RequestBody FridgeItem item
     ) {
-    	// 冷蔵庫IDが存在するか確認（なければ例外）
         Fridge fridge = fridgeRepository.findById(fridgeId)
                 .orElseThrow(() -> new RuntimeException("Fridge not found"));
-        // サービス経由で保存処理
-        return fridgeItemService.createItem(item, fridge);
+        FridgeItem saved = fridgeItemService.createItem(item, fridge);
+        return new FridgeItemDTO(saved.getId(), saved.getName(), saved.getCategory(), saved.getQuantity(), saved.getExpirationDate());
     }
 
     /**
@@ -88,24 +87,26 @@ public class FridgeItemController {
      *　特定の食材アイテムをID指定で取得
      */
     @GetMapping("/{itemId}")
-    public FridgeItem getItem(
+    public FridgeItemDTO getItem(
         @PathVariable Long fridgeId,
         @PathVariable Long itemId
     ) {
-        Optional<FridgeItem> optionalItem = fridgeItemService.getItemById(itemId);
-        return optionalItem.orElseThrow(() -> new RuntimeException("Item not found"));
+        FridgeItem item = fridgeItemService.getItemById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+        return new FridgeItemDTO(item.getId(), item.getName(), item.getCategory(), item.getQuantity(), item.getExpirationDate());
     }
 
     /**
      * 食材情報の更新
      */
     @PutMapping("/{itemId}")
-    public FridgeItem updateItem(
+    public FridgeItemDTO updateItem(
         @PathVariable Long fridgeId,
         @PathVariable Long itemId,
         @RequestBody FridgeItem updatedItem
     ) {
-        return fridgeItemService.updateItem(itemId, updatedItem);
+        FridgeItem item = fridgeItemService.updateItem(itemId, updatedItem);
+        return new FridgeItemDTO(item.getId(), item.getName(), item.getCategory(), item.getQuantity(), item.getExpirationDate());
     }
 
     /**

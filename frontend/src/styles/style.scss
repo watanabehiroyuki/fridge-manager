@@ -1,0 +1,107 @@
+@charset "UTF-8";
+// [共有事項]
+// ・ PCとSPの個別の記述はブレイクポイントで分けてください
+//　　　-> どちらにも反映されてブレイクポイントで上書きみたいなのは禁止です
+// ・ 基本はBEMですがそこまで厳しく縛っていません
+//　　　-> 状態を表すクラス・jsで使用しているクラスなどのマルチクラスなどは許可する形です
+//　　　-> それ以外はブロックとエレメントのマルチクラスが以外は原則禁止です
+//　　　-> セレクタへ直接css適用するなど、それが最適な場合はOKですが、それ以外は原則禁止です
+// ・ BEMの参考サイト -> https://qiita.com/Takuan_Oishii/items/0f0d2c5dc33a9b2d9cb1
+// ・ モジュールを横断するような共有のパーツなどは可能な限りextendやmixin化してください
+// ・ CMS導入部分などについてはBEMの例外としてセレクタなどで指定します
+// ・ファイル名が重複したときのために、　_Global, _Modules, _Patches には名前空間を指定してください
+// -> 名前空間はわかりやすいようにclass名と同じにしてください
+
+// [_Setting]
+// ・ sassに関する設定、cssの初期化など
+// ・ 1ファイルの記述が多くなるようでしたらファイルを分割してください
+
+// [_Library]
+// ・ スライダーなどのプラグインを使用する際に必要なcssなど
+// ・ 場合によっては @use url(〜) で外部ファイル可
+
+// [_Status]
+// ・ 状態を表すものなど
+// ・ 接頭詞は必要に応じて個別に設定してください
+
+// [_Global]
+// ・ サイト全体で使用する要素など
+// ・ 接頭詞に g- をつけること
+
+// [_Modules]
+// ・ 各種モジュールなど
+// ・ モジュール名とファイル名が一致するようにしてください
+// ・ モジュールはブロックごとどこに配置しても問題が起きないように組まれていることが理想です
+// ・ ブロックとエレメントでの構成が難しくなるようでしたら、モジュールを分けることを検討してください
+// ・ 接頭詞に m- をつけること
+
+// [_Patches]
+// ・ ページ単位の記述や _Modules で設定したものと個別に違う場合など
+// ・ ページ固有のデザインであっても、モジュールとして存在しないものはモジュール化してください（基本的に全ての要素がモジュール化する想定です）
+// ・ ページごとにファイルを用意してください（ディレクトリ構成はhtmlファイルに則ってください）
+// ・ URLが変更になった場合などは適宜class名やファイル名・コメントなども直してください
+// ・ CSSの安易な上書きは避けてください
+// ・ 接頭詞に p- をつけること
+
+// ==================================================
+// _Setting
+// ==================================================
+@use "setting/reset";
+@use "setting/base";
+
+// ==================================================
+// _Library
+// ==================================================
+
+// ==================================================
+// _Status
+// ==================================================
+@use "status/is";
+
+// ==================================================
+// _Global
+// ==================================================
+@use "global/header" as g-header;
+@use "global/container" as g-container;
+@use "global/logout-btn" as g-logout-btn;
+
+// ...以下、必要に応じて増設
+
+// ==================================================
+// _Modules
+// ==================================================
+// 00：ページ共通
+@use "modules/00_common/btn" as m-btn;
+@use "modules/00_common/ttl" as m-ttl;
+@use "modules/00_common/form" as m-form;
+@use "modules/00_common/modal" as m-modal;
+@use "modules/00_common/user-tag" as m-user-tag;
+@use "modules/00_common/card" as m-card;
+
+// 01：ユーザー新規登録画面
+
+// 02：冷蔵庫一覧画面
+@use "modules/02_fridge/fridge" as m-fridge;
+@use "modules/02_fridge/register" as m-fridge-register;
+@use "modules/02_fridge/card" as m-fridge-card;
+@use "modules/02_fridge/users" as m-fridge-users;
+@use "modules/02_fridge/items" as m-fridge-items;
+
+// 03：冷蔵庫共有画面
+@use "modules/03_share/share" as m-share;
+@use "modules/03_share/search" as m-share-search;
+
+// 04：冷蔵庫詳細画面
+@use "modules/04_fridge-detail/detail" as m-fridge-detail;
+@use "modules/04_fridge-detail/sort" as m-fridge-detail-sort;
+@use "modules/04_fridge-detail/date" as m-fridge-detail-date;
+@use "modules/04_fridge-detail/form" as m-fridge-detail-form;
+@use "modules/04_fridge-detail/item" as m-fridge-detail-item;
+
+// ...以下、必要に応じて増設
+
+// ==================================================
+// _Patches
+// ==================================================
+
+// ...以下、必要に応じて増設

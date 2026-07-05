@@ -1,0 +1,170 @@
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Mixins
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@use "var" as *;
+@use "functions" as *;
+
+@mixin pc {
+  @media screen and (min-width: #{$break+1}px) {
+    @content;
+  }
+}
+
+@mixin sp {
+  @media screen and (max-width: #{$break}px) {
+    @content;
+  }
+}
+
+@mixin hidden {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: transparent;
+  text-indent: -9999px;
+  opacity: 0;
+  transform: scale(0);
+}
+
+@mixin svg {
+  content: "";
+  flex-shrink: 0;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+  mask-size: contain;
+}
+
+// アスペクト比
+@mixin aspect($width, $height, $ofi: cover) {
+  position: relative;
+
+  &::before {
+    float: left;
+    padding-top: calc($height / $width * 100%);
+    content: "";
+  }
+
+  &::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+
+  & > :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: $ofi;
+  }
+}
+
+@mixin clamp($count: 3) {
+  @if $count==1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    width: 100%;
+    -webkit-line-clamp: $count;
+    -webkit-box-orient: vertical;
+    text-align: left;
+    overflow: hidden;
+  }
+}
+
+@mixin hBase {
+  @include pc {
+    transition: opacity 0.1s ease;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+@mixin icon($bg, $color, $w, $h) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $bold;
+  background-color: $bg;
+  border-radius: 50%;
+  overflow: hidden;
+  font-size: 0;
+  color: transparent;
+  box-sizing: border-box;
+  &::after {
+    color: $color;
+  }
+  @include pc {
+    width: vw($w, $pc);
+    height: vw($h, $pc);
+    &:hover {
+      background-color: $color;
+      &::after {
+        color: $bg;
+      }
+    }
+  }
+}
+
+@mixin tagIcon($bg, $color, $w, $h, $icnW, $icnH) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $bg;
+  border-radius: 50%;
+  overflow: hidden;
+  box-sizing: border-box;
+  &::after {
+    @include svg;
+    background-color: $color;
+  }
+  @include pc {
+    width: vw($w, $pc);
+    height: vw($h, $pc);
+    &::after {
+      width: vw($icnW, $pc);
+      height: vw($icnH, $pc);
+    }
+  }
+}
+
+@mixin checkbox($color) {
+  position: relative;
+  border: 2px solid color(gry);
+  background-color: color(wt);
+  margin: 0;
+  box-sizing: border-box;
+  &:checked:before {
+    content: "";
+    position: absolute;
+    @include svg;
+    mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22170.57%22%20viewBox%3D%220%200%20200%20170.57%22%3E%3Cpath%20d%3D%22M190.7%2C263.769a22.288%2C22.288%2C0%2C0%2C0-16.9%2C8.2L87.768%2C374.526%2C54.414%2C322.551A22.287%2C22.287%2C0%2C1%2C0%2C16.9%2C346.627l49.716%2C77.462a22.287%2C22.287%2C0%2C0%2C0%2C35.825%2C2.288l105.508-125.76A22.287%2C22.287%2C0%2C0%2C0%2C190.7%2C263.769Z%22%20transform%3D%22translate(-13.367%20-263.766)%22%2F%3E%3C%2Fsvg%3E");
+    background-color: $color;
+  }
+  @include pc {
+    border-radius: vw(5px, $pc);
+    width: vw(15px, $pc);
+    height: vw(15px, $pc);
+    &:checked:before {
+      width: vw(15px, $pc);
+      height: vw(15px, $pc);
+      top: vw(-4px, $pc);
+      left: 0;
+    }
+  }
+}
+
+@mixin input {
+  border: 1px solid color(bk, bdr);
+  width: 100%;
+  @include pc {
+    font-size: vw(15px, $pc);
+    border-radius: vw(5px, $pc);
+    padding: vw(10px, $pc);
+  }
+}

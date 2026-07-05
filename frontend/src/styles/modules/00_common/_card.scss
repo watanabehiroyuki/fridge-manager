@@ -1,0 +1,45 @@
+/* modules/00_common/_card.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-card {
+  & {
+    background-color: color(wt);
+    &__ttl {
+      text-align: center;
+      font-weight: 600;
+    }
+    &__txt {
+      text-align: center;
+      a {
+        text-decoration: underline;
+        color: color(blu);
+      }
+    }
+  }
+
+  @include pc {
+    border-radius: vw(20px, $pc);
+    max-width: vw(500px, $pc);
+    margin: vw(20px, $pc) auto;
+    box-shadow: 0 0 vw(8px, $pc) 0 rgba(0, 0, 0, 0.2);
+    padding: vw(55px, $pc) vw(45px, $pc);
+    &__ttl {
+      font-size: vw(28px, $pc);
+      margin-bottom: vw(25px, $pc);
+    }
+    &__txt {
+      font-size: vw(18px, $pc);
+      margin: vw(25px, $pc) 0;
+      a {
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+    &__icon {
+      width: vw(80px, $pc);
+      margin: vw(50px, $pc) auto vw(70px, $pc);
+    }
+  }
+}

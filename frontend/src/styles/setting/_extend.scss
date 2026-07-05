@@ -1,0 +1,20 @@
+/* setting/_extend.scss
+-------------------------------------------------- */
+@use "var" as *;
+@use "functions" as *;
+@use "mixins" as *;
+
+%container {
+  @include pc {
+    max-width: vw($container, $pc);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: vw(50px, $pc);
+    padding-right: vw(50px, $pc);
+  }
+
+  @include sp {
+    padding-left: vw(16px);
+    padding-right: vw(16px);
+  }
+}

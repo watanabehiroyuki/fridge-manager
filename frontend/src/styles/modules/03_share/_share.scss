@@ -1,0 +1,147 @@
+/* modules/03_share/_share.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-share {
+  & {
+    &__head {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: color(wt);
+      display: flex;
+      align-items: center;
+      z-index: 1;
+    }
+    &__back {
+      svg {
+        transform: scaleX(-1);
+      }
+    }
+    &__ttl {
+      font-weight: $regular;
+    }
+    &__main {
+      background-color: color(wt);
+    }
+    &__notice {
+      background-color: color(blu, thin);
+      color: color(blu);
+    }
+    &__notice-list {
+      line-height: 1.4;
+    }
+    &__share-users {
+    }
+    &__share-users-ttl {
+      background-color: color(gry, thin);
+    }
+    &__share-users-list {
+      background-color: color(wt);
+      li {
+        position: relative;
+      }
+      .username {
+      }
+      .email {
+        color: color(gry);
+      }
+      .remove-btn {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        color: color(gry);
+      }
+      .role {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        background-color: color(blu, thin);
+        color: color(blu);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    &__search-error {
+      color: color(pink);
+      font-weight: 700;
+    }
+  }
+
+  @include pc {
+    &__head {
+      height: vw(80px, $pc);
+      padding: 0 vw(25px, $pc);
+      box-shadow: 0 vw(5px, $pc) vw(5px, $pc) 0 rgba(0, 0, 0, 0.2);
+      gap: 0 vw(10px, $pc);
+    }
+    &__back {
+      width: vw(50px, $pc);
+    }
+    &__ttl {
+      font-size: vw(25px, $pc);
+      span {
+        font-size: vw(15px, $pc);
+      }
+    }
+    &__main {
+      margin: vw(160px, $pc) 0 vw(50px, $pc);
+      border-radius: vw(20px, $pc);
+      box-shadow: 0 0 vw(8px, $pc) 0 rgba(0, 0, 0, 0.2);
+      padding: vw(30px, $pc);
+    }
+    &__notice {
+      border-radius: vw(20px, $pc);
+      padding: vw(30px, $pc);
+      margin-top: vw(40px, $pc);
+    }
+    &__notice-ttl {
+      font-size: vw(18px, $pc);
+      margin-bottom: vw(10px, $pc);
+    }
+    &__notice-list {
+      font-size: vw(16px, $pc);
+    }
+    &__share-users {
+      margin-top: vw(40px, $pc);
+      box-shadow: 0 0 vw(10px, $pc) 0 rgba(0, 0, 0, 0.2);
+      border-radius: vw(20px, $pc);
+      overflow: hidden;
+    }
+    &__share-users-ttl {
+      padding: vw(15px, $pc) vw(30px, $pc);
+      font-size: vw(18px, $pc);
+    }
+    &__share-users-list {
+      li {
+        padding: vw(15px, $pc) vw(30px, $pc);
+        border-top: vw(1px, $pc) solid color(gry);
+      }
+      .username {
+        font-size: vw(18px, $pc);
+        margin-bottom: vw(8px, $pc);
+      }
+      .email {
+        font-size: vw(14px, $pc);
+      }
+      .remove-btn {
+        right: vw(30px, $pc);
+        font-size: vw(30px, $pc);
+      }
+      .role {
+        right: vw(30px, $pc);
+        font-size: vw(14px, $pc);
+        border-radius: vw(5px, $pc);
+        width: vw(76px, $pc);
+        height: vw(30px, $pc);
+      }
+    }
+    &__search-error {
+      font-size: vw(14px, $pc);
+      margin-top: vw(10px, $pc);
+    }
+  }
+}

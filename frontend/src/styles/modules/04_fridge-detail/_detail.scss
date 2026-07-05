@@ -1,0 +1,81 @@
+/* modules/04_fridge-detail/_detail.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-fridge-detail {
+  & {
+    &__head {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: color(wt);
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &__top-ttl {
+      display: flex;
+      align-items: center;
+    }
+    &__register-btn {
+      background-color: color(grn);
+      color: color(wt);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include hBase;
+      &::before {
+        @include svg;
+        background-color: color(wt);
+        mask-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20class%3D%22lucide%20lucide-plus%20w-5%20h-5%22%20data-fg-dymv20%3D%221.18%3A7.12010%3A%2Fcomponents%2FFridgeListScreen.tsx%3A72%3A13%3A2462%3A28%3Ae%3APlus%3A%3A%3A%3A%3A%3ABkTm%22%3E%3Cpath%20d%3D%22M5%2012h14%22%3E%3C%2Fpath%3E%3Cpath%20d%3D%22M12%205v14%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+      }
+    }
+    &__back {
+      svg {
+        transform: scaleX(-1);
+      }
+    }
+    &__ttl {
+      font-weight: $regular;
+    }
+  }
+
+  @include pc {
+    &__head {
+      height: vw(80px, $pc);
+      padding: 0 vw(25px, $pc);
+      box-shadow: 0 vw(5px, $pc) vw(5px, $pc) 0 rgba(0, 0, 0, 0.2);
+      gap: 0 vw(10px, $pc);
+    }
+    &__top-ttl {
+      gap: 0 vw(10px, $pc);
+    }
+    &__register-btn {
+      border-radius: vw(5px, $pc);
+      padding: vw(10px, $pc);
+      gap: 0 vw(5px, $pc);
+      font-size: vw(16px, $pc);
+      &::before {
+        width: vw(20px, $pc);
+        height: vw(20px, $pc);
+      }
+    }
+    &__back {
+      width: vw(50px, $pc);
+    }
+    &__ttl {
+      font-size: vw(25px, $pc);
+      span {
+        font-size: vw(15px, $pc);
+      }
+    }
+    &__main {
+      margin: vw(160px, $pc) 0 vw(50px, $pc);
+    }
+    &__list {
+      margin: vw(60px, $pc) 0;
+    }
+  }
+}

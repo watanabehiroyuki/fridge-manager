@@ -1,0 +1,15 @@
+/* modules/03_share/_search.scss
+-------------------------------------------------- */
+@use "../../setting/import" as *;
+
+.m-share-search {
+  & {
+    &__submit-btn {
+    }
+  }
+
+  @include pc {
+    &__submit-btn {
+    }
+  }
+}
